@@ -15,7 +15,7 @@ return [
     'smtp_secure'   => 'ssl',                   // use 'ssl' for port 465, 'tls' for 587
     'smtp_user'     => 'support@maztechno.com',
     'smtp_pass'     => 'YOUR_MAILBOX_PASSWORD',
-    'from_email'    => 'info@maztechno.com',
-    'from_name'     => 'MazERP Website',
+    'from_email'    => 'support@maztechno.com',
+    'from_name'     => 'Maztechno',
     'test_mail_key' => 'generate-a-long-random-string-here',
 ];

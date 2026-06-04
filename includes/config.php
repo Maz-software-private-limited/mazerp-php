@@ -118,11 +118,11 @@ define('CONTACT_PHONE', '+91 81100 87700');
 $mail_config = [
     'smtp_host'     => 'smtp.hostinger.com',
     'smtp_port'     => 465,
-    'smtp_secure'   => 'tls',
+    'smtp_secure'   => 'ssl',
     'smtp_user'     => 'support@maztechno.com',
     'smtp_pass'     => '',
-    'from_email'    => CONTACT_EMAIL,
-    'from_name'     => SITE_NAME . ' Website',
+    'from_email'    => 'support@maztechno.com',
+    'from_name'     => 'Maztechno',
     'test_mail_key' => 'Maz@2024',
 ];
 $mail_config_file = __DIR__ . '/mail-config.local.php';
