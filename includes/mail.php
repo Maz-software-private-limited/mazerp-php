@@ -129,8 +129,30 @@ function send_test_email(): array
     }
 }
 
-function send_contact_email(string $subject, string $body, string $replyToEmail, string $replyToName): bool
+function attach_email_logo(PHPMailer $mail): void
 {
+    if (!defined('EMAIL_LOGO_PATH') || !defined('EMAIL_LOGO_CID') || !is_file(EMAIL_LOGO_PATH)) {
+        return;
+    }
+
+    $mail->addEmbeddedImage(
+        EMAIL_LOGO_PATH,
+        EMAIL_LOGO_CID,
+        'mazerp-logo.png',
+        PHPMailer::ENCODING_BASE64,
+        'image/png'
+    );
+}
+
+function send_html_email(
+    string $toEmail,
+    string $toName,
+    string $subject,
+    string $htmlBody,
+    string $textBody,
+    ?string $replyToEmail = null,
+    ?string $replyToName = null
+): bool {
     if (!is_mail_configured()) {
         log_mail_error('SMTP not configured — copy includes/mail-config.local.php.example to mail-config.local.php');
         return false;
@@ -141,11 +163,15 @@ function send_contact_email(string $subject, string $body, string $replyToEmail,
         global $mail_config;
 
         $mail->setFrom($mail_config['from_email'], $mail_config['from_name']);
-        $mail->addAddress(CONTACT_EMAIL);
-        $mail->addReplyTo($replyToEmail, $replyToName);
+        $mail->addAddress($toEmail, $toName);
+        if ($replyToEmail !== null && $replyToEmail !== '') {
+            $mail->addReplyTo($replyToEmail, $replyToName ?? '');
+        }
         $mail->Subject = $subject;
-        $mail->Body    = $body;
-        $mail->isHTML(false);
+        $mail->isHTML(true);
+        $mail->Body    = $htmlBody;
+        $mail->AltBody = $textBody;
+        attach_email_logo($mail);
         $mail->send();
 
         return true;
@@ -154,4 +180,32 @@ function send_contact_email(string $subject, string $body, string $replyToEmail,
         log_mail_error($error);
         return false;
     }
+}
+
+function send_contact_email(
+    string $subject,
+    string $htmlBody,
+    string $textBody,
+    string $replyToEmail,
+    string $replyToName
+): bool {
+    return send_html_email(
+        CONTACT_EMAIL,
+        SITE_NAME,
+        $subject,
+        $htmlBody,
+        $textBody,
+        $replyToEmail,
+        $replyToName
+    );
+}
+
+function send_thank_you_email(string $subject, string $htmlBody, string $textBody, string $toEmail, string $toName): bool
+{
+    if (!send_html_email($toEmail, $toName, $subject, $htmlBody, $textBody)) {
+        log_mail_error('Thank-you auto-reply failed for ' . $toEmail);
+        return false;
+    }
+
+    return true;
 }

@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/mail.php';
+require_once __DIR__ . '/../includes/email-templates.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -37,13 +38,43 @@ if ($errors) {
     exit;
 }
 
+$lead = [
+    'name'          => $name,
+    'email'         => $email,
+    'phone'         => $phone,
+    'company'       => $company,
+    'business_type' => $business,
+    'message'       => $message,
+];
+
+$meta = lead_submitted_meta();
 $body  = "New MazERP Demo / Trial Request\n\n";
 $body .= "Name:     {$name}\nEmail:    {$email}\nPhone:    {$phone}\n";
-$body .= "Company:  {$company}\nType:     {$business}\nMessage:  {$message}\n";
-$body .= "\nSubmitted: " . date('Y-m-d H:i:s') . "\nIP: " . ($_SERVER['REMOTE_ADDR'] ?? 'unknown') . "\n";
+$body .= "Company:  {$company}\nType:     " . business_type_label($business) . "\nMessage:  " . ($message !== '' ? $message : '—') . "\n";
+$body .= "\nSubmitted: {$meta['submitted_at']}\nIP: {$meta['ip']}\n";
 
 $logWritten = file_put_contents(__DIR__ . '/leads.log', $body . "\n---\n", FILE_APPEND | LOCK_EX);
-$mailSent   = send_contact_email("New inquiry: {$company}", $body, $email, $name);
+
+$mailSent = false;
+if (is_mail_configured()) {
+    $notification = build_lead_notification_email($lead);
+    $mailSent = send_contact_email(
+        $notification['subject'],
+        $notification['html'],
+        $notification['text'],
+        $email,
+        $name
+    );
+
+    $thankYou = build_thank_you_email($lead);
+    send_thank_you_email(
+        $thankYou['subject'],
+        $thankYou['html'],
+        $thankYou['text'],
+        $email,
+        $name
+    );
+}
 
 if ($mailSent || $logWritten !== false) {
     echo json_encode(['success' => true, 'message' => 'Thank you! Our team will contact you within one business hour.']);

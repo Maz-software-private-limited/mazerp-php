@@ -135,6 +135,8 @@ if (is_file($mail_config_file)) {
 define('WHATSAPP_NUMBER', '918110087700');
 define('LOGO_URL', 'assets/img/logo.png');
 define('LOGO_ALT_URL', 'assets/img/logo.png');
+define('EMAIL_LOGO_CID', 'mazerp-logo');
+define('EMAIL_LOGO_PATH', __DIR__ . '/../assets/img/logo.png');
 
 function current_page() {
     return basename($_SERVER['PHP_SELF'], '.php') ?: 'index';

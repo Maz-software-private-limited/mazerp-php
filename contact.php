@@ -191,8 +191,9 @@ include __DIR__ . '/includes/header.php';
   var form = document.getElementById('demoForm');
   var msg  = document.getElementById('formMsg');
   var btn  = document.getElementById('submitBtn');
+  var btnLabel = btn ? btn.innerHTML : '';
 
-  if (!form) return;
+  if (!form || !btn) return;
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -246,7 +247,8 @@ include __DIR__ . '/includes/header.php';
     })
     .finally(function () {
       btn.disabled = false;
-      btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Book My Free Demo';
+      btn.innerHTML = btnLabel;
+      msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
 })();
