@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 440" width="700" height="440">
+  <rect width="700" height="440" fill="#f8fafc"/>
+  <!-- Header -->
+  <rect width="700" height="56" fill="#fff"/>
+  <line x1="0" y1="56" x2="700" y2="56" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="20" y="32" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" fill="#1e293b">CRM — Sales Pipeline</text>
+  <text x="20" y="48" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#94a3b8">8,432 contacts · 247 active leads</text>
+  <!-- Date range -->
+  <rect x="380" y="14" width="100" height="28" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="430" y="32" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#64748b">This Quarter ▾</text>
+  <!-- Add Contact button -->
+  <rect x="498" y="14" width="130" height="28" rx="8" fill="#10b981"/>
+  <text x="563" y="32" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#fff">+ Add Contact</text>
+  <!-- View toggle -->
+  <rect x="640" y="14" width="28" height="28" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+  <rect x="644" y="20" width="8" height="6" rx="1" fill="#2563eb"/>
+  <rect x="654" y="20" width="8" height="6" rx="1" fill="#2563eb"/>
+  <rect x="644" y="28" width="8" height="6" rx="1" fill="#2563eb" opacity="0.5"/>
+  <rect x="654" y="28" width="8" height="6" rx="1" fill="#2563eb" opacity="0.5"/>
+  <rect x="672" y="14" width="28" height="28" rx="6" fill="#f1f5f9"/>
+  <rect x="676" y="19" width="20" height="2" rx="1" fill="#94a3b8"/>
+  <rect x="676" y="24" width="14" height="2" rx="1" fill="#94a3b8"/>
+  <rect x="676" y="29" width="18" height="2" rx="1" fill="#94a3b8"/>
+
+  <!-- Kanban pipeline columns -->
+  <!-- Column 1: Prospects -->
+  <rect x="12" y="66" width="158" height="362" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="12" y="66" width="158" height="36" rx="10" fill="none"/>
+  <rect x="12" y="66" width="158" height="36" rx="10" fill="#f1f5f9"/>
+  <text x="28" y="88" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#64748b">PROSPECTS</text>
+  <rect x="132" y="74" width="30" height="18" rx="9" fill="#e2e8f0"/>
+  <text x="147" y="87" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">48</text>
+  <!-- Cards in column 1 -->
+  <rect x="20" y="112" width="142" height="70" rx="8" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="38" cy="130" r="10" fill="#dbeafe"/>
+  <text x="38" y="134" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="#2563eb">A</text>
+  <text x="56" y="128" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">Anbu Traders</text>
+  <text x="56" y="140" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Retail · Erode</text>
+  <text x="20" y="161" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">₹2.4L potential</text>
+  <rect x="114" y="153" width="40" height="14" rx="7" fill="#eff6ff"/>
+  <text x="134" y="163" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#3b82f6">New</text>
+
+  <rect x="20" y="192" width="142" height="70" rx="8" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="38" cy="210" r="10" fill="#f0fdf4"/>
+  <text x="38" y="214" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="#16a34a">P</text>
+  <text x="56" y="208" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">Priya Medicals</text>
+  <text x="56" y="220" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Pharmacy · Salem</text>
+  <text x="20" y="241" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">₹5.8L potential</text>
+  <rect x="106" y="233" width="48" height="14" rx="7" fill="#eff6ff"/>
+  <text x="130" y="243" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#3b82f6">Referral</text>
+
+  <rect x="20" y="272" width="142" height="70" rx="8" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="38" cy="290" r="10" fill="#fce7f3"/>
+  <text x="38" y="294" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="#db2777">V</text>
+  <text x="56" y="288" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">Vijay Hardware</text>
+  <text x="56" y="300" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Hardware · Trichy</text>
+  <text x="20" y="321" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">₹1.2L potential</text>
+  <rect x="114" y="313" width="40" height="14" rx="7" fill="#fef3c7"/>
+  <text x="134" y="323" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#d97706">Cold</text>
+
+  <!-- Column 2: Contacted -->
+  <rect x="180" y="66" width="158" height="362" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="180" y="66" width="158" height="36" rx="10" fill="#eff6ff"/>
+  <text x="196" y="88" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#2563eb">CONTACTED</text>
+  <rect x="304" y="74" width="26" height="18" rx="9" fill="#bfdbfe"/>
+  <text x="317" y="87" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#1d4ed8">32</text>
+  <!-- Cards -->
+  <rect x="188" y="112" width="142" height="70" rx="8" fill="#fff" stroke="#bfdbfe" stroke-width="1"/>
+  <circle cx="206" cy="130" r="10" fill="#dbeafe"/>
+  <text x="206" y="134" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="#2563eb">S</text>
+  <text x="224" y="128" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">Selvi Supermarket</text>
+  <text x="224" y="140" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Retail · Coimbatore</text>
+  <text x="188" y="161" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">₹18.4L potential</text>
+  <rect x="272" y="153" width="50" height="14" rx="7" fill="#dcfce7"/>
+  <text x="297" y="163" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#16a34a">Hot</text>
+
+  <rect x="188" y="192" width="142" height="70" rx="8" fill="#fff" stroke="#bfdbfe" stroke-width="1"/>
+  <circle cx="206" cy="210" r="10" fill="#ede9fe"/>
+  <text x="206" y="214" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="#7c3aed">N</text>
+  <text x="224" y="208" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">Nair Restaurant</text>
+  <text x="224" y="220" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Restaurant · Madurai</text>
+  <text x="188" y="241" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">₹6.6L potential</text>
+  <rect x="264" y="233" width="58" height="14" rx="7" fill="#dbeafe"/>
+  <text x="293" y="243" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#1d4ed8">Warm</text>
+
+  <!-- Column 3: Demo Scheduled -->
+  <rect x="348" y="66" width="158" height="362" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="348" y="66" width="158" height="36" rx="10" fill="#fef3c7"/>
+  <text x="364" y="88" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#d97706">DEMO SCHEDULED</text>
+  <rect x="474" y="74" width="24" height="18" rx="9" fill="#fde68a"/>
+  <text x="486" y="87" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#92400e">18</text>
+  <!-- Cards -->
+  <rect x="356" y="112" width="142" height="70" rx="8" fill="#fff" stroke="#fde68a" stroke-width="1"/>
+  <circle cx="374" cy="130" r="10" fill="#fef3c7"/>
+  <text x="374" y="134" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="#d97706">R</text>
+  <text x="392" y="128" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">Royal Pharma</text>
+  <text x="392" y="140" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Pharma · Chennai</text>
+  <text x="356" y="161" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">₹42L potential</text>
+  <text x="356" y="175" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Demo: 20 Aug 3:00 PM</text>
+
+  <rect x="356" y="192" width="142" height="70" rx="8" fill="#fff" stroke="#fde68a" stroke-width="1"/>
+  <circle cx="374" cy="210" r="10" fill="#dcfce7"/>
+  <text x="374" y="214" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="#16a34a">B</text>
+  <text x="392" y="208" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">Babu Textile</text>
+  <text x="392" y="220" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Textile · Tirupur</text>
+  <text x="356" y="241" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">₹28L potential</text>
+  <text x="356" y="255" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Demo: 22 Aug 11:00 AM</text>
+
+  <!-- Column 4: Proposal Sent -->
+  <rect x="516" y="66" width="158" height="362" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="516" y="66" width="158" height="36" rx="10" fill="#f0fdf4"/>
+  <text x="532" y="88" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#15803d">PROPOSAL SENT</text>
+  <rect x="648" y="74" width="24" height="18" rx="9" fill="#bbf7d0"/>
+  <text x="660" y="87" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#15803d">9</text>
+  <!-- Cards -->
+  <rect x="524" y="112" width="142" height="70" rx="8" fill="#fff" stroke="#bbf7d0" stroke-width="1"/>
+  <circle cx="542" cy="130" r="10" fill="#dcfce7"/>
+  <text x="542" y="134" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="#16a34a">M</text>
+  <text x="560" y="128" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">Metro Supermart</text>
+  <text x="560" y="140" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Retail · Bengaluru</text>
+  <text x="524" y="161" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">₹96L potential</text>
+  <rect x="600" y="153" width="58" height="14" rx="7" fill="#fef9c3"/>
+  <text x="629" y="163" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#a16207">Awaiting</text>
+
+  <rect x="524" y="192" width="142" height="70" rx="8" fill="#fff" stroke="#bbf7d0" stroke-width="1"/>
+  <circle cx="542" cy="210" r="10" fill="#fce7f3"/>
+  <text x="542" y="214" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="#db2777">T</text>
+  <text x="560" y="208" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">Tech Solutions</text>
+  <text x="560" y="220" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">IT · Hyderabad</text>
+  <text x="524" y="241" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">₹1.4Cr potential</text>
+  <rect x="592" y="233" width="66" height="14" rx="7" fill="#eff6ff"/>
+  <text x="625" y="243" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#2563eb">In Review</text>
+
+  <!-- Total pipeline value bar at bottom -->
+  <rect x="0" y="394" width="700" height="46" fill="#fff"/>
+  <line x1="0" y1="394" x2="700" y2="394" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="20" y="416" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#64748b">Total Pipeline Value</text>
+  <text x="20" y="430" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="#1e293b">₹3.84 Cr</text>
+  <rect x="200" y="402" width="420" height="12" rx="6" fill="#e2e8f0"/>
+  <rect x="200" y="402" width="180" height="12" rx="6" fill="#2563eb"/>
+  <rect x="380" y="402" width="100" height="12" rx="6" fill="#10b981"/>
+  <rect x="480" y="402" width="80" height="12" rx="6" fill="#f59e0b"/>
+  <rect x="560" y="402" width="60" height="12" rx="6" fill="#94a3b8"/>
+  <text x="624" y="416" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#64748b">Conversion: 14.2%</text>
+  <text x="624" y="430" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#16a34a">₹54.6L won this month</text>
+</svg>

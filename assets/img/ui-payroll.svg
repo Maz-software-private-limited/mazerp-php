@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 440" width="700" height="440">
+  <rect width="700" height="440" fill="#f8fafc"/>
+  <!-- Header -->
+  <rect width="700" height="56" fill="#fff"/>
+  <line x1="0" y1="56" x2="700" y2="56" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="20" y="32" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" fill="#1e293b">Payroll — Employee Cost &amp; Attendance</text>
+  <text x="20" y="48" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#94a3b8">142 employees · Active pay cycle (May 2026)</text>
+  <!-- Date range / Pay Cycle -->
+  <rect x="380" y="14" width="100" height="28" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="430" y="32" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#64748b">May 2026 ▾</text>
+  <!-- Run Payroll button -->
+  <rect x="498" y="14" width="130" height="28" rx="8" fill="#7c3aed"/>
+  <text x="563" y="32" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#fff">⚡ Run Payroll</text>
+  <!-- View Settings -->
+  <circle cx="654" cy="28" r="14" fill="#f1f5f9"/>
+  <path d="M650 24h8v8h-8z" fill="none"/>
+  <path d="M654 20c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#64748b"/>
+
+  <!-- Left Column: Employee Directory -->
+  <rect x="12" y="66" width="220" height="320" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="12" y="66" width="220" height="40" rx="10" fill="#f8fafc"/>
+  <line x1="12" y1="106" x2="232" y2="106" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="24" y="90" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#475569">EMPLOYEE LIST</text>
+
+  <!-- Employee Row 1 -->
+  <circle cx="34" cy="130" r="14" fill="#f3f0ff"/>
+  <text x="34" y="134" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#7c3aed">AR</text>
+  <text x="58" y="128" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#1e293b">Arun Raj</text>
+  <text x="58" y="138" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#94a3b8">Sales Lead · Tirunelveli</text>
+  <rect x="175" y="122" width="45" height="16" rx="8" fill="#dcfce7"/>
+  <text x="197.5" y="133" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="600" fill="#16a34a">Present</text>
+  <line x1="20" y1="154" x2="224" y2="154" stroke="#f1f5f9" stroke-width="1"/>
+
+  <!-- Employee Row 2 -->
+  <circle cx="34" cy="178" r="14" fill="#eff6ff"/>
+  <text x="34" y="182" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#2563eb">MS</text>
+  <text x="58" y="176" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#1e293b">Meera S.</text>
+  <text x="58" y="186" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#94a3b8">Accountant · Tirunelveli</text>
+  <rect x="175" y="170" width="45" height="16" rx="8" fill="#dcfce7"/>
+  <text x="197.5" y="181" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="600" fill="#16a34a">Present</text>
+  <line x1="20" y1="202" x2="224" y2="202" stroke="#f1f5f9" stroke-width="1"/>
+
+  <!-- Employee Row 3 -->
+  <circle cx="34" cy="226" r="14" fill="#fef3c7"/>
+  <text x="34" y="230" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#d97706">KP</text>
+  <text x="58" y="224" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#1e293b">Karan Patel</text>
+  <text x="58" y="234" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#94a3b8">Store In-charge · Salem</text>
+  <rect x="175" y="218" width="45" height="16" rx="8" fill="#fee2e2"/>
+  <text x="197.5" y="229" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="600" fill="#dc2626">On Leave</text>
+  <line x1="20" y1="250" x2="224" y2="250" stroke="#f1f5f9" stroke-width="1"/>
+
+  <!-- Employee Row 4 -->
+  <circle cx="34" cy="274" r="14" fill="#fce7f3"/>
+  <text x="34" y="278" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#db2777">AD</text>
+  <text x="58" y="272" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#1e293b">Anita Dev</text>
+  <text x="58" y="282" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#94a3b8">Billing Clerk · Erode</text>
+  <rect x="175" y="266" width="45" height="16" rx="8" fill="#dcfce7"/>
+  <text x="197.5" y="277" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="600" fill="#16a34a">Present</text>
+  <line x1="20" y1="298" x2="224" y2="298" stroke="#f1f5f9" stroke-width="1"/>
+
+  <!-- Employee Row 5 -->
+  <circle cx="34" cy="322" r="14" fill="#e0f2fe"/>
+  <text x="34" y="326" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#0369a1">RG</text>
+  <text x="58" y="320" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#1e293b">Ram Gopal</text>
+  <text x="58" y="330" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#94a3b8">Delivery Executive · Trichy</text>
+  <rect x="175" y="314" width="45" height="16" rx="8" fill="#dcfce7"/>
+  <text x="197.5" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="600" fill="#16a34a">Present</text>
+  <line x1="20" y1="346" x2="224" y2="346" stroke="#f1f5f9" stroke-width="1"/>
+
+  <!-- Center-Right Details: Salary & Compliance Mockup -->
+  <!-- Box 1: Payroll Summary Metrics -->
+  <rect x="244" y="66" width="444" height="96" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  
+  <text x="264" y="90" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#94a3b8">TOTAL PAYOUT</text>
+  <text x="264" y="114" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" fill="#1e293b">₹28,45,600</text>
+  <text x="264" y="130" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#16a34a">↑ 4.2% vs last month</text>
+
+  <line x1="395" y1="76" x2="395" y2="152" stroke="#e2e8f0" stroke-width="1"/>
+
+  <text x="415" y="90" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#94a3b8">STATUTORY DEDUCTIONS</text>
+  <text x="415" y="114" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" fill="#7c3aed">₹3,42,800</text>
+  <text x="415" y="130" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">PF: ₹2,10,200 · ESI: ₹82,600 · PT: ₹50,000</text>
+
+  <line x1="565" y1="76" x2="565" y2="152" stroke="#e2e8f0" stroke-width="1"/>
+
+  <text x="585" y="90" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#94a3b8">COMPLIANCE</text>
+  <text x="585" y="114" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" fill="#10b981">100%</text>
+  <text x="585" y="130" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#10b981">Auto-filing Ready</text>
+
+  <!-- Box 2: Detailed Salary Slip / Breakdown -->
+  <rect x="244" y="174" width="444" height="212" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="244" y="174" width="444" height="40" rx="10" fill="#f8fafc"/>
+  <line x1="244" y1="214" x2="688" y2="214" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="260" y="198" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="#1e293b">Salary Details: Arun Raj (Sales Lead)</text>
+  <rect x="588" y="182" width="88" height="24" rx="12" fill="#f3f0ff" stroke="#7c3aed" stroke-width="1"/>
+  <text x="632" y="197" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="600" fill="#7c3aed">PDF Payslip 📥</text>
+
+  <text x="260" y="240" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#64748b">EARNINGS</text>
+  <text x="260" y="260" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#1e293b">Basic Salary</text>
+  <text x="400" y="260" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#1e293b">₹25,000</text>
+  <text x="260" y="280" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#1e293b">HRA (House Rent Allow.)</text>
+  <text x="400" y="280" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#1e293b">₹10,000</text>
+  <text x="260" y="300" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#1e293b">Special Allowance</text>
+  <text x="400" y="300" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#1e293b">₹8,000</text>
+  <line x1="260" y1="312" x2="410" y2="312" stroke="#e2e8f0" stroke-dasharray="2,2"/>
+  <text x="260" y="330" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#1e293b">Gross Earnings</text>
+  <text x="400" y="330" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#1e293b">₹43,000</text>
+
+  <line x1="435" y1="226" x2="435" y2="340" stroke="#e2e8f0" stroke-width="1"/>
+
+  <text x="455" y="240" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#64748b">DEDUCTIONS</text>
+  <text x="455" y="260" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#1e293b">PF (Provident Fund)</text>
+  <text x="668" y="260" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#dc2626">-₹3,000</text>
+  <text x="455" y="280" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#1e293b">ESI (Employee Insurance)</text>
+  <text x="668" y="280" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#dc2626">-₹325</text>
+  <text x="455" y="300" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#1e293b">PT (Professional Tax)</text>
+  <text x="668" y="300" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#dc2626">-₹200</text>
+  <line x1="455" y1="312" x2="668" y2="312" stroke="#e2e8f0" stroke-dasharray="2,2"/>
+  <text x="455" y="330" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#1e293b">Total Deductions</text>
+  <text x="668" y="330" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#dc2626">-₹3,525</text>
+
+  <rect x="254" y="350" width="424" height="26" rx="6" fill="#f3f0ff"/>
+  <text x="266" y="367" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#7c3aed">Net Take-Home Salary:</text>
+  <text x="662" y="367" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="800" fill="#7c3aed">₹39,475</text>
+
+  <!-- Total cost bar at bottom -->
+  <rect x="0" y="394" width="700" height="46" fill="#fff"/>
+  <line x1="0" y1="394" x2="700" y2="394" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="20" y="420" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#475569">Direct Bank Transfer Integration Active: ICICI Corporate Banking ✅</text>
+  <rect x="580" y="404" width="100" height="24" rx="6" fill="#10b981"/>
+  <text x="630" y="419" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9.5" font-weight="700" fill="#fff">Ready to Pay</text>
+</svg>

@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 440" width="700" height="440">
+  <rect width="700" height="440" fill="#f8fafc"/>
+  <!-- Header -->
+  <rect width="700" height="56" fill="#fff"/>
+  <line x1="0" y1="56" x2="700" y2="56" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="20" y="32" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" fill="#1e293b">Analytics &amp; Reports</text>
+  <text x="20" y="48" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#94a3b8">Business overview · Auto-updated</text>
+  <!-- Filter chips -->
+  <rect x="360" y="14" width="72" height="28" rx="14" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="396" y="32" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#2563eb">This Year ▾</text>
+  <rect x="440" y="14" width="72" height="28" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="476" y="32" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#64748b">Compare</text>
+  <!-- Export button -->
+  <rect x="524" y="14" width="88" height="28" rx="8" fill="#0f172a"/>
+  <text x="568" y="32" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#fff">Export PDF</text>
+  <rect x="620" y="14" width="66" height="28" rx="8" fill="#2563eb"/>
+  <text x="653" y="32" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#fff">Schedule</text>
+
+  <!-- KPI Row -->
+  <rect x="12" y="66" width="158" height="62" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="24" y="83" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">Total Revenue</text>
+  <text x="24" y="104" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#1e293b">₹2.48 Cr</text>
+  <rect x="104" y="73" width="58" height="14" rx="7" fill="#dcfce7"/>
+  <text x="133" y="84" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#16a34a">▲ 22.4%</text>
+
+  <rect x="180" y="66" width="158" height="62" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="192" y="83" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">Orders Processed</text>
+  <text x="192" y="104" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#1e293b">14,932</text>
+  <rect x="270" y="73" width="58" height="14" rx="7" fill="#dcfce7"/>
+  <text x="299" y="84" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#16a34a">▲ 11.8%</text>
+
+  <rect x="348" y="66" width="158" height="62" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="360" y="83" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">Avg Order Value</text>
+  <text x="360" y="104" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#1e293b">₹16,600</text>
+  <rect x="448" y="73" width="50" height="14" rx="7" fill="#dcfce7"/>
+  <text x="473" y="84" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#16a34a">▲ 9.6%</text>
+
+  <rect x="516" y="66" width="172" height="62" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="528" y="83" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">GST Filed</text>
+  <text x="528" y="104" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#1e293b">₹38.6L</text>
+  <rect x="608" y="73" width="72" height="14" rx="7" fill="#dcfce7"/>
+  <text x="644" y="84" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#16a34a">On Schedule</text>
+
+  <!-- REVENUE LINE CHART -->
+  <rect x="12" y="140" width="452" height="200" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="28" y="160" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#1e293b">Revenue Trend</text>
+  <text x="28" y="173" font-family="Arial,Helvetica,sans-serif" font-size="8.5" fill="#94a3b8">Monthly revenue vs last year</text>
+  <!-- Legend -->
+  <line x1="290" y1="162" x2="310" y2="162" stroke="#2563eb" stroke-width="2"/>
+  <text x="314" y="166" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#64748b">This Year</text>
+  <line x1="356" y1="162" x2="376" y2="162" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="380" y="166" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#94a3b8">Last Year</text>
+  <!-- Grid -->
+  <line x1="44" y1="184" x2="448" y2="184" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="44" y1="204" x2="448" y2="204" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="44" y1="224" x2="448" y2="224" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="44" y1="244" x2="448" y2="244" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="44" y1="264" x2="448" y2="264" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="44" y1="312" x2="448" y2="312" stroke="#e2e8f0" stroke-width="1"/>
+  <!-- Y-axis labels -->
+  <text x="40" y="187" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="7" fill="#94a3b8">25L</text>
+  <text x="40" y="227" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="7" fill="#94a3b8">15L</text>
+  <text x="40" y="267" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="7" fill="#94a3b8">5L</text>
+  <text x="40" y="314" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="7" fill="#94a3b8">0</text>
+  <!-- Last year (dashed lighter line) -->
+  <polyline points="56,290 88,275 120,265 152,260 184,255 216,248 248,242 280,250 312,238 344,232 376,236 408,225"
+    fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <!-- This year (solid blue line) -->
+  <polyline points="56,280 88,262 120,248 152,240 184,228 216,215 248,205 280,218 312,200 344,190 376,195 408,184"
+    fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Area fill below line (gradient effect via rect clipping approximation) -->
+  <polygon points="56,280 88,262 120,248 152,240 184,228 216,215 248,205 280,218 312,200 344,190 376,195 408,184 408,312 56,312"
+    fill="#2563eb" opacity="0.06"/>
+  <!-- Data points -->
+  <circle cx="56" cy="280" r="3" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="88" cy="262" r="3" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="120" cy="248" r="3" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="152" cy="240" r="3" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="184" cy="228" r="3" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="216" cy="215" r="3" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="248" cy="205" r="3" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="280" cy="218" r="3" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="312" cy="200" r="3" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="344" cy="190" r="4" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+  <!-- Highlighted dot + tooltip -->
+  <line x1="344" y1="184" x2="344" y2="312" stroke="#2563eb" stroke-width="1" stroke-dasharray="3,2" opacity="0.4"/>
+  <rect x="310" y="174" width="68" height="22" rx="5" fill="#1e293b"/>
+  <text x="344" y="189" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="600" fill="#fff">₹24.8L</text>
+  <!-- X labels -->
+  <text x="56" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">Jan</text>
+  <text x="88" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">Feb</text>
+  <text x="120" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">Mar</text>
+  <text x="152" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">Apr</text>
+  <text x="184" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">May</text>
+  <text x="216" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">Jun</text>
+  <text x="248" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">Jul</text>
+  <text x="280" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">Aug</text>
+  <text x="312" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">Sep</text>
+  <text x="344" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" font-weight="700" fill="#2563eb">Oct</text>
+  <text x="376" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">Nov</text>
+  <text x="408" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.5" fill="#94a3b8">Dec</text>
+
+  <!-- RIGHT SIDE: Donut + Category table -->
+  <rect x="474" y="140" width="214" height="200" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="490" y="160" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#1e293b">Revenue by Module</text>
+  <!-- Donut -->
+  <circle cx="581" cy="232" r="52" fill="none" stroke="#f1f5f9" stroke-width="2"/>
+  <circle cx="581" cy="232" r="42" fill="none" stroke="#2563eb" stroke-width="16" stroke-dasharray="105.6 158.4" stroke-dashoffset="0" transform="rotate(-90 581 232)"/>
+  <circle cx="581" cy="232" r="42" fill="none" stroke="#10b981" stroke-width="16" stroke-dasharray="88" stroke-dashoffset="-105.6" transform="rotate(-90 581 232)"/>
+  <circle cx="581" cy="232" r="42" fill="none" stroke="#f59e0b" stroke-width="16" stroke-dasharray="70.4 193.6" stroke-dashoffset="-193.6" transform="rotate(-90 581 232)"/>
+  <circle cx="581" cy="232" r="28" fill="#fff"/>
+  <text x="581" y="228" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#1e293b">₹2.48Cr</text>
+  <text x="581" y="240" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7" fill="#94a3b8">YTD Sales</text>
+  <!-- Legend -->
+  <rect x="490" y="296" width="7" height="7" rx="1" fill="#2563eb"/>
+  <text x="501" y="303" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#64748b">ERP 40%</text>
+  <rect x="556" y="296" width="7" height="7" rx="1" fill="#10b981"/>
+  <text x="567" y="303" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#64748b">CRM 33%</text>
+  <rect x="620" y="296" width="7" height="7" rx="1" fill="#f59e0b"/>
+  <text x="631" y="303" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#64748b">Acc 27%</text>
+
+  <!-- BOTTOM: Top Customers table -->
+  <rect x="12" y="352" width="452" height="76" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="28" y="371" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">Top Customers by Revenue</text>
+  <!-- Mini table -->
+  <text x="28" y="388" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">1. Raj Electronics — Tirunelveli</text>
+  <text x="350" y="388" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="600" fill="#1e293b">₹4,82,600</text>
+  <rect x="360" y="380" width="88" height="6" rx="3" fill="#e2e8f0"/>
+  <rect x="360" y="380" width="88" height="6" rx="3" fill="#2563eb" opacity="0.8"/>
+  <text x="28" y="404" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">2. Kavitha Traders — Chennai</text>
+  <text x="350" y="404" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="600" fill="#1e293b">₹3,28,400</text>
+  <rect x="360" y="396" width="88" height="6" rx="3" fill="#e2e8f0"/>
+  <rect x="360" y="396" width="60" height="6" rx="3" fill="#2563eb" opacity="0.6"/>
+  <text x="28" y="420" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">3. Harish Auto Parts — Salem</text>
+  <text x="350" y="420" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="600" fill="#1e293b">₹2,18,000</text>
+  <rect x="360" y="412" width="88" height="6" rx="3" fill="#e2e8f0"/>
+  <rect x="360" y="412" width="40" height="6" rx="3" fill="#2563eb" opacity="0.4"/>
+
+  <!-- BOTTOM RIGHT: GST summary -->
+  <rect x="474" y="352" width="214" height="76" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="490" y="371" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600" fill="#1e293b">GST Summary (FY 2024)</text>
+  <text x="490" y="389" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">CGST Collected</text>
+  <text x="678" y="389" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="600" fill="#1e293b">₹19.3L</text>
+  <text x="490" y="406" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">SGST Collected</text>
+  <text x="678" y="406" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="600" fill="#1e293b">₹19.3L</text>
+  <text x="490" y="423" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748b">IGST Collected</text>
+  <text x="678" y="423" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="600" fill="#1e293b">₹0</text>
+</svg>
