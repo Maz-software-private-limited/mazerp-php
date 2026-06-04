@@ -2493,6 +2493,93 @@ section {
   line-height: 1.75;
 }
 
+.page-hero .legal-last-updated {
+  font-size: 0.875rem;
+  margin-top: 12px;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ==========================================================================
+   23b. Legal Pages
+   ========================================================================== */
+.legal-page {
+  padding: var(--sp) 0 calc(var(--sp) * 1.5);
+  background: #ffffff;
+}
+
+.legal-page-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.legal-page-inner p,
+.legal-page-inner li {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.legal-page-inner h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 2.5rem 0 1rem;
+  padding-top: 0.5rem;
+}
+
+.legal-page-inner h2:first-of-type {
+  margin-top: 1.5rem;
+}
+
+.legal-page-inner h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 1.25rem 0 0.5rem;
+}
+
+.legal-page-inner ul {
+  margin: 0.75rem 0 1.25rem;
+  padding-left: 1.35rem;
+}
+
+.legal-page-inner li {
+  margin-bottom: 0.5rem;
+}
+
+.legal-page-inner a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-page-inner a:hover {
+  color: var(--blue-dark, #1d4ed8);
+}
+
+.legal-intro {
+  font-size: 1.05rem;
+  color: var(--text) !important;
+}
+
+.legal-disclaimer {
+  margin: 1.25rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-subtle, #f8fafc);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem !important;
+}
+
+.legal-contact {
+  list-style: none;
+  padding-left: 0 !important;
+}
+
+.legal-contact li {
+  margin-bottom: 0.35rem;
+}
+
 /* ==========================================================================
    24. Product Page Styles
    ========================================================================== */

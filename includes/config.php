@@ -194,6 +194,14 @@ $page_seo = [
         'description'  => 'Automate payroll processing, track attendance, manage PF, ESI, and salary disbursements with MazERP Payroll. Start your 7-day free trial.',
         'keywords'     => 'payroll software India, salary processing, attendance tracker, PF ESI compliance, employee management software',
     ],
+    'terms-of-service' => [
+        'title'       => 'Terms of Service | MazERP',
+        'description'  => 'Terms of Service for MazERP cloud ERP, CRM, accounting, and payroll software by MAZ Software Solutions.',
+    ],
+    'privacy-policy' => [
+        'title'       => 'Privacy Policy | MazERP',
+        'description'  => 'How MazERP and MAZ Software Solutions collect, use, and protect personal data on our website and cloud ERP platform.',
+    ],
 ];
 
 $_page = current_page();

@@ -94,8 +94,8 @@
     <div class="footer-bottom">
       <p>&copy; <?php echo date('Y'); ?> MAZ Software Solutions. All Rights Reserved.</p>
       <div class="footer-legal">
-        <a href="https://www.mazerp.com/terms-of-service/">Terms of Service</a>
-        <a href="https://www.mazerp.com/privacy-policy/">Privacy Policy</a>
+        <a href="terms-of-service.php">Terms of Service</a>
+        <a href="privacy-policy.php">Privacy Policy</a>
       </div>
     </div>
 
