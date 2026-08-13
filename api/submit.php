@@ -24,6 +24,17 @@ $phone    = clean($_POST['phone'] ?? '');
 $company  = clean($_POST['company'] ?? '');
 $business = clean($_POST['business_type'] ?? '');
 $message  = clean($_POST['message'] ?? '');
+$source   = clean($_POST['source'] ?? '');
+$intent   = clean($_POST['intent'] ?? '');
+
+$allowed_sources = ['crm-microsite', ''];
+$allowed_intents = ['demo', 'contact', ''];
+if (!in_array($source, $allowed_sources, true)) {
+    $source = '';
+}
+if (!in_array($intent, $allowed_intents, true)) {
+    $intent = '';
+}
 
 $errors = [];
 if (strlen($name) < 2)                          $errors[] = 'Valid name required.';
@@ -45,14 +56,21 @@ $lead = [
     'company'       => $company,
     'business_type' => $business,
     'message'       => $message,
+    'source'        => $source,
+    'intent'        => $intent,
 ];
 
 $meta = lead_submitted_meta();
 $body  = "New MazERP Demo / Trial Request\n\n";
 $body .= "Name:     {$name}\nEmail:    {$email}\nPhone:    {$phone}\n";
 $body .= "Company:  {$company}\nType:     " . business_type_label($business) . "\nMessage:  " . ($message !== '' ? $message : '—') . "\n";
+if ($source !== '') {
+    $body .= "Source:   {$source}\n";
+}
+if ($intent !== '') {
+    $body .= "Intent:   {$intent}\n";
+}
 $body .= "\nSubmitted: {$meta['submitted_at']}\nIP: {$meta['ip']}\n";
-
 $logWritten = file_put_contents(__DIR__ . '/leads.log', $body . "\n---\n", FILE_APPEND | LOCK_EX);
 
 $mailSent = false;

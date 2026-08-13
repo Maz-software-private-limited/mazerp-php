@@ -296,7 +296,7 @@ $products_nav = [
     ],
     'crm' => [
         'label' => 'CRM',
-        'url'   => 'crm.php',
+        'url'   => 'crm/',
         'icon'  => 'fa-users',
         'desc'  => 'Customers & sales pipeline',
     ],

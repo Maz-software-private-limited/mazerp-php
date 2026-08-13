@@ -113,6 +113,9 @@ function build_lead_notification_email(array $lead): array
     $business = business_type_label($lead['business_type'] ?? '');
     $message = trim($lead['message'] ?? '');
     $messageDisplay = $message !== '' ? nl2br(escape_html($message)) : '<span style="color:#94a3b8;">—</span>';
+    $leadSource = trim($lead['source'] ?? '');
+    $leadIntent = trim($lead['intent'] ?? '');
+    $metaSource = $leadSource !== '' ? $leadSource : $meta['source'];
 
     $emailLink = '<a href="mailto:' . escape_html($email) . '" style="color:#2563eb;text-decoration:none;">' . escape_html($email) . '</a>';
     $phoneLink = '<a href="tel:' . escape_html(preg_replace('/\s+/', '', $phone)) . '" style="color:#2563eb;text-decoration:none;">' . escape_html($phone) . '</a>';
@@ -123,13 +126,19 @@ function build_lead_notification_email(array $lead): array
         . email_field_row('Phone', $phoneLink)
         . email_field_row('Company', escape_html($company))
         . email_field_row('Business type', escape_html($business))
-        . email_field_row('Message', $messageDisplay)
-        . '</table>';
+        . email_field_row('Message', $messageDisplay);
+    if ($leadSource !== '') {
+        $fieldsTable .= email_field_row('Source', escape_html($leadSource));
+    }
+    if ($leadIntent !== '') {
+        $fieldsTable .= email_field_row('Intent', escape_html($leadIntent));
+    }
+    $fieldsTable .= '</table>';
 
     $inner = '<p style="margin:0 0 16px;font-size:16px;line-height:1.5;color:#1e293b;">A new demo request was submitted on the website.</p>'
         . $fieldsTable;
 
-    $footer = 'Submitted via ' . escape_html($meta['source']) . ' &middot; '
+    $footer = 'Submitted via ' . escape_html($metaSource) . ' &middot; '
         . escape_html($meta['submitted_at']) . ' &middot; IP ' . escape_html($meta['ip']);
 
     $html = email_html_wrapper('New demo request', 'New demo request', $inner, $footer);
@@ -143,7 +152,8 @@ function build_lead_notification_email(array $lead): array
         . "Business type: {$business}\n"
         . "Message:       {$messagePlain}\n\n"
         . "Submitted: {$meta['submitted_at']}\n"
-        . "Source:    {$meta['source']}\n"
+        . "Source:    {$metaSource}\n"
+        . ($leadIntent !== '' ? "Intent:    {$leadIntent}\n" : '')
         . "IP:        {$meta['ip']}\n";
 
     return [
