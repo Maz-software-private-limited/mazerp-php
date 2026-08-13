@@ -8,7 +8,7 @@ include __DIR__ . '/includes/header.php';
   <div class="container reveal">
     <span class="label"><i class="fa-solid fa-grid-2"></i> Features</span>
     <h1>Powerful Features to Simplify Your Business Operations</h1>
-    <p>Every tool your business needs — GST billing, inventory, payroll management, accounting, CRM, analytics, and multi-store operations — in one connected platform that works the way you do.</p>
+    <p>Every tool your business needs — GST billing, inventory, accounting, CRM, analytics, and multi-store operations — in one connected platform that works the way you do.</p>
     <a href="https://app.mazerp.com/auth/register" class="btn btn-white btn-lg">Start Free Trial</a>
   </div>
 </section>
@@ -150,42 +150,6 @@ include __DIR__ . '/includes/header.php';
           <div class="sol-float bot-right">
             <i class="fa-solid fa-users" style="color:var(--blue-light);"></i>
             10,000+ customer profiles
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PAYROLL -->
-<section id="payroll">
-  <div class="container">
-    <div class="sol-block reveal">
-      <div class="sol-layout">
-        <div class="sol-info">
-          <span class="label"><i class="fa-solid fa-wallet"></i> <?php echo htmlspecialchars($loc['payroll_title']); ?></span>
-          <h2>Automate salary, attendance, and compliance</h2>
-          <p class="lead">Manage your team's salaries, track attendance, and ensure complete <?php echo htmlspecialchars($loc['payroll_desc']); ?> seamlessly in one consolidated platform. Empower employees with self-service payslip downloads.</p>
-          <div class="sol-feats">
-            <div class="sol-feat-item"><i class="fa-solid fa-check"></i> <?php echo htmlspecialchars($loc['payroll_feat1']); ?></div>
-            <div class="sol-feat-item"><i class="fa-solid fa-check"></i> <?php echo htmlspecialchars($loc['payroll_feat2']); ?></div>
-            <div class="sol-feat-item"><i class="fa-solid fa-check"></i> <?php echo htmlspecialchars($loc['payroll_feat3']); ?></div>
-            <div class="sol-feat-item"><i class="fa-solid fa-check"></i> <?php echo htmlspecialchars($loc['payroll_feat4']); ?></div>
-            <div class="sol-feat-item"><i class="fa-solid fa-check"></i> <?php echo htmlspecialchars($loc['payroll_feat5']); ?></div>
-            <div class="sol-feat-item"><i class="fa-solid fa-check"></i> <?php echo htmlspecialchars($loc['payroll_feat6']); ?></div>
-          </div>
-          <a href="contact.php" class="btn btn-primary">See it in action</a>
-        </div>
-        <div class="sol-visual">
-          <div class="sol-screen">
-            <div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url"></div></div>
-            <img src="assets/img/ui-payroll.svg"
-                 alt="MazERP payroll management dashboard showing salary breakdown, attendance tracking, and compliance filings"
-                 width="700" height="440">
-          </div>
-          <div class="sol-float top-right">
-            <i class="fa-solid fa-wallet" style="color:var(--purple);"></i>
-            Compliant salary payouts
           </div>
         </div>
       </div>
@@ -370,5 +334,55 @@ include __DIR__ . '/includes/header.php';
     </div>
   </div>
 </section>
+
+<!-- Features FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does MazERP handle all GST types — CGST, SGST, and IGST?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. MazERP automatically applies the correct tax split based on the billing state. For intra-state sales it applies CGST and SGST; for inter-state sales it applies IGST. You set the HSN code and GST rate once per product and the system handles everything from there."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I track inventory across multiple branches from one account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The multi-store module lets you manage any number of branches under one login. You can view consolidated stock, transfer inventory between stores, set branch-specific pricing, and generate reports per store or across all stores combined."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What kinds of reports does MazERP generate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MazERP covers sales reports, GST summary reports (GSTR-1 and GSTR-3B ready), profit and loss statements, inventory movement reports, customer-wise sales, product-wise profitability, and daily/monthly/yearly business overviews. All reports can be exported to Excel or PDF."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does MazERP work on mobile devices?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. MazERP is fully responsive and works on smartphones and tablets. You can view sales data, check stock levels, approve invoices, and pull reports from any device with a browser. A dedicated mobile app is also available for Android."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can my staff have different access levels?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. MazERP has role-based access control. You can give a billing staff member access only to the POS screen, restrict your inventory manager to stock operations, and keep financial reports visible only to managers and owners. All roles are configurable from the admin panel."
+      }
+    }
+  ]
+}
+</script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

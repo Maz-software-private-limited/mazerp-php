@@ -404,7 +404,7 @@ include __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="section-head reveal">
       <span class="label"><i class="fa-solid fa-cubes"></i> Our Core Suite</span>
-      <h2>Four Powerful Modules. One Connected Platform.</h2>
+      <h2>Three Powerful Modules. One Connected Platform.</h2>
       <p>Turn on what you need today, grow with confidence. Every product is built for premium performance and seamless integration.</p>
     </div>
 
@@ -453,21 +453,6 @@ include __DIR__ . '/includes/header.php';
           <li><i class="fa-solid fa-check" style="color:var(--emerald);"></i> Live cash flow analytics</li>
         </ul>
         <a href="accounting.php" class="pc-link">Explore Accounting <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-
-      <!-- Payroll -->
-      <div class="product-card purple-card reveal">
-        <div class="pc-icon purple"><i class="fa-solid fa-wallet"></i></div>
-        <div>
-          <div class="pc-title"><?php echo htmlspecialchars($loc['payroll_title']); ?></div>
-          <div class="pc-desc">Automate employee salary calculations, track attendance, and ensure seamless <?php echo htmlspecialchars($loc['payroll_desc']); ?>.</div>
-        </div>
-        <ul class="pc-features">
-          <li><i class="fa-solid fa-check" style="color:var(--emerald);"></i> <?php echo htmlspecialchars($loc['payroll_feat1']); ?></li>
-          <li><i class="fa-solid fa-check" style="color:var(--emerald);"></i> <?php echo htmlspecialchars($loc['payroll_feat3']); ?></li>
-          <li><i class="fa-solid fa-check" style="color:var(--emerald);"></i> <?php echo htmlspecialchars($loc['payroll_feat5']); ?></li>
-        </ul>
-        <a href="payroll.php" class="pc-link">Explore Payroll <i class="fa-solid fa-arrow-right"></i></a>
       </div>
 
     </div><!-- /products-grid -->

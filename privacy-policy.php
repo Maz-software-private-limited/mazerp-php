@@ -31,7 +31,7 @@ include __DIR__ . '/includes/header.php';
       <ul>
         <li>Visitors to our public website (for example <?php echo htmlspecialchars(parse_url(SITE_URL, PHP_URL_HOST) ?: 'www.mazerp.com'); ?>);</li>
         <li>Prospective customers who submit demo or trial requests through our <a href="contact.php">contact form</a>;</li>
-        <li>Registered users and organizations that use the MazERP Platform, including ERP, CRM, accounting, and payroll modules.</li>
+        <li>Registered users and organizations that use the MazERP Platform, including ERP, CRM, and accounting modules.</li>
       </ul>
       <p>If you process personal data of your own employees, customers, or vendors inside MazERP, you are generally the data controller for that information. We act as a processor or service provider on your instructions, as described in our Terms and this policy.</p>
 
@@ -60,7 +60,7 @@ include __DIR__ . '/includes/header.php';
       <ul>
         <li>Account and organization profile details (name, email, phone, billing contacts);</li>
         <li>Login credentials and authentication activity;</li>
-        <li><strong>Customer Data</strong> you or your users submit, including invoices, inventory records, CRM contacts, payroll and employee information, attendance, and financial or tax-related records;</li>
+        <li><strong>Customer Data</strong> you or your users submit, including invoices, inventory records, CRM contacts, employee information, attendance, and financial or tax-related records;</li>
         <li>Usage, configuration, and support communications related to your Account.</li>
       </ul>
 

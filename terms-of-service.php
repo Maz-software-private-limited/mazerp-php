@@ -28,9 +28,9 @@ include __DIR__ . '/includes/header.php';
 
       <h2>2. Definitions and service overview</h2>
       <ul>
-        <li><strong>Platform</strong> — the MazERP software, including ERP, CRM, accounting, payroll, and related modules delivered online.</li>
+        <li><strong>Platform</strong> — the MazERP software, including ERP, CRM, accounting, and related modules delivered online.</li>
         <li><strong>Account</strong> — your registered user or organization profile on the Platform.</li>
-        <li><strong>Customer Data</strong> — data you or your users submit to the Service (for example invoices, inventory, contacts, payroll, and financial records).</li>
+        <li><strong>Customer Data</strong> — data you or your users submit to the Service (for example invoices, inventory, contacts, and financial records).</li>
         <li><strong>Subscription</strong> — a paid plan that grants access to Platform features for a recurring billing period.</li>
       </ul>
       <p>The Platform provides comprehensive business management tools, including:</p>
@@ -39,7 +39,7 @@ include __DIR__ . '/includes/header.php';
         <li>Inventory management;</li>
         <li>Customer relationship management;</li>
         <li>Financial reporting and analytics;</li>
-        <li>Accounting and payroll modules (where included in your plan);</li>
+        <li>Accounting modules (where included in your plan);</li>
         <li>Multi-location and multi-store support;</li>
         <li>Web and mobile access.</li>
       </ul>
@@ -87,7 +87,7 @@ include __DIR__ . '/includes/header.php';
       <p><strong>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE."</strong> TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
 
       <h2>11. Tax and compliance tools</h2>
-      <p>MazERP includes features to assist with GST, VAT, payroll, and similar requirements in India, the United States, the UAE, and other regions. These tools are aids only. You remain solely responsible for statutory filings, accuracy of returns, and compliance with tax, labor, and industry regulations. We do not provide legal, tax, or accounting advice.</p>
+      <p>MazERP includes features to assist with GST, VAT, and similar tax requirements in India, the United States, the UAE, and other regions. These tools are aids only. You remain solely responsible for statutory filings, accuracy of returns, and compliance with tax and industry regulations. We do not provide legal, tax, or accounting advice.</p>
 
       <h2>12. Limitation of liability</h2>
       <p>To the maximum extent permitted by law, MAZ Software Solutions and its officers, employees, and affiliates will not be liable for indirect, incidental, special, consequential, or punitive damages, or for loss of profits, revenue, data, or goodwill arising from your use of the Service.</p>

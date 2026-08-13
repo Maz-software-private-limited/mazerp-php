@@ -12,20 +12,32 @@ include __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- PRICING CARDS -->
+<!-- PRICING TOGGLE + CARDS -->
 <section style="padding:var(--sp) 0;">
   <div class="container">
-    <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+
+    <!-- Monthly / Annual Toggle -->
+    <div class="pricing-toggle-wrap reveal" style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:40px;">
+      <span class="toggle-label" id="toggleMonthly" style="font-weight:600;font-size:0.95rem;color:var(--text);cursor:pointer;">Monthly</span>
+      <label class="pricing-switch" aria-label="Toggle between monthly and annual pricing">
+        <input type="checkbox" id="pricingToggle">
+        <span class="pricing-slider"></span>
+      </label>
+      <span class="toggle-label" id="toggleAnnual" style="font-weight:600;font-size:0.95rem;color:var(--text-muted);cursor:pointer;">Annual</span>
+      <span class="annual-badge" id="annualBadge" style="background:var(--emerald);color:#fff;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:var(--r-full);opacity:0;transition:opacity 0.3s;">SAVE MORE</span>
+    </div>
+
+    <div class="pricing-grid">
 
       <!-- Basic -->
       <div class="price-card reveal">
         <h2 class="pc-name" style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:8px;">Basic</h2>
         <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.5;min-height:48px;">Essential tools to manage your business operations with ease</p>
         <div class="price-amount" style="margin:16px 0 8px;display:flex;align-items:baseline;gap:4px;">
-          <span class="price-num" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_basic']); ?></span>
-          <span class="price-period" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
+          <span class="price-num" data-monthly="<?php echo htmlspecialchars($loc['pricing_basic']); ?>" data-annual="<?php echo htmlspecialchars($loc['pricing_basic_annual']); ?>" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_basic']); ?></span>
+          <span class="price-period" data-monthly="/month" data-annual="/year" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
         </div>
-        <p class="price-note" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_basic_orig']); ?>/mo</p>
+        <p class="price-note" data-monthly="Regularly <?php echo htmlspecialchars($loc['pricing_basic_orig']); ?>/mo" data-annual="Regularly <?php echo htmlspecialchars($loc['pricing_basic_annual_orig']); ?>/yr" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_basic_orig']); ?>/mo</p>
         <a href="https://app.mazerp.com/auth/register" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;margin-bottom:20px;">Start Free Trial</a>
         
         <div style="border-top:1.5px solid var(--border);padding-top:20px;">
@@ -33,9 +45,9 @@ include __DIR__ . '/includes/header.php';
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage: 1 Business</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> 1 User Access</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Billing &amp; Accounting</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice: 2000</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice: 2000</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> <?php echo htmlspecialchars($loc['tax_name']); ?> Compliance Filing</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> <?php echo htmlspecialchars($loc['tax_name']); ?> Filing + Report</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> All Accounting Reports</li>
           </ul>
         </div>
@@ -46,10 +58,10 @@ include __DIR__ . '/includes/header.php';
         <h2 class="pc-name" style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:8px;">Standard</h2>
         <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.5;min-height:48px;">Smart features for growing businesses and daily efficiency</p>
         <div class="price-amount" style="margin:16px 0 8px;display:flex;align-items:baseline;gap:4px;">
-          <span class="price-num" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_std']); ?></span>
-          <span class="price-period" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
+          <span class="price-num" data-monthly="<?php echo htmlspecialchars($loc['pricing_std']); ?>" data-annual="<?php echo htmlspecialchars($loc['pricing_std_annual']); ?>" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_std']); ?></span>
+          <span class="price-period" data-monthly="/month" data-annual="/year" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
         </div>
-        <p class="price-note" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_std_orig']); ?>/mo</p>
+        <p class="price-note" data-monthly="Regularly <?php echo htmlspecialchars($loc['pricing_std_orig']); ?>/mo" data-annual="Regularly <?php echo htmlspecialchars($loc['pricing_std_annual_orig']); ?>/yr" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_std_orig']); ?>/mo</p>
         <a href="https://app.mazerp.com/auth/register" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;margin-bottom:20px;">Start Free Trial</a>
         
         <div style="border-top:1.5px solid var(--border);padding-top:20px;">
@@ -57,10 +69,10 @@ include __DIR__ . '/includes/header.php';
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage: 1 Business</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> 1 User Access</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Access to ERP + CRM</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice: 5000</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice: 5000</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage 1 Branch</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> <?php echo htmlspecialchars($loc['tax_name']); ?> E-Way compliance</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> E-Way Bill</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Barcode Gen + Scan</li>
           </ul>
         </div>
@@ -72,23 +84,23 @@ include __DIR__ . '/includes/header.php';
         <h2 class="pc-name" style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:8px;">Professional</h2>
         <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.5;min-height:48px;">Advanced business management with powerful automation tools</p>
         <div class="price-amount" style="margin:16px 0 8px;display:flex;align-items:baseline;gap:4px;">
-          <span class="price-num" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_prof']); ?></span>
-          <span class="price-period" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
+          <span class="price-num" data-monthly="<?php echo htmlspecialchars($loc['pricing_prof']); ?>" data-annual="<?php echo htmlspecialchars($loc['pricing_prof_annual']); ?>" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_prof']); ?></span>
+          <span class="price-period" data-monthly="/month" data-annual="/year" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
         </div>
-        <p class="price-note" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_prof_orig']); ?>/mo</p>
+        <p class="price-note" data-monthly="Regularly <?php echo htmlspecialchars($loc['pricing_prof_orig']); ?>/mo" data-annual="Regularly <?php echo htmlspecialchars($loc['pricing_prof_annual_orig']); ?>/yr" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_prof_orig']); ?>/mo</p>
         <a href="https://app.mazerp.com/auth/register" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-bottom:20px;">Start Free Trial</a>
         
         <div style="border-top:1.5px solid var(--border);padding-top:20px;">
           <ul class="price-feats" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;font-size:0.875rem;">
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage: 1 Business</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> 3 User Access</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> ERP + CRM + <?php echo htmlspecialchars($loc['payroll_title']); ?></li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice: 10000</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice: 10000</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Access to ERP + CRM</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage 3 Branches</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Access to POS</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> <?php echo htmlspecialchars($loc['tax_name']); ?> Compliance (200/Yr)</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Compliance Reports (200/Yr)</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> E-Invoicing</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> E-Way Bill</li>
           </ul>
         </div>
       </div>
@@ -98,22 +110,44 @@ include __DIR__ . '/includes/header.php';
         <h2 class="pc-name" style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:8px;">Premium</h2>
         <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.5;min-height:48px;">All-in-one advanced platform built for high-performance businesses</p>
         <div class="price-amount" style="margin:16px 0 8px;display:flex;align-items:baseline;gap:4px;">
-          <span class="price-num" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_prem']); ?></span>
-          <span class="price-period" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
+          <span class="price-num" data-monthly="<?php echo htmlspecialchars($loc['pricing_prem']); ?>" data-annual="<?php echo htmlspecialchars($loc['pricing_prem_annual']); ?>" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_prem']); ?></span>
+          <span class="price-period" data-monthly="/month" data-annual="/year" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
         </div>
-        <p class="price-note" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_prem_orig']); ?>/mo</p>
+        <p class="price-note" data-monthly="Regularly <?php echo htmlspecialchars($loc['pricing_prem_orig']); ?>/mo" data-annual="Regularly <?php echo htmlspecialchars($loc['pricing_prem_annual_orig']); ?>/yr" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_prem_orig']); ?>/mo</p>
         <a href="https://app.mazerp.com/auth/register" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;margin-bottom:20px;">Start Free Trial</a>
         
         <div style="border-top:1.5px solid var(--border);padding-top:20px;">
           <ul class="price-feats" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;font-size:0.875rem;">
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage: 1 Business</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> 5 User Access</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> ERP + CRM + <?php echo htmlspecialchars($loc['payroll_title']); ?></li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Access to ERP + CRM</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice: Unlimited</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice: Unlimited</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage 5 Branches</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Compliance: Unlimited</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> E-Way Bill: Unlimited</li>
             <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> E-Invoicing: Unlimited</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="price-card price-card-enterprise reveal">
+        <h2 class="pc-name" style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:8px;">Enterprise</h2>
+        <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.5;min-height:48px;">Let's talk to our team to build your customised business management tool</p>
+        <div class="price-amount" style="margin:16px 0 8px;">
+          <span style="font-size:1.8rem;font-weight:800;color:var(--text);line-height:1;">Let's Talk</span>
+        </div>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;">Custom pricing for your needs</p>
+        <a href="contact.php" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;margin-bottom:20px;">Contact Sales</a>
+        
+        <div style="border-top:1.5px solid var(--border);padding-top:20px;">
+          <ul class="price-feats" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;font-size:0.875rem;">
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Fully customisable</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Unlimited users &amp; branches</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Dedicated account manager</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Priority support &amp; SLA</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Custom integrations</li>
+            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> On-premise option available</li>
           </ul>
         </div>
       </div>
@@ -143,7 +177,7 @@ include __DIR__ . '/includes/header.php';
           </tr>
         </thead>
         <tbody>
-          <!-- Category Header: Access -->
+          <!-- Category: Access -->
           <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
             <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Access Details</td>
           </tr>
@@ -168,15 +202,8 @@ include __DIR__ . '/includes/header.php';
             <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
             <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
           </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Payroll Module</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
 
-          <!-- Category Header: Business -->
+          <!-- Category: Business -->
           <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
             <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Business Parameters</td>
           </tr>
@@ -202,7 +229,7 @@ include __DIR__ . '/includes/header.php';
             <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
           </tr>
 
-          <!-- Category Header: Sales -->
+          <!-- Category: Sales -->
           <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
             <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Sales &amp; Compliance</td>
           </tr>
@@ -249,13 +276,112 @@ include __DIR__ . '/includes/header.php';
             <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
           </tr>
 
-          <!-- Category Header: Inventory -->
+          <!-- Category: Inventory -->
           <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
             <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Inventory Control</td>
           </tr>
           <tr style="border-bottom:1px solid var(--border);">
             <td style="padding:14px 16px;">Warehouse &amp; Stock Sync</td>
             <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">Stock Adjustment</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">Barcode Print &amp; Scan</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+
+          <!-- Category: Purchase -->
+          <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
+            <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Purchase Management</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">Purchase Orders</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">Vendor Management</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+
+          <!-- Category: Compliance -->
+          <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
+            <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;"><?php echo htmlspecialchars($loc['tax_name']); ?> Compliance</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;"><?php echo htmlspecialchars($loc['tax_name']); ?> Report</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">GSTR - 1</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">GSTR - 2</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">GSTR - 3B</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+
+          <!-- Category: Reports -->
+          <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
+            <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Reports &amp; Analytics</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">P &amp; L Report</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">Balance Sheet</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">Item-wise &amp; Batch-wise Reports</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:14px 16px;">Aging Summary &amp; Sales Summary</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
             <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
             <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
             <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
@@ -307,6 +433,16 @@ include __DIR__ . '/includes/header.php';
 
       <div class="faq-item">
         <button class="faq-btn" aria-expanded="false">
+          What's the difference between Monthly and Annual plans?
+          <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer">
+          <p>Both plans give you access to the same features. Annual plans offer significant savings compared to paying monthly. You can switch between monthly and annual billing at any time from your account settings.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
           What payment methods do you accept?
           <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
         </button>
@@ -341,5 +477,93 @@ include __DIR__ . '/includes/header.php';
     </div>
   </div>
 </section>
+
+<!-- Pricing FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the 7-day trial really free with no credit card?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, completely free. No credit card required. All features of the Professional plan are unlocked during your trial."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I switch plans at any time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Upgrade at any time and get access to new features immediately. Downgrades take effect at the next billing cycle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are there any hidden fees or setup charges?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "None at all. No setup fees, no per-transaction charges, no per-invoice fees. Onboarding and training are included free with every plan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between Monthly and Annual plans?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both plans give you access to the same features. Annual plans offer significant savings compared to paying monthly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What payment methods do you accept?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We accept all major credit and debit cards, net banking, UPI, and NEFT/RTGS. All transactions are processed securely through Razorpay."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens to my data if I cancel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your data is yours. You have 30 days to export all invoices, customer data, inventory records, and reports after cancellation."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- Pricing Toggle Script -->
+<script>
+(function(){
+  var toggle = document.getElementById('pricingToggle');
+  var labelMonthly = document.getElementById('toggleMonthly');
+  var labelAnnual = document.getElementById('toggleAnnual');
+  var badge = document.getElementById('annualBadge');
+  if(!toggle) return;
+
+  function updatePricing(isAnnual) {
+    var nums = document.querySelectorAll('.price-num[data-monthly]');
+    var periods = document.querySelectorAll('.price-period[data-monthly]');
+    var notes = document.querySelectorAll('.price-note[data-monthly]');
+    var key = isAnnual ? 'annual' : 'monthly';
+
+    nums.forEach(function(el){ el.textContent = el.getAttribute('data-'+key); });
+    periods.forEach(function(el){ el.textContent = el.getAttribute('data-'+key); });
+    notes.forEach(function(el){ el.textContent = el.getAttribute('data-'+key); });
+
+    labelMonthly.style.color = isAnnual ? 'var(--text-muted)' : 'var(--text)';
+    labelAnnual.style.color = isAnnual ? 'var(--text)' : 'var(--text-muted)';
+    badge.style.opacity = isAnnual ? '1' : '0';
+  }
+
+  toggle.addEventListener('change', function(){ updatePricing(this.checked); });
+  labelMonthly.addEventListener('click', function(){ toggle.checked = false; updatePricing(false); });
+  labelAnnual.addEventListener('click', function(){ toggle.checked = true; updatePricing(true); });
+})();
+</script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /vendor/
+Disallow: /api/
+Disallow: /desktop/
+
+Sitemap: https://www.mazerp.com/sitemap.xml

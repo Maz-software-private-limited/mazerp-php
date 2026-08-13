@@ -6,6 +6,15 @@ $is_product_page = in_array($active, $_product_pages);
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TFSXP9BP1R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TFSXP9BP1R');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo htmlspecialchars($seo['title']); ?></title>
@@ -39,7 +48,7 @@ $is_product_page = in_array($active, $_product_pages);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <!-- Site stylesheet -->
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=2.7">
 
 <!-- Schema: SoftwareApplication -->
 <script type="application/ld+json">
@@ -72,7 +81,7 @@ $is_product_page = in_array($active, $_product_pages);
   "@type": "Organization",
   "name": "MAZ Software Solutions",
   "url": "<?php echo SITE_URL; ?>",
-  "logo": "<?php echo LOGO_URL; ?>",
+  "logo": "<?php echo SITE_URL . '/' . LOGO_URL; ?>",
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "<?php echo CONTACT_PHONE; ?>",
@@ -95,7 +104,7 @@ $is_product_page = in_array($active, $_product_pages);
 <!-- Top strip -->
 <div class="top-strip">
   <div class="container strip-inner">
-    <span class="strip-left"><i class="fa-solid fa-bolt"></i> Limited time: Get 3 months free on annual plans. <a href="pricing.php">See pricing</a></span>
+    <span class="strip-left"><i class="fa-solid fa-bolt"></i> Limited time: Get 1 month free on annual plans. <a href="pricing.php">See pricing</a></span>
     <span class="strip-right"><i class="fa-solid fa-phone"></i> <?php echo CONTACT_PHONE; ?></span>
   </div>
 </div>
@@ -136,7 +145,7 @@ $is_product_page = in_array($active, $_product_pages);
               </a>
               <div class="dropdown-menu" role="menu">
                 <?php
-                  $_dm_color_map = ['erp' => 'blue', 'crm' => 'green', 'accounting' => 'amber', 'payroll' => 'purple'];
+                  $_dm_color_map = ['erp' => 'blue', 'crm' => 'green', 'accounting' => 'amber'];
                   foreach ($products_nav as $prod_key => $prod):
                     $_dm_color = $_dm_color_map[$prod_key] ?? 'blue';
                 ?>

@@ -49,6 +49,7 @@
           <li><a href="solutions.php">Solutions</a></li>
           <li><a href="pricing.php">Pricing</a></li>
           <li><a href="about.php">About Us</a></li>
+          <li><a href="blog.php">Blog</a></li>
           <li><a href="contact.php">Contact Us</a></li>
         </ul>
       </div>
@@ -92,7 +93,8 @@
     </div><!-- /.footer-top -->
 
     <div class="footer-bottom">
-      <p>&copy; <?php echo date('Y'); ?> MAZ Software Solutions. All Rights Reserved.</p>
+      <p class="footer-copyright">&copy; <?php echo date('Y'); ?> MAZ Software Solutions. All Rights Reserved.</p>
+      <p class="footer-credit">Made with <i class="fa-solid fa-heart" style="color: var(--rose);"></i> by <a href="https://kasadaratech.in" target="_blank" style="color: inherit; text-decoration: underline;">kasadaratech.in</a></p>
       <div class="footer-legal">
         <a href="terms-of-service.php">Terms of Service</a>
         <a href="privacy-policy.php">Privacy Policy</a>
