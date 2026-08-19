@@ -74,11 +74,19 @@ include __DIR__ . '/includes/header.php';
   var form = document.getElementById('crmDemoForm');
   var msg = document.getElementById('formMsg');
   var btn = document.getElementById('submitBtn');
-  var btnLabel = btn ? btn.innerHTML : '';
   if (!form || !btn) return;
+
+  function setError(id, errId, text) {
+    var el = document.getElementById(id);
+    var err = document.getElementById(errId);
+    if (!el || !err) return;
+    err.textContent = text || '';
+    err.classList.toggle('is-visible', !!text);
+    el.classList.toggle('is-invalid', !!text);
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    form.querySelectorAll('.form-error').forEach(function (el) { el.textContent = ''; });
     msg.textContent = '';
     msg.className = 'form-msg';
     var valid = true;
@@ -90,28 +98,33 @@ include __DIR__ . '/includes/header.php';
       { id: 'f-business', err: 'err-business', msg: 'Please select your business type.' }
     ].forEach(function (f) {
       var el = document.getElementById(f.id);
-      if (!el.value.trim()) {
-        document.getElementById(f.err).textContent = f.msg;
-        valid = false;
-      }
+      var bad = !el || !el.value.trim();
+      setError(f.id, f.err, bad ? f.msg : '');
+      if (bad) valid = false;
     });
     if (!valid) return;
+
     btn.disabled = true;
-    btn.innerHTML = 'Sending...';
+    btn.classList.add('is-loading');
+    btn.setAttribute('aria-busy', 'true');
+
     fetch(form.action, { method: 'POST', body: new FormData(form) })
       .then(function (res) { return res.json(); })
       .then(function (data) {
-        msg.className = 'form-msg ' + (data.success ? 'form-msg--success' : 'form-msg--error');
-        msg.textContent = data.success ? 'Thanks! We will call within one business hour to confirm your demo.' : (data.message || 'Something went wrong.');
+        msg.className = 'form-msg is-visible ' + (data.success ? 'form-msg--success' : 'form-msg--error');
+        msg.textContent = data.success
+          ? 'Thanks! We will call within one business hour to confirm your demo.'
+          : (data.message || 'Something went wrong.');
         if (data.success) form.reset();
       })
       .catch(function () {
-        msg.className = 'form-msg form-msg--error';
+        msg.className = 'form-msg is-visible form-msg--error';
         msg.textContent = 'Could not send. Please call <?php echo htmlspecialchars(CONTACT_PHONE); ?>.';
       })
       .finally(function () {
         btn.disabled = false;
-        btn.innerHTML = btnLabel;
+        btn.classList.remove('is-loading');
+        btn.removeAttribute('aria-busy');
       });
   });
 })();

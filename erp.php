@@ -322,7 +322,7 @@ include __DIR__ . '/includes/header.php';
         <div class="pc-icon-green"><i class="fa-solid fa-users"></i></div>
         <h3>CRM</h3>
         <p>Complete customer profiles, loyalty programs, sales pipeline tracking, and automated follow-up reminders.</p>
-        <a href="crm/" class="pc-link">Explore CRM <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="crm.php" class="pc-link">Explore CRM <i class="fa-solid fa-arrow-right"></i></a>
       </div>
       <div class="product-card reveal">
         <div class="pc-icon-amber"><i class="fa-solid fa-calculator"></i></div>

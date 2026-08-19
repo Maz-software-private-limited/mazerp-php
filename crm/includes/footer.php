@@ -95,5 +95,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo CRM_LOCAL_ASSET_BASE; ?>/js/crm-motion.js?v=1.1"></script>
 </body>
 </html>

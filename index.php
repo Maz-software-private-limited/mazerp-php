@@ -139,7 +139,7 @@ include __DIR__ . '/includes/header.php';
           <li><i class="fa-solid fa-check" style="color:var(--emerald);"></i> Payment reminders</li>
           <li><i class="fa-solid fa-check" style="color:var(--emerald);"></i> Loyalty programs</li>
         </ul>
-        <a href="crm/" class="pc-link">Explore CRM <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="features.php#crm" class="pc-link">Explore CRM <i class="fa-solid fa-arrow-right"></i></a>
       </div>
 
       <!-- Accounting -->
@@ -437,7 +437,7 @@ include __DIR__ . '/includes/header.php';
           <li><i class="fa-solid fa-check" style="color:var(--emerald);"></i> Customer profile &amp; credit ledger</li>
           <li><i class="fa-solid fa-check" style="color:var(--emerald);"></i> Pipeline &amp; lead tracking</li>
         </ul>
-        <a href="crm/" class="pc-link">Explore CRM <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="crm.php" class="pc-link">Explore CRM <i class="fa-solid fa-arrow-right"></i></a>
       </div>
 
       <!-- Accounting -->

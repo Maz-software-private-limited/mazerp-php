@@ -59,7 +59,7 @@
         <h3>Products</h3>
         <ul>
           <li><a href="erp.php"><i class="fa-solid fa-layer-group"></i> ERP</a></li>
-          <li><a href="crm/"><i class="fa-solid fa-users"></i> CRM</a></li>
+          <li><a href="crm.php"><i class="fa-solid fa-users"></i> CRM</a></li>
           <li><a href="accounting.php"><i class="fa-solid fa-calculator"></i> Accounting</a></li>
         </ul>
       </div>

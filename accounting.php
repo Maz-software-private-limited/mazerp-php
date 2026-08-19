@@ -381,7 +381,7 @@ include __DIR__ . '/includes/header.php';
         <div class="pc-icon-green"><i class="fa-solid fa-users"></i></div>
         <h3>CRM</h3>
         <p>Customer profiles, loyalty programs, and sales pipelines — outstanding balances sync directly with accounting receivables.</p>
-        <a href="crm/" class="pc-link">Explore CRM <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="crm.php" class="pc-link">Explore CRM <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>

@@ -20,6 +20,7 @@ $url = $mockup_url ?? 'app.mazerp.com/crm/leads';
         <h4>Leads</h4>
         <span class="crm-mockup-pill">128 active</span>
       </div>
+      <div class="crm-table-wrap">
       <table class="crm-table">
         <thead>
           <tr>
@@ -68,6 +69,7 @@ $url = $mockup_url ?? 'app.mazerp.com/crm/leads';
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
   </div>
 </div>
