@@ -1,568 +1,495 @@
 <?php
 require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/catalog-pricing.php';
 include __DIR__ . '/includes/header.php';
+
+$catalog = mazerp_fetch_app_pricing_catalog();
+
+$plan_meta = [];
+$seen_plans = [];
+foreach ($catalog['apps'] as $row) {
+    foreach ($row['prices'] as $price) {
+        $pid = (int) $price['plan_id'];
+        if (isset($seen_plans[$pid])) {
+            continue;
+        }
+        $seen_plans[$pid] = true;
+        $plan_meta[] = [
+            'id'      => $pid,
+            'code'    => (string) ($price['plan_code'] ?? ''),
+            'name'    => (string) ($price['plan_name'] ?? 'Plan'),
+            'blurb'   => (string) ($price['short_description'] ?? ''),
+            'popular' => !empty($price['is_popular']),
+            'sort'    => (int) ($price['sort_order'] ?? 0),
+        ];
+    }
+}
+usort($plan_meta, function ($a, $b) {
+    return $a['sort'] <=> $b['sort'] ?: $a['id'] <=> $b['id'];
+});
+
+$app_copy = [
+    'books' => [
+        'name' => 'Books',
+        'desc' => 'Accounting, inventory, sales, and purchases',
+        'url'  => 'erp.php',
+        'icon' => 'fa-book-open',
+        'tone' => 'blue',
+        'features' => [
+            2 => ['GST billing', 'Inventory', 'Sales and purchases'],
+            3 => ['1 branch', 'E-Way Bill', 'Barcode'],
+            6 => ['POS', 'E-invoicing', '3 users, 3 branches'],
+            4 => ['Unlimited invoices', 'Unlimited e-invoicing', '5 users, 5 branches'],
+        ],
+        'compare' => [
+            ['label' => 'GST billing', 'cells' => [2 => true, 3 => true, 6 => true, 4 => true]],
+            ['label' => 'Inventory', 'cells' => [2 => true, 3 => true, 6 => true, 4 => true]],
+            ['label' => 'Branches', 'cells' => [2 => '1 organisation', 3 => '1 branch', 6 => '3 branches', 4 => '5 branches']],
+            ['label' => 'E-Way Bill', 'cells' => [2 => false, 3 => true, 6 => true, 4 => true]],
+            ['label' => 'Barcode', 'cells' => [2 => false, 3 => true, 6 => true, 4 => true]],
+            ['label' => 'POS', 'cells' => [2 => false, 3 => false, 6 => true, 4 => true]],
+            ['label' => 'E-invoicing', 'cells' => [2 => false, 3 => false, 6 => true, 4 => 'Unlimited']],
+            ['label' => 'Invoices', 'cells' => [2 => 'GST billing', 3 => 'E-Way Bill', 6 => 'POS + e-invoice', 4 => 'Unlimited']],
+            ['label' => 'Users', 'cells' => [2 => '1 user', 3 => '1 user', 6 => '3 users', 4 => '5 users']],
+        ],
+    ],
+    'crm' => [
+        'name' => 'CRM',
+        'desc' => 'Leads, deals, and customer follow-up',
+        'url'  => 'crm.php',
+        'icon' => 'fa-users',
+        'tone' => 'green',
+        'features' => [
+            2 => ['Lead management', 'Follow-ups', 'Basic reports'],
+            3 => ['Sales pipeline', 'Tasks', '2,000 contacts'],
+            6 => ['Automation', '10,000 contacts', '5 users'],
+            4 => ['Unlimited contacts', 'Roles', 'API access'],
+        ],
+        'compare' => [
+            ['label' => 'Lead management', 'cells' => [2 => true, 3 => true, 6 => true, 4 => true]],
+            ['label' => 'Follow-ups', 'cells' => [2 => true, 3 => true, 6 => true, 4 => true]],
+            ['label' => 'Sales pipeline', 'cells' => [2 => false, 3 => true, 6 => true, 4 => true]],
+            ['label' => 'Contacts', 'cells' => [2 => 'Starter', 3 => '2,000', 6 => '10,000', 4 => 'Unlimited']],
+            ['label' => 'Users', 'cells' => [2 => '1 user', 3 => '2 users', 6 => '5 users', 4 => 'Unlimited']],
+            ['label' => 'Automation', 'cells' => [2 => false, 3 => false, 6 => true, 4 => true]],
+            ['label' => 'Roles', 'cells' => [2 => false, 3 => false, 6 => false, 4 => true]],
+            ['label' => 'API access', 'cells' => [2 => false, 3 => false, 6 => false, 4 => true]],
+        ],
+    ],
+    'timex' => [
+        'name' => 'Timex',
+        'desc' => 'Attendance, shifts, and workforce time',
+        'url'  => 'timex.php',
+        'icon' => 'fa-clock',
+        'tone' => 'amber',
+        'features' => [
+            2 => ['Daily attendance', 'Basic shifts', 'One branch'],
+            3 => ['Shift patterns', 'Manager review', 'Multi-branch'],
+            6 => ['Branch-aware hours', 'Priority support', 'Exports'],
+            4 => ['Full workforce time', 'Named support', 'Custom onboarding'],
+        ],
+        'compare' => [
+            ['label' => 'Daily attendance', 'cells' => [2 => true, 3 => true, 6 => true, 4 => true]],
+            ['label' => 'Shifts', 'cells' => [2 => 'Basic', 3 => 'Patterns', 6 => 'Branch-aware', 4 => 'Full workforce']],
+            ['label' => 'Branches', 'cells' => [2 => 'One branch', 3 => 'Multi-branch', 6 => 'Multi-branch', 4 => 'Multi-branch']],
+            ['label' => 'Manager review', 'cells' => [2 => false, 3 => true, 6 => true, 4 => true]],
+            ['label' => 'Exports', 'cells' => [2 => false, 3 => true, 6 => true, 4 => true]],
+            ['label' => 'Support', 'cells' => [2 => 'Email', 3 => 'Email', 6 => 'Priority', 4 => 'Named']],
+        ],
+    ],
+];
+
+$apps = [];
+$order = [];
+foreach ($catalog['apps'] as $row) {
+    $code = (string) ($row['app_code'] ?? '');
+    if ($code === '' || !isset($app_copy[$code])) {
+        continue;
+    }
+    $copy = $app_copy[$code];
+    $prices = mazerp_catalog_price_map($row['prices'] ?? []);
+    if (!$prices) {
+        continue;
+    }
+    $order[] = $code;
+    $apps[$code] = [
+        'name'     => (string) ($row['app_name'] ?: $copy['name']),
+        'desc'     => (string) (($row['short_description'] ?? '') ?: $copy['desc']),
+        'url'      => $copy['url'],
+        'icon'     => $copy['icon'],
+        'tone'     => $copy['tone'],
+        'from'     => mazerp_catalog_lowest_monthly($row['prices'] ?? []),
+        'features' => $copy['features'],
+        'compare'  => $copy['compare'],
+        'prices'   => $prices,
+    ];
+}
+
+$payload = json_encode([
+    'plans'       => $plan_meta,
+    'order'       => $order,
+    'apps'        => $apps,
+    'registerUrl' => PORTAL_APP_URL . '/auth/register',
+], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP);
 ?>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <div class="container reveal">
-    <span class="label"><i class="fa-solid fa-tag"></i> Pricing Plans</span>
-    <h1>Simple, transparent pricing</h1>
-    <p>No hidden fees. Cancel anytime. Free 7-day trial on every plan — no credit card required.</p>
-  </div>
-</section>
+<div class="pv3-page">
 
-<!-- PRICING TOGGLE + CARDS -->
-<section style="padding:var(--sp) 0;">
+<section class="pv3-stage">
   <div class="container">
-
-    <!-- Monthly / Annual Toggle -->
-    <div class="pricing-toggle-wrap reveal" style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:40px;">
-      <span class="toggle-label" id="toggleMonthly" style="font-weight:600;font-size:0.95rem;color:var(--text);cursor:pointer;">Monthly</span>
-      <label class="pricing-switch" aria-label="Toggle between monthly and annual pricing">
-        <input type="checkbox" id="pricingToggle">
-        <span class="pricing-slider"></span>
-      </label>
-      <span class="toggle-label" id="toggleAnnual" style="font-weight:600;font-size:0.95rem;color:var(--text-muted);cursor:pointer;">Annual</span>
-      <span class="annual-badge" id="annualBadge" style="background:var(--emerald);color:#fff;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:var(--r-full);opacity:0;transition:opacity 0.3s;">SAVE MORE</span>
+    <div class="pv3-head">
+      <p class="pv3-step">Step 1 · Mix</p>
+      <h1>Build a workspace, then pick a plan</h1>
+      <p>All in one is on by default. Switch an app off if you only need some of them. Global is included at ₹0.</p>
     </div>
 
-    <div class="pricing-grid">
-
-      <!-- Basic -->
-      <div class="price-card reveal">
-        <h2 class="pc-name" style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:8px;">Basic</h2>
-        <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.5;min-height:48px;">Essential tools to manage your business operations with ease</p>
-        <div class="price-amount" style="margin:16px 0 8px;display:flex;align-items:baseline;gap:4px;">
-          <span class="price-num" data-monthly="<?php echo htmlspecialchars($loc['pricing_basic']); ?>" data-annual="<?php echo htmlspecialchars($loc['pricing_basic_annual']); ?>" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_basic']); ?></span>
-          <span class="price-period" data-monthly="/month" data-annual="/year" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
-        </div>
-        <p class="price-note" data-monthly="Regularly <?php echo htmlspecialchars($loc['pricing_basic_orig']); ?>/mo" data-annual="Regularly <?php echo htmlspecialchars($loc['pricing_basic_annual_orig']); ?>/yr" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_basic_orig']); ?>/mo</p>
-        <a href="https://app.mazerp.com/auth/register" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;margin-bottom:20px;">Start Free Trial</a>
-        
-        <div style="border-top:1.5px solid var(--border);padding-top:20px;">
-          <ul class="price-feats" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;font-size:0.875rem;">
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage: 1 Business</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> 1 User Access</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Billing &amp; Accounting</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> <?php echo htmlspecialchars($loc['tax_name']); ?> Filing + Report</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> All Accounting Reports</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Standard -->
-      <div class="price-card reveal">
-        <h2 class="pc-name" style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:8px;">Standard</h2>
-        <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.5;min-height:48px;">Smart features for growing businesses and daily efficiency</p>
-        <div class="price-amount" style="margin:16px 0 8px;display:flex;align-items:baseline;gap:4px;">
-          <span class="price-num" data-monthly="<?php echo htmlspecialchars($loc['pricing_std']); ?>" data-annual="<?php echo htmlspecialchars($loc['pricing_std_annual']); ?>" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_std']); ?></span>
-          <span class="price-period" data-monthly="/month" data-annual="/year" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
-        </div>
-        <p class="price-note" data-monthly="Regularly <?php echo htmlspecialchars($loc['pricing_std_orig']); ?>/mo" data-annual="Regularly <?php echo htmlspecialchars($loc['pricing_std_annual_orig']); ?>/yr" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_std_orig']); ?>/mo</p>
-        <a href="https://app.mazerp.com/auth/register" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;margin-bottom:20px;">Start Free Trial</a>
-        
-        <div style="border-top:1.5px solid var(--border);padding-top:20px;">
-          <ul class="price-feats" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;font-size:0.875rem;">
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage: 1 Business</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> 1 User Access</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Access to ERP + CRM</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage 1 Branch</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> E-Way Bill</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Barcode Gen + Scan</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Professional (Featured) -->
-      <div class="price-card featured reveal">
-        <span class="price-popular" style="background:var(--blue);color:#ffffff;font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:var(--r-full);position:absolute;top:16px;right:16px;text-transform:uppercase;">Popular</span>
-        <h2 class="pc-name" style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:8px;">Professional</h2>
-        <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.5;min-height:48px;">Advanced business management with powerful automation tools</p>
-        <div class="price-amount" style="margin:16px 0 8px;display:flex;align-items:baseline;gap:4px;">
-          <span class="price-num" data-monthly="<?php echo htmlspecialchars($loc['pricing_prof']); ?>" data-annual="<?php echo htmlspecialchars($loc['pricing_prof_annual']); ?>" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_prof']); ?></span>
-          <span class="price-period" data-monthly="/month" data-annual="/year" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
-        </div>
-        <p class="price-note" data-monthly="Regularly <?php echo htmlspecialchars($loc['pricing_prof_orig']); ?>/mo" data-annual="Regularly <?php echo htmlspecialchars($loc['pricing_prof_annual_orig']); ?>/yr" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_prof_orig']); ?>/mo</p>
-        <a href="https://app.mazerp.com/auth/register" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-bottom:20px;">Start Free Trial</a>
-        
-        <div style="border-top:1.5px solid var(--border);padding-top:20px;">
-          <ul class="price-feats" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;font-size:0.875rem;">
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage: 1 Business</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> 3 User Access</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Access to ERP + CRM</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage 3 Branches</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Access to POS</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> E-Invoicing</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> E-Way Bill</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Premium -->
-      <div class="price-card reveal">
-        <h2 class="pc-name" style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:8px;">Premium</h2>
-        <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.5;min-height:48px;">All-in-one advanced platform built for high-performance businesses</p>
-        <div class="price-amount" style="margin:16px 0 8px;display:flex;align-items:baseline;gap:4px;">
-          <span class="price-num" data-monthly="<?php echo htmlspecialchars($loc['pricing_prem']); ?>" data-annual="<?php echo htmlspecialchars($loc['pricing_prem_annual']); ?>" style="font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;"><?php echo htmlspecialchars($loc['pricing_prem']); ?></span>
-          <span class="price-period" data-monthly="/month" data-annual="/year" style="color:var(--text-muted);font-size:0.875rem;">/month</span>
-        </div>
-        <p class="price-note" data-monthly="Regularly <?php echo htmlspecialchars($loc['pricing_prem_orig']); ?>/mo" data-annual="Regularly <?php echo htmlspecialchars($loc['pricing_prem_annual_orig']); ?>/yr" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;text-decoration:line-through;">Regularly <?php echo htmlspecialchars($loc['pricing_prem_orig']); ?>/mo</p>
-        <a href="https://app.mazerp.com/auth/register" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;margin-bottom:20px;">Start Free Trial</a>
-        
-        <div style="border-top:1.5px solid var(--border);padding-top:20px;">
-          <ul class="price-feats" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;font-size:0.875rem;">
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage: 1 Business</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> 5 User Access</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Access to ERP + CRM</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Sales Invoice: Unlimited</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Purchase Invoice: Unlimited</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Manage 5 Branches</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> E-Way Bill: Unlimited</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> E-Invoicing: Unlimited</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Enterprise -->
-      <div class="price-card price-card-enterprise reveal">
-        <h2 class="pc-name" style="font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:8px;">Enterprise</h2>
-        <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.5;min-height:48px;">Let's talk to our team to build your customised business management tool</p>
-        <div class="price-amount" style="margin:16px 0 8px;">
-          <span style="font-size:1.8rem;font-weight:800;color:var(--text);line-height:1;">Let's Talk</span>
-        </div>
-        <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;">Custom pricing for your needs</p>
-        <a href="contact.php" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;margin-bottom:20px;">Contact Sales</a>
-        
-        <div style="border-top:1.5px solid var(--border);padding-top:20px;">
-          <ul class="price-feats" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;font-size:0.875rem;">
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Fully customisable</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Unlimited users &amp; branches</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Dedicated account manager</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Priority support &amp; SLA</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> Custom integrations</li>
-            <li><i class="fa-solid fa-circle-check" style="color:var(--blue);margin-right:8px;"></i> On-premise option available</li>
-          </ul>
-        </div>
-      </div>
-
+        <div class="pv3-mixer" role="group" aria-label="Apps in this quote">
+      <?php foreach ($apps as $code => $app): ?>
+      <button type="button"
+        class="pv3-tile pv3-tile--<?php echo htmlspecialchars($app['tone']); ?> is-on"
+        data-app="<?php echo htmlspecialchars($code); ?>"
+        aria-pressed="true">
+        <span class="pv3-tile-top">
+          <span class="pv3-tile-icon" aria-hidden="true"><i class="fa-solid <?php echo htmlspecialchars($app['icon']); ?>"></i></span>
+          <span class="pv3-switch" aria-hidden="true"><span></span></span>
+        </span>
+        <strong><?php echo htmlspecialchars($app['name']); ?></strong>
+        <span class="pv3-tile-desc"><?php echo htmlspecialchars($app['desc']); ?></span>
+        <span class="pv3-tile-from">from ₹<?php echo number_format((int) $app['from']); ?>/mo</span>
+      </button>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>
 
-<!-- COMPARISON TABLE -->
-<section class="bg-subtle" style="padding:var(--sp) 0;">
+<section class="pv3-plans-wrap" id="pv3Plans">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="label"><i class="fa-solid fa-table"></i> Compare Plans</span>
-      <h2>Detailed Feature Comparison Matrix</h2>
-      <p>Compare our packages and select the plan that matches your business scale and compliance requirements.</p>
+    <div class="pv3-plans-bar">
+      <div>
+        <p class="pv3-step">Step 2 · Plan</p>
+        <h2 id="pv3Lead">All in one</h2>
+        <p class="pv3-pick-hint">Select a plan to continue. Tick Add to compare on two plans, then Compare.</p>
+      </div>
+      <div class="pv3-cycle" role="group" aria-label="Billing cycle">
+        <button type="button" class="is-on" id="pv3Monthly">Monthly</button>
+        <button type="button" id="pv3Annual">Annual <em>save ~8%</em></button>
+      </div>
     </div>
-    
-    <div class="compare-wrap reveal">
-      <table class="compare-tbl" style="width:100%;border-collapse:collapse;text-align:left;">
-        <thead>
-          <tr style="border-bottom:2px solid var(--border);">
-            <th style="padding:16px;font-weight:700;">Features &amp; Capabilities</th>
-            <th style="padding:16px;text-align:center;font-weight:700;">Basic</th>
-            <th style="padding:16px;text-align:center;font-weight:700;">Standard</th>
-            <th style="padding:16px;text-align:center;font-weight:700;background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);">Professional</th>
-            <th style="padding:16px;text-align:center;font-weight:700;">Premium</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Category: Access -->
-          <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
-            <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Access Details</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Multi-Device Access</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">ERP Modules</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">CRM Modules</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
 
-          <!-- Category: Business -->
-          <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
-            <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Business Parameters</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Multi-Organisation Management</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Multi-User Support</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Multi-Branch Mapping</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-
-          <!-- Category: Sales -->
-          <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
-            <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Sales &amp; Compliance</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Invoices / Year</td>
-            <td style="padding:14px 16px;text-align:center;">2,000 / Year</td>
-            <td style="padding:14px 16px;text-align:center;">5,000 / Year</td>
-            <td style="padding:14px 16px;text-align:center;background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);">10,000 / Year</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);font-weight:600;">Unlimited</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Estimates &amp; Quotes</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Thermal Print Support</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">E-Way Bill Generation</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i> (100/Yr)</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i> (200/Yr)</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);font-weight:600;">Unlimited</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">E-Invoicing Compliance</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i> (200/Yr)</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);font-weight:600;">Unlimited</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Integrated POS System</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-
-          <!-- Category: Inventory -->
-          <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
-            <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Inventory Control</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Warehouse &amp; Stock Sync</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Stock Adjustment</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Barcode Print &amp; Scan</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--rose);"><i class="fa-solid fa-xmark"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-
-          <!-- Category: Purchase -->
-          <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
-            <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Purchase Management</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Purchase Orders</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Vendor Management</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-
-          <!-- Category: Compliance -->
-          <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
-            <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;"><?php echo htmlspecialchars($loc['tax_name']); ?> Compliance</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;"><?php echo htmlspecialchars($loc['tax_name']); ?> Report</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">GSTR - 1</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">GSTR - 2</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">GSTR - 3B</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-
-          <!-- Category: Reports -->
-          <tr style="background:rgba(37,99,235,0.06);font-weight:700;">
-            <td colspan="5" style="padding:12px 16px;font-size:0.875rem;color:var(--blue-dark);text-transform:uppercase;letter-spacing:0.05em;">Reports &amp; Analytics</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">P &amp; L Report</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Balance Sheet</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Item-wise &amp; Batch-wise Reports</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:14px 16px;">Aging Summary &amp; Sales Summary</td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);background:rgba(37,99,235,0.03);border-left:1px dashed var(--blue-100);border-right:1px dashed var(--blue-100);"><i class="fa-solid fa-check"></i></td>
-            <td style="padding:14px 16px;text-align:center;color:var(--emerald);"><i class="fa-solid fa-check"></i></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="pv3-grid" id="pv3Grid"></div>
+    <p class="pv3-footnote">Tick <strong>Add to compare</strong> on two or more plans, then open Compare. Global is included at ₹0.</p>
   </div>
 </section>
 
-<!-- PRICING FAQ -->
-<section style="padding:var(--sp) 0;">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="label"><i class="fa-solid fa-circle-question"></i> Pricing FAQ</span>
-      <h2>Common questions about billing and plans</h2>
-    </div>
-    <div class="faq-wrap reveal">
+<div class="pv3-cmp-bar" id="pv3CmpBar" hidden>
+  <span id="pv3CmpCount">0 plans</span>
+  <button type="button" class="btn btn-primary" id="pv3CmpOpen" disabled>Compare</button>
+  <button type="button" class="btn btn-ghost" id="pv3CmpClear">Clear</button>
+</div>
 
-      <div class="faq-item">
-        <button class="faq-btn" aria-expanded="false">
-          Is the 7-day trial really free with no credit card?
-          <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
-        </button>
-        <div class="faq-answer">
-          <p>Yes, completely free. No credit card required, no payment details needed. All features of the Professional plan are unlocked during your trial. At the end of 7 days you can choose a plan or your account simply pauses — we never charge without your permission.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-btn" aria-expanded="false">
-          Can I switch plans at any time?
-          <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
-        </button>
-        <div class="faq-answer">
-          <p>Yes. Upgrade at any time and get access to new features immediately. Downgrades take effect at the next billing cycle. There are no penalties for switching or cancelling.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-btn" aria-expanded="false">
-          Are there any hidden fees or setup charges?
-          <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
-        </button>
-        <div class="faq-answer">
-          <p>None at all. The price you see is the price you pay. There are no setup fees, no per-transaction charges, no per-invoice fees, and no surprise invoices. Onboarding and training are included free with every plan.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-btn" aria-expanded="false">
-          What's the difference between Monthly and Annual plans?
-          <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
-        </button>
-        <div class="faq-answer">
-          <p>Both plans give you access to the same features. Annual plans offer significant savings compared to paying monthly. You can switch between monthly and annual billing at any time from your account settings.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-btn" aria-expanded="false">
-          What payment methods do you accept?
-          <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
-        </button>
-        <div class="faq-answer">
-          <p>We accept all major credit and debit cards, net banking, UPI, and NEFT/RTGS for plans. All transactions are secured and processed securely through Razorpay.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-btn" aria-expanded="false">
-          What happens to my data if I cancel?
-          <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
-        </button>
-        <div class="faq-answer">
-          <p>Your data is yours. If you cancel, you have 30 days to export all your invoices, customer data, inventory records, and reports in standard formats. After that window, data is permanently deleted from our servers.</p>
-        </div>
-      </div>
-
-    </div>
+<div class="modal-overlay pv3-cmp-modal" id="pv3CmpModal" hidden>
+  <div class="modal-back" data-cmp-close></div>
+  <div class="modal-box pv3-cmp-box" role="dialog" aria-modal="true" aria-labelledby="pv3CmpTitle">
+    <button type="button" class="modal-close" data-cmp-close aria-label="Close">&times;</button>
+    <h2 id="pv3CmpTitle">Compare plans</h2>
+    <p class="pv3-pick-hint" id="pv3CmpHint"></p>
+    <div class="pv3-cmp-head" id="pv3CmpHead"></div>
+    <div class="pv3-cmp-table-wrap" id="pv3CmpBody"><p>Loading…</p></div>
   </div>
-</section>
+</div>
 
-<!-- CTA -->
-<section class="bg-subtle" style="padding:60px 0;">
-  <div class="container reveal" style="text-align:center;padding:60px 20px;">
-    <span class="label"><i class="fa-solid fa-rocket"></i> Get Started Today</span>
-    <h2>Start your free 7-day trial — no card needed</h2>
-    <p style="max-width:520px;margin:0 auto 32px;">Join over 10,000 businesses already running on MazERP. Set up in under an hour and start billing on day one.</p>
-    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-      <a href="https://app.mazerp.com/auth/register" class="btn btn-primary btn-xl">Start Free Trial</a>
-      <a href="contact.php" class="btn btn-ghost btn-xl">Talk to Sales</a>
+<div class="pv3-dock" id="pv3Dock" hidden>
+  <div class="container pv3-dock-inner">
+    <div class="pv3-dock-mix" id="pv3DockMix"></div>
+    <div class="pv3-dock-price">
+      <span>Selected</span>
+      <strong id="pv3DockFrom">—</strong>
+      <span id="pv3DockPeriod"></span>
     </div>
+    <a class="btn btn-primary is-disabled" id="pv3DockCta" href="<?php echo htmlspecialchars(PORTAL_APP_URL . '/auth/register'); ?>" aria-disabled="true">Start free trial</a>
   </div>
-</section>
+</div>
 
-<!-- Pricing FAQ Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Is the 7-day trial really free with no credit card?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, completely free. No credit card required. All features of the Professional plan are unlocked during your trial."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can I switch plans at any time?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Upgrade at any time and get access to new features immediately. Downgrades take effect at the next billing cycle."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Are there any hidden fees or setup charges?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "None at all. No setup fees, no per-transaction charges, no per-invoice fees. Onboarding and training are included free with every plan."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What's the difference between Monthly and Annual plans?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Both plans give you access to the same features. Annual plans offer significant savings compared to paying monthly."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What payment methods do you accept?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We accept all major credit and debit cards, net banking, UPI, and NEFT/RTGS. All transactions are processed securely through Razorpay."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What happens to my data if I cancel?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Your data is yours. You have 30 days to export all invoices, customer data, inventory records, and reports after cancellation."
-      }
-    }
-  ]
-}
-</script>
+</div>
 
-<!-- Pricing Toggle Script -->
 <script>
-(function(){
-  var toggle = document.getElementById('pricingToggle');
-  var labelMonthly = document.getElementById('toggleMonthly');
-  var labelAnnual = document.getElementById('toggleAnnual');
-  var badge = document.getElementById('annualBadge');
-  if(!toggle) return;
+(function () {
+  var data = <?php echo $payload; ?>;
+  var order = data.order && data.order.length ? data.order.slice() : Object.keys(data.apps);
+  var names = {};
+  order.forEach(function (code) {
+    names[code] = data.apps[code].name;
+  });
+  var appBtns = document.querySelectorAll('.pv3-tile');
+  var grid = document.getElementById('pv3Grid');
+  var lead = document.getElementById('pv3Lead');
+  var monthlyBtn = document.getElementById('pv3Monthly');
+  var annualBtn = document.getElementById('pv3Annual');
+  var dock = document.getElementById('pv3Dock');
+  var dockMix = document.getElementById('pv3DockMix');
+  var dockFrom = document.getElementById('pv3DockFrom');
+  var dockPeriod = document.getElementById('pv3DockPeriod');
+  var dockCta = document.getElementById('pv3DockCta');
+  var registerBase = data.registerUrl || 'http://localhost:4200/auth/register';
+  var cmpBar = document.getElementById('pv3CmpBar');
+  var cmpCount = document.getElementById('pv3CmpCount');
+  var cmpOpen = document.getElementById('pv3CmpOpen');
+  var cmpClear = document.getElementById('pv3CmpClear');
+  var cmpModal = document.getElementById('pv3CmpModal');
+  var cmpBody = document.getElementById('pv3CmpBody');
+  var cmpHead = document.getElementById('pv3CmpHead');
+  var cmpHint = document.getElementById('pv3CmpHint');
+  var selected = {};
+  order.forEach(function (code) { selected[code] = true; });
+  var annual = false;
+  var selectedPlanId = 0;
+  var compareIds = {};
 
-  function updatePricing(isAnnual) {
-    var nums = document.querySelectorAll('.price-num[data-monthly]');
-    var periods = document.querySelectorAll('.price-period[data-monthly]');
-    var notes = document.querySelectorAll('.price-note[data-monthly]');
-    var key = isAnnual ? 'annual' : 'monthly';
-
-    nums.forEach(function(el){ el.textContent = el.getAttribute('data-'+key); });
-    periods.forEach(function(el){ el.textContent = el.getAttribute('data-'+key); });
-    notes.forEach(function(el){ el.textContent = el.getAttribute('data-'+key); });
-
-    labelMonthly.style.color = isAnnual ? 'var(--text-muted)' : 'var(--text)';
-    labelAnnual.style.color = isAnnual ? 'var(--text)' : 'var(--text-muted)';
-    badge.style.opacity = isAnnual ? '1' : '0';
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
   }
 
-  toggle.addEventListener('change', function(){ updatePricing(this.checked); });
-  labelMonthly.addEventListener('click', function(){ toggle.checked = false; updatePricing(false); });
-  labelAnnual.addEventListener('click', function(){ toggle.checked = true; updatePricing(true); });
+  function inr(n) {
+    return '₹' + Math.round(n).toLocaleString('en-IN');
+  }
+
+  function picked() {
+    return order.filter(function (code) { return selected[code]; });
+  }
+
+  function sumPlan(planId, yearly) {
+    return picked().reduce(function (sum, code) {
+      var row = data.apps[code] && data.apps[code].prices && data.apps[code].prices[planId];
+      if (!row) return sum;
+      return sum + Number(yearly ? row.yearly : row.monthly);
+    }, 0);
+  }
+
+  function compareList() {
+    return data.plans.filter(function (p) { return compareIds[p.id]; }).map(function (p) { return p.id; });
+  }
+
+  function renderCompareBar() {
+    var ids = compareList();
+    var n = ids.length;
+    cmpBar.hidden = n === 0;
+    cmpCount.textContent = n === 1 ? '1 plan' : n + ' plans';
+    cmpOpen.disabled = n < 2;
+  }
+
+  function render() {
+    var list = picked();
+    if (!list.length && order[0]) {
+      selected[order[0]] = true;
+      list = [order[0]];
+    }
+    var n = list.length;
+    var all = n === order.length && n > 1;
+    appBtns.forEach(function (b) {
+      var on = !!selected[b.getAttribute('data-app')];
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    monthlyBtn.classList.toggle('is-on', !annual);
+    annualBtn.classList.toggle('is-on', annual);
+
+    var label = list.map(function (c) { return names[c]; }).join(' + ');
+    if (all) {
+      lead.textContent = 'All in one · each app’s plan, added together';
+    } else if (n === 1) {
+      lead.textContent = names[list[0]] + ' only';
+    } else {
+      lead.textContent = label + ' · each app’s plan, added together';
+    }
+
+    var chosen = data.plans.filter(function (p) { return p.id === selectedPlanId; })[0];
+    dock.hidden = !chosen;
+    document.body.classList.toggle('pv3-has-dock', !!chosen);
+    if (chosen) {
+      dockFrom.textContent = inr(sumPlan(chosen.id, annual));
+      dockPeriod.textContent = (annual ? '/year' : '/month') + ' · ' + chosen.name;
+    }
+    if (dockCta) {
+      if (!chosen || !chosen.code) {
+        dockCta.href = registerBase;
+        dockCta.classList.add('is-disabled');
+        dockCta.setAttribute('aria-disabled', 'true');
+      } else {
+        var qs = new URLSearchParams({
+          plan: String(chosen.code),
+          billing: annual ? 'yearly' : 'monthly',
+          apps: list.join(','),
+        });
+        dockCta.href = registerBase + '?' + qs.toString();
+        dockCta.classList.remove('is-disabled');
+        dockCta.removeAttribute('aria-disabled');
+      }
+    }
+    dockMix.innerHTML = list.map(function (code) {
+      return '<button type="button" class="pv3-chip pv3-chip--' + code + '" data-app="' + esc(code) + '">' + esc(names[code]) + '</button>';
+    }).join('');
+
+    grid.innerHTML = data.plans.map(function (plan) {
+      var total = sumPlan(plan.id, annual);
+      var period = annual ? '/year' : '/month';
+      return (
+        '<article class="pv3-plan' + (plan.popular ? ' is-star' : '') + (plan.id === selectedPlanId ? ' is-picked' : '') +
+          '" data-plan-id="' + plan.id + '">' +
+          (plan.popular ? '<span class="pv3-star">Most teams</span>' : '') +
+          '<h3>' + esc(plan.name) + '</h3>' +
+          '<p class="pv3-plan-blurb">' + esc(plan.blurb || '') + '</p>' +
+          '<p class="pv3-plan-price"><b>' + esc(inr(total)) + '</b><span>' + period + '</span></p>' +
+          '<button type="button" class="pv3-plan-cta" data-select-plan="' + plan.id + '" aria-pressed="' +
+            (plan.id === selectedPlanId ? 'true' : 'false') + '">' +
+            (plan.id === selectedPlanId ? 'Selected' : 'Select plan') + '</button>' +
+          '<label class="pv3-add-cmp"><input type="checkbox" data-compare-plan="' + plan.id + '"' +
+            (compareIds[plan.id] ? ' checked' : '') + '> Add to compare</label>' +
+        '</article>'
+      );
+    }).join('');
+    renderCompareBar();
+  }
+
+  appBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var code = b.getAttribute('data-app');
+      if (selected[code] && picked().length === 1) return;
+      selected[code] = !selected[code];
+      history.replaceState(null, '', picked().length === order.length ? '#all-in-one' : '#' + picked().join(','));
+      render();
+    });
+  });
+  grid.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-select-plan]');
+    if (!btn) return;
+    var id = Number(btn.getAttribute('data-select-plan'));
+    if (!id) return;
+    selectedPlanId = id;
+    render();
+  });
+  grid.addEventListener('change', function (e) {
+    var input = e.target.closest('[data-compare-plan]');
+    if (!input) return;
+    var id = Number(input.getAttribute('data-compare-plan'));
+    if (!id) return;
+    if (input.checked) {
+      if (compareList().length >= 4) {
+        input.checked = false;
+        return;
+      }
+      compareIds[id] = true;
+    } else {
+      delete compareIds[id];
+    }
+    renderCompareBar();
+  });
+  function closeCompareModal() {
+    cmpModal.classList.remove('open');
+    cmpModal.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+  }
+
+  function openCompareModal() {
+    var ids = compareList();
+    if (ids.length < 2) return;
+    cmpHint.textContent = picked().map(function (c) { return names[c]; }).join(' + ');
+    cmpHead.innerHTML = '';
+    cmpBody.innerHTML = '<p>Loading…</p>';
+    cmpModal.removeAttribute('hidden');
+    cmpModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var url = 'catalog-compare.php?plan_ids=' + encodeURIComponent(ids.join(',')) +
+      '&app_codes=' + encodeURIComponent(picked().join(','));
+    fetch(url, { headers: { Accept: 'application/json' } })
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        var pack = json && json.data;
+        if (!pack || !pack.plans) {
+          cmpHead.innerHTML = '';
+          cmpBody.innerHTML = '<p>' + esc(json && json.message ? json.message : 'Compare is unavailable.') + '</p>';
+          return;
+        }
+        var plans = pack.plans;
+        var n = plans.length;
+        var colW = (78 / n).toFixed(4);
+        var cols = '<colgroup><col style="width:22%">' +
+          plans.map(function () { return '<col style="width:' + colW + '%">'; }).join('') +
+          '</colgroup>';
+        cmpHead.innerHTML =
+          '<table class="compare-tbl pv3-cmp-lock">' + cols + '<thead><tr><th>Feature</th>' +
+          plans.map(function (plan) {
+            return '<th>' + esc(plan.plan_name) + '</th>';
+          }).join('') + '</tr></thead></table>';
+        var html = '<table class="compare-tbl pv3-cmp-lock">' + cols + '<tbody>';
+        html += '<tr><td>Price for this mix</td>';
+        html += plans.map(function (plan) {
+          return '<td><strong>' + esc(inr(sumPlan(plan.id, annual))) + '</strong> ' +
+            (annual ? '/year' : '/month') + '</td>';
+        }).join('') + '</tr>';
+        (pack.groups || []).forEach(function (group) {
+          html += '<tr class="pv3-cmp-group"><td colspan="' + (plans.length + 1) + '">' + esc(group.name) + '</td></tr>';
+          (group.rows || []).forEach(function (row) {
+            html += '<tr><td>' + esc(row.name) + '</td>';
+            plans.forEach(function (plan) {
+              var cell = (row.cells || {})[plan.id] || (row.cells || {})[String(plan.id)] || { included: false, text: '—' };
+              if (!cell.included) {
+                html += '<td><span class="no">—</span></td>';
+              } else if (cell.text === 'Yes') {
+                html += '<td><span class="yes">Yes</span></td>';
+              } else {
+                html += '<td>' + esc(cell.text || 'Yes') + '</td>';
+              }
+            });
+            html += '</tr>';
+          });
+        });
+        html += '</tbody></table>';
+        cmpBody.innerHTML = html;
+        cmpBody.onscroll = function () {
+          cmpHead.scrollLeft = cmpBody.scrollLeft;
+        };
+      })
+      .catch(function () {
+        cmpHead.innerHTML = '';
+        cmpBody.innerHTML = '<p>Compare is unavailable right now.</p>';
+      });
+  }
+
+  cmpOpen.addEventListener('click', openCompareModal);
+  cmpClear.addEventListener('click', function () {
+    compareIds = {};
+    render();
+  });
+  cmpModal.querySelectorAll('[data-cmp-close]').forEach(function (el) {
+    el.addEventListener('click', closeCompareModal);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && cmpModal.classList.contains('open')) closeCompareModal();
+  });
+  dockMix.addEventListener('click', function (e) {
+    var chip = e.target.closest('[data-app]');
+    if (!chip) return;
+    var code = chip.getAttribute('data-app');
+    if (selected[code] && picked().length === 1) return;
+    selected[code] = !selected[code];
+    history.replaceState(null, '', picked().length === order.length ? '#all-in-one' : '#' + picked().join(','));
+    render();
+  });
+  monthlyBtn.addEventListener('click', function () { annual = false; render(); });
+  annualBtn.addEventListener('click', function () { annual = true; render(); });
+
+  var hash = (location.hash || '').replace('#', '');
+  if (hash && hash !== 'all-in-one' && hash !== 'aio' && hash !== 'compare') {
+    var bits = hash.split(',');
+    var known = bits.filter(function (c) { return !!data.apps[c]; });
+    if (known.length) {
+      order.forEach(function (c) { selected[c] = false; });
+      known.forEach(function (c) { selected[c] = true; });
+    }
+  }
+  render();
 })();
 </script>
 
