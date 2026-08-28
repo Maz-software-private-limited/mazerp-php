@@ -36,7 +36,7 @@ include __DIR__ . '/includes/header.php';
       
       <!-- Hero Image -->
       <div class="post-hero-image-wrapper">
-        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=675&fit=crop&q=80" alt="Laptop showing analytical dashboard charts and sales data" width="1200" height="675">
+        <img src="assets/img/blog-understanding-retail-analytics.jpg" alt="Laptop showing analytical dashboard charts and sales data" width="1200" height="675">
       </div>
 
       <!-- Content Body -->
@@ -120,7 +120,7 @@ function copyPostLink() {
   },
   "headline": "Understanding Retail Analytics: 3 Reports You Must Run Every Week",
   "description": "Maximize your shop profits. Learn about the 3 retail analytics reports to track weekly: sales by item, customer behavior, and supplier lead times.",
-  "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=675&fit=crop&q=80",  
+  "image": "https://www.mazerp.com/assets/img/blog-understanding-retail-analytics.jpg",  
   "author": {
     "@type": "Organization",
     "name": "MazERP Team",

@@ -48,7 +48,7 @@ $is_product_page = in_array($active, $_product_pages);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <!-- Site stylesheet -->
-<link rel="stylesheet" href="assets/css/style.css?v=2.7">
+<link rel="stylesheet" href="assets/css/style.css?v=3.0">
 
 <!-- Schema: SoftwareApplication -->
 <script type="application/ld+json">

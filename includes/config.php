@@ -218,13 +218,13 @@ $page_seo = [
         'title'       => '5 Common GST Invoicing Mistakes Indian Businesses Make | MazERP',
         'description'  => 'Avoid expensive tax penalties and mismatches. Discover the top 5 GST invoicing errors Indian retailers and wholesalers make and how to format CGST, SGST, and IGST invoices.',
         'keywords'     => 'GST invoicing mistakes, CGST SGST IGST invoice format, GST billing software India, tax invoice compliance, GST audit errors',
-        'og_image'     => 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=675&fit=crop&q=80',
+        'og_image'     => SITE_URL . '/assets/img/blog-5-common-gst-invoicing-mistakes.jpg',
     ],
     'blog-how-cloud-erp-helps-manage-multiple-stores' => [
         'title'       => 'Manage Multiple Retail Stores Remotely with Cloud ERP | MazERP',
         'description'  => 'Find out how cloud-based ERP software helps Indian retail owners track sales, manage inventory transfers, and monitor cashier shifts across branches remotely.',
         'keywords'     => 'multi-store ERP, remote retail management, retail billing software, warehouse stock transfer, cloud POS India',
-        'og_image'     => 'https://images.unsplash.com/photo-1563013544-824ae1d704d3?w=1200&h=675&fit=crop&q=80',
+        'og_image'     => SITE_URL . '/assets/img/blog-how-cloud-erp-helps-manage-multiple-stores.jpg',
     ],
     'blog-how-erp-simplifies-accounting' => [
         'title'       => 'How ERP Simplifies Accounting for Indian Businesses | MAZ ERP',
@@ -266,7 +266,19 @@ $page_seo = [
         'title'       => '3 Critical Retail Analytics Reports to Run Weekly | MazERP',
         'description'  => 'Maximize your shop profits. Learn about the 3 retail analytics reports to track weekly: sales by item, customer behavior, and supplier lead times.',
         'keywords'     => 'retail analytics, weekly sales reports, inventory turnover, customer purchase history, retail business intelligence',
-        'og_image'     => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=675&fit=crop&q=80',
+        'og_image'     => SITE_URL . '/assets/img/blog-understanding-retail-analytics.jpg',
+    ],
+    'blog-10-signs-outgrown-manual-billing-accounting' => [
+        'title'       => '10 Signs Your Business Has Outgrown Manual Billing & Accounting | MazERP',
+        'description'  => 'Discover 10 signs your business has outgrown manual billing and accounting, and learn how ERP and billing software can improve accuracy, efficiency, and growth.',
+        'keywords'     => 'GST billing and accounting, manual billing, ERP software, billing software India, outgrown manual accounting',
+        'og_image'     => SITE_URL . '/assets/img/blog-10-signs-outgrown-manual-billing-accounting.jpg',
+    ],
+    'blog-erp-vs-excel' => [
+        'title'       => 'ERP vs Excel: Which Is Better for Business in 2026? | MazERP',
+        'description'  => 'ERP vs Excel - which is better for managing your business in 2026? Compare features, automation, inventory, accounting, GST and business reporting.',
+        'keywords'     => 'ERP vs Excel, ERP software India, Excel alternative, cloud ERP SME, business management software',
+        'og_image'     => SITE_URL . '/assets/img/blog-erp-vs-excel.jpg',
     ],
 ];
 

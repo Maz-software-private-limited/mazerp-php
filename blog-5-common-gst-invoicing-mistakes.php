@@ -36,7 +36,7 @@ include __DIR__ . '/includes/header.php';
       
       <!-- Hero Image -->
       <div class="post-hero-image-wrapper">
-        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=675&fit=crop&q=80" alt="Professional calculator, pen, and invoice paper" width="1200" height="675">
+        <img src="assets/img/blog-5-common-gst-invoicing-mistakes.jpg" alt="Professional calculator, pen, and invoice paper" width="1200" height="675">
       </div>
 
       <!-- Content Body -->
@@ -136,7 +136,7 @@ function copyPostLink() {
   },
   "headline": "5 Common GST Invoicing Mistakes Indian Businesses Make",
   "description": "Avoid expensive tax penalties and mismatches. Discover the top 5 GST invoicing errors Indian retailers and wholesalers make and how to format CGST, SGST, and IGST invoices.",
-  "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=675&fit=crop&q=80",  
+  "image": "https://www.mazerp.com/assets/img/blog-5-common-gst-invoicing-mistakes.jpg",  
   "author": {
     "@type": "Organization",
     "name": "MazERP Team",
