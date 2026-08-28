@@ -114,12 +114,6 @@ define('SITE_TAGLINE', 'One Stop Software Solution for All Your Business Needs')
 define('SITE_URL', 'https://www.mazerp.com');
 define('CONTACT_EMAIL', 'info@maztechno.com');
 define('CONTACT_PHONE', '+91 81100 87700');
-if (!defined('MAZERP_API_BASE')) {
-    define('MAZERP_API_BASE', getenv('MAZERP_API_BASE') ?: 'http://localhost:3000');
-}
-if (!defined('PORTAL_APP_URL')) {
-    define('PORTAL_APP_URL', rtrim(getenv('PORTAL_APP_URL') ?: 'http://localhost:4200', '/'));
-}
 
 $mail_config = [
     'smtp_host'     => 'smtp.hostinger.com',
@@ -177,8 +171,8 @@ $page_seo = [
         'description'  => 'Get in touch with MazERP. Book a personalized demo, start your free trial, or talk to our team for honest answers and zero-pressure pricing.',
     ],
     'pricing' => [
-        'title'       => 'Pricing | Books, CRM, Timex or All in one | MazERP',
-        'description'  => 'Choose Books, CRM, Timex, or all in one. Pay each app’s plan at that tier. Global is included at ₹0. Start a free trial.',
+        'title'       => 'Pricing Plans | Affordable GST Billing & ERP Software | MazERP',
+        'description'  => 'Transparent, affordable pricing for MazERP. Choose the plan that fits your business. No hidden fees, free trial, cancel anytime.',
     ],
     'erp' => [
         'title'       => 'ERP Software | Inventory, Billing & Operations Management | MazERP',
@@ -194,11 +188,6 @@ $page_seo = [
         'title'       => 'Accounting Software | GST, Finance & Reports | MazERP',
         'description'  => 'Automated GST accounting, financial reports, and compliance tools built for Indian businesses. MazERP Accounting makes finance simple. Start free.',
         'keywords'     => 'accounting software India, GST accounting, financial reports, tally alternative, cloud accounting India',
-    ],
-    'timex' => [
-        'title'       => 'Timex | Attendance, Shifts & Workforce Time | MazERP',
-        'description'  => 'Track daily attendance, manage shifts, and approve workforce hours across branches with MazERP Timex. Built for Indian SMBs. Start your free trial.',
-        'keywords'     => 'attendance software India, shift management, workforce time tracking, employee attendance, multi-branch attendance',
     ],
     'terms-of-service' => [
         'title'       => 'Terms of Service | MazERP',
@@ -285,7 +274,7 @@ $_page = current_page();
 $seo = array_merge($default_seo, $page_seo[$_page] ?? []);
 
 // Product pages — used to set the "Products" parent nav item as active
-$_product_pages = ['erp', 'crm', 'accounting', 'timex'];
+$_product_pages = ['erp', 'crm', 'accounting'];
 
 $nav_items = [
     'index'     => ['label' => 'Home',      'url' => 'index.php'],
@@ -316,11 +305,5 @@ $products_nav = [
         'url'   => 'accounting.php',
         'icon'  => 'fa-calculator',
         'desc'  => 'Finance, GST & reports',
-    ],
-    'timex' => [
-        'label' => 'Timex',
-        'url'   => 'timex.php',
-        'icon'  => 'fa-clock',
-        'desc'  => 'Attendance, shifts & workforce time',
     ],
 ];

@@ -20,7 +20,7 @@ $is_product_page = in_array($active, $_product_pages);
 <title><?php echo htmlspecialchars($seo['title']); ?></title>
 <meta name="description" content="<?php echo htmlspecialchars($seo['description']); ?>">
 <meta name="keywords" content="<?php echo htmlspecialchars($seo['keywords']); ?>">
-<meta name="robots" content="<?php echo htmlspecialchars($seo['robots'] ?? 'index, follow, max-image-preview:large'); ?>">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="<?php echo SITE_URL . '/' . ($active === 'index' ? '' : $active . '.php'); ?>">
 
 <!-- Open Graph -->
@@ -48,7 +48,7 @@ $is_product_page = in_array($active, $_product_pages);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <!-- Site stylesheet -->
-<link rel="stylesheet" href="assets/css/style.css?v=2.29">
+<link rel="stylesheet" href="assets/css/style.css?v=2.7">
 
 <!-- Schema: SoftwareApplication -->
 <script type="application/ld+json">

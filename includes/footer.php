@@ -61,7 +61,6 @@
           <li><a href="erp.php"><i class="fa-solid fa-layer-group"></i> ERP</a></li>
           <li><a href="crm.php"><i class="fa-solid fa-users"></i> CRM</a></li>
           <li><a href="accounting.php"><i class="fa-solid fa-calculator"></i> Accounting</a></li>
-          <li><a href="timex.php"><i class="fa-solid fa-clock"></i> Timex</a></li>
         </ul>
       </div>
 
@@ -95,7 +94,7 @@
 
     <div class="footer-bottom">
       <p class="footer-copyright">&copy; <?php echo date('Y'); ?> MAZ Software Solutions. All Rights Reserved.</p>
-      <p class="footer-credit">Made with <i class="fa-solid fa-heart" style="color: var(--rose);"></i> by <a href="https://kasadaratech.in" target="_blank" style="color: inherit; text-decoration: underline;">kasadaratech.in</a></p>
+      <p class="footer-credit"></p>
       <div class="footer-legal">
         <a href="terms-of-service.php">Terms of Service</a>
         <a href="privacy-policy.php">Privacy Policy</a>
