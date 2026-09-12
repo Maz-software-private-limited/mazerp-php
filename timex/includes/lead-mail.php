@@ -1,10 +1,10 @@
 <?php
 /**
- * Payroll-only lead email builders (does not change shared suite templates).
+ * Timex-only lead email builders (does not change shared suite templates).
  */
 require_once __DIR__ . '/../../includes/email-templates.php';
 
-function payroll_lead_meta(): array
+function timex_lead_meta(): array
 {
     $tz = new DateTimeZone('Asia/Kolkata');
     $now = new DateTime('now', $tz);
@@ -12,11 +12,11 @@ function payroll_lead_meta(): array
     return [
         'submitted_at' => $now->format('d M Y, h:i A') . ' IST',
         'ip'           => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
-        'source'       => 'payroll-microsite',
+        'source'       => 'timex-microsite',
     ];
 }
 
-function payroll_business_type_label(string $code): string
+function timex_business_type_label(string $code): string
 {
     $labels = [
         'retail'         => 'Retail / Trading',
@@ -29,24 +29,24 @@ function payroll_business_type_label(string $code): string
     return $labels[$code] ?? business_type_label($code);
 }
 
-function payroll_build_lead_notification_email(array $lead): array
+function timex_build_lead_notification_email(array $lead): array
 {
-    $meta = payroll_lead_meta();
+    $meta = timex_lead_meta();
     $name = $lead['name'] ?? '';
     $email = $lead['email'] ?? '';
     $phone = $lead['phone'] ?? '';
     $company = $lead['company'] ?? '';
-    $business = payroll_business_type_label($lead['business_type'] ?? '');
+    $business = timex_business_type_label($lead['business_type'] ?? '');
     $intent = (string) ($lead['intent_label'] ?? 'demo');
     $employees = trim((string) ($lead['employee_count'] ?? ''));
     $message = trim($lead['message'] ?? '');
     $messageDisplay = $message !== '' ? nl2br(escape_html($message)) : '<span style="color:#94a3b8;">—</span>';
 
-    $emailLink = '<a href="mailto:' . escape_html($email) . '" style="color:#0d9488;text-decoration:none;">' . escape_html($email) . '</a>';
-    $phoneLink = '<a href="tel:' . escape_html(preg_replace('/\s+/', '', $phone)) . '" style="color:#0d9488;text-decoration:none;">' . escape_html($phone) . '</a>';
+    $emailLink = '<a href="mailto:' . escape_html($email) . '" style="color:#2563eb;text-decoration:none;">' . escape_html($email) . '</a>';
+    $phoneLink = '<a href="tel:' . escape_html(preg_replace('/\s+/', '', $phone)) . '" style="color:#2563eb;text-decoration:none;">' . escape_html($phone) . '</a>';
 
     $fieldsTable = '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;">'
-        . email_field_row('Product', escape_html('Maz Payroll'))
+        . email_field_row('Product', escape_html('Maz Timex'))
         . email_field_row('Intent', escape_html($intent))
         . email_field_row('Name', escape_html($name))
         . email_field_row('Email', $emailLink)
@@ -57,17 +57,17 @@ function payroll_build_lead_notification_email(array $lead): array
         . email_field_row('Message', $messageDisplay)
         . '</table>';
 
-    $inner = '<p style="margin:0 0 16px;font-size:16px;line-height:1.5;color:#1e293b;">A new <strong>Maz Payroll</strong> ' . escape_html($intent) . ' request was submitted.</p>'
+    $inner = '<p style="margin:0 0 16px;font-size:16px;line-height:1.5;color:#1e293b;">A new <strong>Maz Timex</strong> ' . escape_html($intent) . ' request was submitted.</p>'
         . $fieldsTable;
 
-    $footer = 'Submitted via payroll-microsite &middot; '
+    $footer = 'Submitted via timex-microsite &middot; '
         . escape_html($meta['submitted_at']) . ' &middot; IP ' . escape_html($meta['ip']);
 
-    $html = email_html_wrapper('New Maz Payroll request', 'Maz Payroll', $inner, $footer);
+    $html = email_html_wrapper('New Maz Timex request', 'Maz Timex', $inner, $footer);
 
     $messagePlain = $message !== '' ? $message : '—';
-    $text = "New Maz Payroll {$intent} request\n\n"
-        . "Product:       Maz Payroll\n"
+    $text = "New Maz Timex {$intent} request\n\n"
+        . "Product:       Maz Timex\n"
         . "Intent:        {$intent}\n"
         . "Name:          {$name}\n"
         . "Email:         {$email}\n"
@@ -77,50 +77,50 @@ function payroll_build_lead_notification_email(array $lead): array
         . ($employees !== '' ? "Employees:     {$employees}\n" : '')
         . "Message:       {$messagePlain}\n\n"
         . "Submitted: {$meta['submitted_at']}\n"
-        . "Source:    payroll-microsite\n"
+        . "Source:    timex-microsite\n"
         . "IP:        {$meta['ip']}\n";
 
     return [
-        'subject' => 'New Maz Payroll ' . $intent . ' request: ' . $company,
+        'subject' => 'New Maz Timex ' . $intent . ' request: ' . $company,
         'html'    => $html,
         'text'    => $text,
     ];
 }
 
-function payroll_build_thank_you_email(array $lead): array
+function timex_build_thank_you_email(array $lead): array
 {
     $firstName = lead_first_name($lead['name'] ?? '');
     $company = $lead['company'] ?? '';
 
     $inner = '<p style="margin:0 0 16px;font-size:17px;line-height:1.5;color:#1e293b;">Hi ' . escape_html($firstName) . ',</p>'
-        . '<p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#475569;">Thank you for your interest in <strong style="color:#1e293b;">Maz Payroll</strong>. We received your request'
+        . '<p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#475569;">Thank you for your interest in <strong style="color:#1e293b;">Maz Timex</strong>. We received your request'
         . ($company !== '' ? ' for <strong style="color:#1e293b;">' . escape_html($company) . '</strong>' : '')
         . ' and our team will contact you within <strong style="color:#1e293b;">one business hour</strong>.</p>'
-        . '<p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#475569;">In the meantime, you can explore Maz Payroll features on our website, or reply to this email if you have urgent questions.</p>'
-        . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f0fdfa;border-radius:8px;border:1px solid #ccfbf1;">
+        . '<p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#475569;">In the meantime, you can explore Maz Timex features on our website, or reply to this email if you have urgent questions.</p>'
+        . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#eff6ff;border-radius:8px;border:1px solid #dbeafe;">
 <tr><td style="padding:18px 20px;">
-<p style="margin:0 0 10px;font-size:13px;font-weight:bold;color:#0f766e;text-transform:uppercase;letter-spacing:0.4px;">Need help now?</p>
-<p style="margin:0 0 6px;font-size:14px;color:#1e293b;"><strong>Email:</strong> <a href="mailto:' . escape_html(CONTACT_EMAIL) . '" style="color:#0d9488;">' . escape_html(CONTACT_EMAIL) . '</a></p>
-<p style="margin:0 0 6px;font-size:14px;color:#1e293b;"><strong>Phone:</strong> <a href="tel:' . escape_html(preg_replace('/\s+/', '', CONTACT_PHONE)) . '" style="color:#0d9488;">' . escape_html(CONTACT_PHONE) . '</a></p>
-<p style="margin:0;font-size:14px;color:#1e293b;"><strong>Website:</strong> <a href="' . escape_html(PAYROLL_SITE_URL) . '/" style="color:#0d9488;">' . escape_html(PAYROLL_SITE_URL) . '</a></p>
+<p style="margin:0 0 10px;font-size:13px;font-weight:bold;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.4px;">Need help now?</p>
+<p style="margin:0 0 6px;font-size:14px;color:#1e293b;"><strong>Email:</strong> <a href="mailto:' . escape_html(CONTACT_EMAIL) . '" style="color:#2563eb;">' . escape_html(CONTACT_EMAIL) . '</a></p>
+<p style="margin:0 0 6px;font-size:14px;color:#1e293b;"><strong>Phone:</strong> <a href="tel:' . escape_html(preg_replace('/\s+/', '', CONTACT_PHONE)) . '" style="color:#2563eb;">' . escape_html(CONTACT_PHONE) . '</a></p>
+<p style="margin:0;font-size:14px;color:#1e293b;"><strong>Website:</strong> <a href="' . escape_html(TIMEX_SITE_URL) . '/" style="color:#2563eb;">' . escape_html(TIMEX_SITE_URL) . '</a></p>
 </td></tr>
 </table>';
 
-    $footer = 'Maz Payroll &middot; ' . escape_html(SITE_TAGLINE);
+    $footer = 'Maz Timex &middot; ' . escape_html(SITE_TAGLINE);
     $html = email_html_wrapper('Thank you', 'Thank you', $inner, $footer);
 
     $text = "Hi {$firstName},\n\n"
-        . "Thank you for your interest in Maz Payroll. We received your request"
+        . "Thank you for your interest in Maz Timex. We received your request"
         . ($company !== '' ? " for {$company}" : '')
         . " and our team will contact you within one business hour.\n\n"
         . "Need help now?\n"
         . "Email:   " . CONTACT_EMAIL . "\n"
         . "Phone:   " . CONTACT_PHONE . "\n"
-        . "Website: " . PAYROLL_SITE_URL . "/\n\n"
-        . "Maz Payroll — " . SITE_TAGLINE . "\n";
+        . "Website: " . TIMEX_SITE_URL . "/\n\n"
+        . "Maz Timex — " . SITE_TAGLINE . "\n";
 
     return [
-        'subject' => 'Thanks for contacting Maz Payroll, ' . $firstName,
+        'subject' => 'Thanks for contacting Maz Timex, ' . $firstName,
         'html'    => $html,
         'text'    => $text,
     ];

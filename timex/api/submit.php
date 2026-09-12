@@ -1,7 +1,7 @@
 <?php
 /**
- * CRM microsite demo/contact submit endpoint.
- * Keeps product labeling local to /crm — does not change shared api/submit.php.
+ * Timex microsite demo/contact submit endpoint.
+ * Keeps product labeling local to /timex — does not change shared api/submit.php.
  */
 header('Content-Type: application/json');
 
@@ -20,18 +20,18 @@ if (!empty($_POST['website'])) {
     exit;
 }
 
-function crm_clean($v) {
+function timex_clean($v) {
     return trim(strip_tags((string) $v));
 }
 
-$name = crm_clean($_POST['name'] ?? '');
-$email = crm_clean($_POST['email'] ?? '');
-$phone = crm_clean($_POST['phone'] ?? '');
-$company = crm_clean($_POST['company'] ?? '');
-$business = crm_clean($_POST['business_type'] ?? '');
-$message = crm_clean($_POST['message'] ?? '');
-$employeeCount = crm_clean($_POST['employee_count'] ?? '');
-$intentRaw = strtolower(crm_clean($_POST['intent'] ?? 'demo'));
+$name = timex_clean($_POST['name'] ?? '');
+$email = timex_clean($_POST['email'] ?? '');
+$phone = timex_clean($_POST['phone'] ?? '');
+$company = timex_clean($_POST['company'] ?? '');
+$business = timex_clean($_POST['business_type'] ?? '');
+$message = timex_clean($_POST['message'] ?? '');
+$employeeCount = timex_clean($_POST['employee_count'] ?? '');
+$intentRaw = strtolower(timex_clean($_POST['intent'] ?? 'demo'));
 $intent = in_array($intentRaw, ['demo', 'contact', 'trial'], true) ? $intentRaw : 'demo';
 
 $errors = [];
@@ -51,7 +51,7 @@ if ($business === '') {
     $errors[] = 'Business type required.';
 }
 if ($employeeCount === '') {
-    $errors[] = 'Sales team size required.';
+    $errors[] = 'Employee count required.';
 }
 
 if ($errors) {
@@ -69,27 +69,26 @@ $lead = [
     'message'        => $message,
     'employee_count' => $employeeCount,
     'intent_label'   => $intent,
-    'product'        => 'crm',
 ];
 
-$meta = crm_lead_meta();
-$logBody = "New Maz CRM {$intent} request\n\n";
-$logBody .= "Product:  Maz CRM\n";
+$meta = timex_lead_meta();
+$logBody = "New Maz Timex {$intent} request\n\n";
+$logBody .= "Product:  Maz Timex\n";
 $logBody .= "Intent:   {$intent}\n";
 $logBody .= "Name:     {$name}\nEmail:    {$email}\nPhone:    {$phone}\n";
-$logBody .= "Company:  {$company}\nType:     " . crm_business_type_label($business) . "\n";
+$logBody .= "Company:  {$company}\nType:     " . timex_business_type_label($business) . "\n";
 if ($employeeCount !== '') {
-    $logBody .= "Sales team: {$employeeCount}\n";
+    $logBody .= "Employees: {$employeeCount}\n";
 }
 $logBody .= 'Message:  ' . ($message !== '' ? $message : '—') . "\n";
-$logBody .= "\nSubmitted: {$meta['submitted_at']}\nSource: crm-microsite\nIP: {$meta['ip']}\n";
+$logBody .= "\nSubmitted: {$meta['submitted_at']}\nSource: timex-microsite\nIP: {$meta['ip']}\n";
 
 $logFile = __DIR__ . '/leads.log';
 $logWritten = file_put_contents($logFile, $logBody . "\n---\n", FILE_APPEND | LOCK_EX);
 
 $mailSent = false;
 if (is_mail_configured()) {
-    $notification = crm_build_lead_notification_email($lead);
+    $notification = timex_build_lead_notification_email($lead);
     $mailSent = send_contact_email(
         $notification['subject'],
         $notification['html'],
@@ -98,7 +97,7 @@ if (is_mail_configured()) {
         $name
     );
 
-    $thankYou = crm_build_thank_you_email($lead);
+    $thankYou = timex_build_thank_you_email($lead);
     send_thank_you_email(
         $thankYou['subject'],
         $thankYou['html'],

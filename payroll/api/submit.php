@@ -50,6 +50,9 @@ if ($company === '') {
 if ($business === '') {
     $errors[] = 'Business type required.';
 }
+if ($employeeCount === '') {
+    $errors[] = 'Employee count required.';
+}
 
 if ($errors) {
     http_response_code(422);
@@ -73,7 +76,7 @@ $logBody = "New Maz Payroll {$intent} request\n\n";
 $logBody .= "Product:  Maz Payroll\n";
 $logBody .= "Intent:   {$intent}\n";
 $logBody .= "Name:     {$name}\nEmail:    {$email}\nPhone:    {$phone}\n";
-$logBody .= "Company:  {$company}\nType:     " . business_type_label($business) . "\n";
+$logBody .= "Company:  {$company}\nType:     " . payroll_business_type_label($business) . "\n";
 if ($employeeCount !== '') {
     $logBody .= "Employees: {$employeeCount}\n";
 }

@@ -144,7 +144,6 @@ include __DIR__ . '/includes/header.php';
     var companyEl = document.getElementById('f-company');
     var empEl = document.getElementById('f-employees');
     var bizEl = document.getElementById('f-business');
-    var messageEl = document.getElementById('f-message');
 
     setError('f-name', 'err-name', nameEl.value.trim().length < 2 ? 'Please enter your full name.' : '');
     setError('f-email', 'err-email', !validEmail(emailEl.value.trim()) ? 'Please enter a valid business email.' : '');
@@ -165,16 +164,6 @@ include __DIR__ . '/includes/header.php';
     }
     if (!valid) return;
 
-    var employeesNote = 'Employees: ' + empEl.value;
-    var bizLabel = bizEl.options[bizEl.selectedIndex] ? bizEl.options[bizEl.selectedIndex].text : bizEl.value;
-    var metaNote = employeesNote + '\nBusiness type: ' + bizLabel;
-    var originalMessage = messageEl.value;
-    if (originalMessage.trim()) {
-      messageEl.value = metaNote + '\n' + originalMessage;
-    } else {
-      messageEl.value = metaNote;
-    }
-
     btn.disabled = true;
     btn.classList.add('is-loading');
     btn.setAttribute('aria-busy', 'true');
@@ -187,10 +176,8 @@ include __DIR__ . '/includes/header.php';
           ? 'Thanks! Our team will contact you shortly about your payroll demo.'
           : (data.message || 'Something went wrong.');
         if (data.success) form.reset();
-        else messageEl.value = originalMessage;
       })
       .catch(function () {
-        messageEl.value = originalMessage;
         msg.className = 'form-msg is-visible form-msg--error';
         msg.textContent = 'Could not send. Please call <?php echo htmlspecialchars(CONTACT_PHONE); ?>.';
       })
