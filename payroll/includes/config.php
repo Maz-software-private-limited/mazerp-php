@@ -149,6 +149,25 @@ $payroll_nav_links = [
     ['label' => 'FAQ', 'url' => payroll_url('faq'), 'slug' => 'faq'],
 ];
 
+/** Other Maz products shown in the navbar Products dropdown (after Home). */
+$payroll_suite_products = [
+    [
+        'label' => 'Books',
+        'url'   => PAYROLL_MAIN_SITE_URL . '/erp.php',
+        'desc'  => 'Billing, inventory & operations',
+    ],
+    [
+        'label' => 'CRM',
+        'url'   => PAYROLL_MAIN_SITE_URL . '/crm/',
+        'desc'  => 'Leads, pipeline & customers',
+    ],
+    [
+        'label' => 'Timex',
+        'url'   => 'https://app.mazerp.com/timex/dashboard',
+        'desc'  => 'Time & attendance',
+    ],
+];
+
 $payroll_feature_links = [
     ['label' => 'Employee Management', 'url' => payroll_url('employee-management')],
     ['label' => 'Salary Management', 'url' => payroll_url('salary-management')],
