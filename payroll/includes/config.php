@@ -35,7 +35,15 @@ define('PAYROLL_ASSET_BASE', '../assets');
 define('PAYROLL_LOCAL_ASSET_BASE', PAYROLL_WEB_BASE . '/assets');
 define('PAYROLL_LOGO_URL', PAYROLL_LOCAL_ASSET_BASE . '/img/logo-payroll.png');
 
-/** Set true and fill monthly/yearly when public pricing is finalized. */
+/**
+ * Portal plans API base (no trailing slash).
+ * Prod: 'https://api.mazerp.com/v2/portal'
+ */
+define('PAYROLL_PLANS_API_BASE', 'http://localhost:3000/portal');
+define('PAYROLL_PLANS_CACHE_TTL', 600);
+define('PAYROLL_PLANS_TIMEOUT', 5);
+
+/** Used only for static fallback plans when the live API is unavailable. */
 define('PAYROLL_SHOW_PRICES', false);
 
 function payroll_current_page() {

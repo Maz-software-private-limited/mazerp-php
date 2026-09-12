@@ -1,14 +1,28 @@
 <?php
 require_once __DIR__ . '/includes/config.php';
-include __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/plans-api.php';
 
-$show_prices = PAYROLL_SHOW_PRICES;
+$resolved = payroll_resolve_pricing_plans($payroll_plans);
+$plans = $resolved['plans'];
+$plansLive = $resolved['live'];
+$planCount = count($plans);
+$colClass = $planCount >= 4 ? 'col-md-6 col-lg-3' : ($planCount === 1 ? 'col-md-6 col-lg-4 mx-auto' : 'col-md-6 col-lg-4');
+
+$planNames = array_values(array_filter(array_map(function ($p) {
+    return $p['name'] ?? '';
+}, $plans)));
+$heroCompare = $planNames
+    ? ('Compare ' . (count($planNames) > 1
+        ? implode(', ', array_slice($planNames, 0, -1)) . (count($planNames) > 2 ? ',' : '') . ' and ' . $planNames[count($planNames) - 1]
+        : $planNames[0]) . '. Start free or talk to us for a plan that matches your headcount.')
+    : 'Compare payroll plans for your team. Start free or book a demo.';
+
 $pricing_faqs = [
   [
     'q' => 'Is pricing final on this page?',
-    'a' => $show_prices
-      ? 'Displayed amounts are current plan prices. Taxes may apply. Contact us if you need a custom quote for larger teams.'
-      : 'Public list prices are configured when finalized. Use Start Free or Book a Demo to get current plan options for your employee count.',
+    'a' => $plansLive
+      ? 'Displayed amounts come from the live Maz Payroll catalog. Taxes may apply. Contact us if you need a custom quote for larger teams.'
+      : 'Live catalog prices are temporarily unavailable, so this page shows fallback plan details. Use Start Free or Book a Demo for current options.',
   ],
   [
     'q' => 'Can I start without choosing a paid plan?',
@@ -20,9 +34,11 @@ $pricing_faqs = [
   ],
   [
     'q' => 'Is there monthly and yearly billing?',
-    'a' => 'The product supports monthly and yearly billing modes in-app. When public prices are published here, you can compare both on this page.',
+    'a' => 'Yes. Toggle Monthly or Yearly above the plans. Yearly pricing is shown when the catalog provides a yearly amount for that plan.',
   ],
 ];
+
+include __DIR__ . '/includes/header.php';
 ?>
 
 <section class="payroll-page-hero text-center">
@@ -32,96 +48,75 @@ $pricing_faqs = [
     </nav>
     <div class="payroll-eyebrow">Pricing</div>
     <h1>Payroll software pricing that scales with your team</h1>
-    <p class="mx-auto">Compare capabilities across Starter, Growth, and Business. Start free or talk to us for a plan that matches your headcount.</p>
+    <p class="mx-auto"><?php echo htmlspecialchars($heroCompare); ?></p>
     <div class="payroll-billing-toggle mt-3" data-payroll-billing>
       <button type="button" class="btn active" data-billing="monthly">Monthly</button>
       <button type="button" class="btn" data-billing="yearly">Yearly</button>
     </div>
-    <?php if (!$show_prices): ?>
-      <p class="small text-secondary mt-3 mb-0">Prices will appear here once published. Plan features below are ready for configuration in <code>includes/config.php</code>.</p>
+    <?php if (!$plansLive): ?>
+      <p class="small text-secondary mt-3 mb-0">Showing fallback plan details while the live pricing catalog is unavailable.</p>
+    <?php elseif ($resolved['source'] === 'cache'): ?>
+      <p class="small text-secondary mt-3 mb-0">Prices refreshed from catalog cache. Taxes may apply.</p>
+    <?php else: ?>
+      <p class="small text-secondary mt-3 mb-0">Live catalog prices. Taxes may apply.</p>
     <?php endif; ?>
   </div>
 </section>
 
 <section class="payroll-section pt-2">
   <div class="container">
-    <div class="row g-3 g-lg-4">
-      <?php foreach ($payroll_plans as $plan):
-        $monthly = $show_prices && $plan['monthly'] !== '' ? $plan['monthly'] : '';
-        $yearly = $show_prices && $plan['yearly'] !== '' ? $plan['yearly'] : '';
-        $display = $monthly !== '' ? $monthly : 'Contact us';
-        $unit = $monthly !== '' ? '/month' : '';
+    <div class="row g-3 g-lg-4 justify-content-center">
+      <?php foreach ($plans as $plan):
+        $isQuote = !empty($plan['is_quote']);
+        $monthlyLabel = !$isQuote && !empty($plan['monthly_label']) ? $plan['monthly_label'] : '';
+        $yearlyLabel = !$isQuote && !empty($plan['yearly_label']) ? $plan['yearly_label'] : '';
+        $display = $monthlyLabel !== '' ? $monthlyLabel : 'Contact us';
+        $unit = $monthlyLabel !== '' ? '/month' : '';
+        $primaryCta = $isQuote ? payroll_url('contact') : PAYROLL_SIGNUP_URL;
+        $primaryLabel = $isQuote ? 'Book a Demo' : 'Start Free';
       ?>
-      <div class="col-md-4">
+      <div class="<?php echo htmlspecialchars($colClass); ?>">
         <div class="payroll-plan-card <?php echo !empty($plan['popular']) ? 'is-popular' : ''; ?>">
           <?php if (!empty($plan['popular'])): ?>
             <div class="payroll-popular-banner">MOST POPULAR</div>
           <?php endif; ?>
-          <div class="payroll-plan-icon <?php echo htmlspecialchars($plan['icon']); ?>">
-            <i class="fa-solid <?php echo htmlspecialchars($plan['icon_fa']); ?>" aria-hidden="true"></i>
+          <div class="payroll-plan-icon <?php echo htmlspecialchars($plan['icon'] ?? 'teal'); ?>">
+            <i class="fa-solid <?php echo htmlspecialchars($plan['icon_fa'] ?? 'fa-coins'); ?>" aria-hidden="true"></i>
           </div>
           <h2 class="h5 fw-bold"><?php echo htmlspecialchars($plan['name']); ?></h2>
-          <p class="small text-secondary"><?php echo htmlspecialchars($plan['blurb']); ?></p>
-          <div class="payroll-plan-price" data-price-monthly="<?php echo htmlspecialchars($monthly); ?>" data-price-yearly="<?php echo htmlspecialchars($yearly); ?>">
+          <?php if (!empty($plan['blurb'])): ?>
+            <p class="small text-secondary"><?php echo htmlspecialchars($plan['blurb']); ?></p>
+          <?php endif; ?>
+          <div class="payroll-plan-price"
+               data-price-monthly="<?php echo htmlspecialchars($monthlyLabel); ?>"
+               data-price-yearly="<?php echo htmlspecialchars($yearlyLabel !== '' ? $yearlyLabel : ($monthlyLabel !== '' ? $monthlyLabel : '')); ?>">
             <span data-price-value><?php echo htmlspecialchars($display); ?></span>
             <span class="fs-6 fw-normal text-secondary" data-price-unit><?php echo htmlspecialchars($unit); ?></span>
           </div>
+          <?php if (!empty($plan['trial_enabled']) && !empty($plan['trial_days'])): ?>
+            <p class="small text-secondary mb-2"><?php echo (int) $plan['trial_days']; ?>-day trial available</p>
+          <?php endif; ?>
+          <?php if (!empty($plan['features'])): ?>
           <ul class="payroll-plan-features">
             <?php foreach ($plan['features'] as $feat): ?>
               <li><?php echo htmlspecialchars($feat); ?></li>
             <?php endforeach; ?>
           </ul>
+          <?php endif; ?>
           <?php if (!empty($plan['note'])): ?>
             <p class="small text-secondary"><?php echo htmlspecialchars($plan['note']); ?></p>
           <?php endif; ?>
           <div class="d-grid gap-2">
-            <a href="<?php echo htmlspecialchars(PAYROLL_SIGNUP_URL); ?>" class="btn <?php echo !empty($plan['popular']) ? 'btn-primary' : 'btn-outline-primary'; ?>">Start Free</a>
-            <a href="<?php echo htmlspecialchars(payroll_url('contact')); ?>" class="btn btn-link">Book a Demo</a>
+            <a href="<?php echo htmlspecialchars($primaryCta); ?>" class="btn <?php echo !empty($plan['popular']) ? 'btn-primary' : 'btn-outline-primary'; ?>"><?php echo htmlspecialchars($primaryLabel); ?></a>
+            <?php if (!$isQuote): ?>
+              <a href="<?php echo htmlspecialchars(payroll_url('contact')); ?>" class="btn btn-link">Book a Demo</a>
+            <?php else: ?>
+              <a href="<?php echo htmlspecialchars(PAYROLL_SIGNUP_URL); ?>" class="btn btn-link">Start Free</a>
+            <?php endif; ?>
           </div>
         </div>
       </div>
       <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-
-<section class="payroll-section bg-soft">
-  <div class="container">
-    <div class="text-center mb-4">
-      <h2 class="fw-bold">Feature comparison</h2>
-      <p class="section-lead">A simple view of what each plan is designed for. Exact entitlements are confirmed at signup or during a demo.</p>
-    </div>
-    <div class="table-responsive">
-      <table class="table payroll-compare-table align-middle bg-white border">
-        <thead>
-          <tr>
-            <th scope="col">Capability</th>
-            <th scope="col">Starter</th>
-            <th scope="col">Growth</th>
-            <th scope="col">Business</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          $rows = [
-            ['Employees & salary assignment', 'Yes', 'Yes', 'Yes'],
-            ['Payroll runs & payslips', 'Yes', 'Yes', 'Yes'],
-            ['Attendance & leave', 'Yes', 'Yes', 'Yes'],
-            ['EPF & ESI reports', 'Core', 'Yes', 'Yes'],
-            ['PT / TDS / advanced reports', '—', 'Add-on capable', 'Add-on capable'],
-            ['Guided onboarding', 'Standard', 'Priority', 'Dedicated'],
-          ];
-          foreach ($rows as $row):
-          ?>
-          <tr>
-            <th scope="row"><?php echo htmlspecialchars($row[0]); ?></th>
-            <td><?php echo htmlspecialchars($row[1]); ?></td>
-            <td><?php echo htmlspecialchars($row[2]); ?></td>
-            <td><?php echo htmlspecialchars($row[3]); ?></td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
     </div>
   </div>
 </section>
