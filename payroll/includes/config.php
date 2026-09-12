@@ -163,7 +163,7 @@ $payroll_suite_products = [
     ],
     [
         'label' => 'Timex',
-        'url'   => 'https://app.mazerp.com/timex/dashboard',
+        'url'   => PAYROLL_MAIN_SITE_URL . '/timex/',
         'desc'  => 'Time & attendance',
     ],
 ];
