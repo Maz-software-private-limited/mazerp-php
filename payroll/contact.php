@@ -8,7 +8,7 @@ include __DIR__ . '/includes/header.php';
     <nav class="payroll-breadcrumb" aria-label="Breadcrumb">
       <a href="<?php echo htmlspecialchars(payroll_url('index')); ?>">Home</a> / Contact
     </nav>
-    <div class="payroll-eyebrow">Contact / Demo</div>
+    <div class="payroll-eyebrow">Demo</div>
     <h1>Book a Maz Payroll demo</h1>
     <p>Tell us about your team size and payroll needs. We will walk you through employees, salary, statutory components, and payroll runs.</p>
   </div>

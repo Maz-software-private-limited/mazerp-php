@@ -8,7 +8,7 @@ include __DIR__ . '/includes/header.php';
     <nav class="timex-breadcrumb" aria-label="Breadcrumb">
       <a href="<?php echo htmlspecialchars(timex_url('index')); ?>">Home</a> / Contact
     </nav>
-    <div class="timex-eyebrow">Contact / Demo</div>
+    <div class="timex-eyebrow">Demo</div>
     <h1>Book a Maz Timex demo</h1>
     <p>Tell us about your team size and attendance needs. We will walk you through employees, shifts, live punch, leave, and workforce reports.</p>
   </div>

@@ -8,7 +8,7 @@ include __DIR__ . '/includes/header.php';
     <nav class="crm-breadcrumb" aria-label="Breadcrumb">
       <a href="<?php echo htmlspecialchars(crm_url('index')); ?>">Home</a> / Contact
     </nav>
-    <div class="crm-eyebrow">Contact / Demo</div>
+    <div class="crm-eyebrow">Demo</div>
     <h1>Book a Maz CRM demo</h1>
     <p>Tell us about your team size and sales process. We will walk you through leads, pipeline, follow-ups, and reports.</p>
   </div>
