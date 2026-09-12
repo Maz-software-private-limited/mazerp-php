@@ -1,0 +1,11 @@
+# Maz Timex marketing microsite
+# Root robots.txt already Allows /. This file documents crawl intent for /timex/.
+
+User-agent: *
+Allow: /
+
+# Do not advertise private app or API surfaces from this tree
+Disallow: /api/
+Disallow: /vendor/
+
+Sitemap: https://www.mazerp.com/timex/sitemap.xml
