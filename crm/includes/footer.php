@@ -1,100 +1,71 @@
 </main>
 
+<section class="crm-cta-band">
+  <div class="container text-center">
+    <h2 class="h3 fw-bold mb-2">Ready to simplify your sales process?</h2>
+    <p class="mb-4 text-white-50 mx-auto" style="max-width:32rem;">Capture leads, run follow-ups, move the pipeline, and keep customer history in one modern workspace.</p>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+      <a href="<?php echo htmlspecialchars(CRM_SIGNUP_URL); ?>" class="btn btn-light btn-lg px-4 fw-semibold">Start Free</a>
+      <a href="<?php echo htmlspecialchars(crm_url('contact')); ?>" class="btn btn-outline-light btn-lg px-4">Book a Demo</a>
+    </div>
+  </div>
+</section>
+
 <footer class="crm-footer">
   <div class="container py-5">
     <div class="row g-4">
-      <div class="col-lg-3">
-        <div class="crm-refer-card p-4 h-100">
-          <h5 class="fw-bold mb-2">Love Maz CRM?</h5>
-          <p class="mb-3 small opacity-90">Refer a friend and get exclusive benefits for your team.</p>
-          <a href="contact.php" class="btn btn-light btn-sm fw-semibold px-3">Refer Now</a>
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <img src="<?php echo htmlspecialchars(CRM_LOGO_URL); ?>" alt="" height="32" width="86" class="crm-brand-logo">
+          <span class="text-white fw-semibold">Maz CRM</span>
         </div>
+        <p class="small text-white-50 mb-3" style="max-width:22rem;">Cloud CRM software for growing Indian businesses—leads, pipeline, follow-ups, customers, and reports.</p>
+        <a href="<?php echo htmlspecialchars(CRM_MAIN_SITE_URL); ?>/" class="small link-light text-decoration-underline">Part of the MazERP suite</a>
       </div>
-      <div class="col-6 col-md-3 col-lg-2">
-        <h6 class="text-uppercase fw-bold small mb-3 text-white-50">Product</h6>
+      <div class="col-6 col-md-4 col-lg-2">
+        <p class="h6 text-uppercase fw-bold small mb-3 text-white-50">Product</p>
         <ul class="list-unstyled crm-footer-links">
-          <li><a href="features.php">Features</a></li>
-          <li><a href="pricing.php">Pricing</a></li>
-          <li><a href="demo.php">Demo</a></li>
-          <li><a href="signup.php">Free Trial</a></li>
+          <?php foreach ($crm_footer_product as $item): ?>
+            <li><a href="<?php echo htmlspecialchars($item['url']); ?>"><?php echo htmlspecialchars($item['label']); ?></a></li>
+          <?php endforeach; ?>
         </ul>
       </div>
-      <div class="col-6 col-md-3 col-lg-2">
-        <h6 class="text-uppercase fw-bold small mb-3 text-white-50">Solutions</h6>
+      <div class="col-6 col-md-4 col-lg-2">
+        <p class="h6 text-uppercase fw-bold small mb-3 text-white-50">Company</p>
         <ul class="list-unstyled crm-footer-links">
-          <li><a href="solutions.php#retail">Retail</a></li>
-          <li><a href="solutions.php#real-estate">Real Estate</a></li>
-          <li><a href="solutions.php#distributors">Distributors</a></li>
-          <li><a href="solutions.php#b2b">B2B Sales</a></li>
+          <li><a href="<?php echo htmlspecialchars(crm_url('pricing')); ?>">Pricing</a></li>
+          <li><a href="<?php echo htmlspecialchars(crm_url('faq')); ?>">FAQ</a></li>
+          <li><a href="<?php echo htmlspecialchars(crm_url('contact')); ?>">Contact</a></li>
+          <li><a href="<?php echo htmlspecialchars(CRM_SIGNUP_URL); ?>">Start Free</a></li>
         </ul>
       </div>
-      <div class="col-6 col-md-3 col-lg-2">
-        <h6 class="text-uppercase fw-bold small mb-3 text-white-50">Resources</h6>
+      <div class="col-6 col-md-4 col-lg-2">
+        <p class="h6 text-uppercase fw-bold small mb-3 text-white-50">Legal</p>
         <ul class="list-unstyled crm-footer-links">
-          <li><a href="<?php echo htmlspecialchars(CRM_MAIN_SITE_URL); ?>/blog.php">Blog</a></li>
-          <li><a href="contact.php">Support</a></li>
-          <li><a href="demo.php">Book a Demo</a></li>
-          <li><a href="<?php echo htmlspecialchars(CRM_MAIN_SITE_URL); ?>/">MazERP Suite</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md-3 col-lg-3">
-        <h6 class="text-uppercase fw-bold small mb-3 text-white-50">Company</h6>
-        <ul class="list-unstyled crm-footer-links">
-          <li><a href="about.php">About Us</a></li>
-          <li><a href="contact.php">Contact</a></li>
           <li><a href="<?php echo htmlspecialchars(CRM_MAIN_SITE_URL); ?>/privacy-policy.php">Privacy Policy</a></li>
           <li><a href="<?php echo htmlspecialchars(CRM_MAIN_SITE_URL); ?>/terms-of-service.php">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <p class="h6 text-uppercase fw-bold small mb-3 text-white-50">Contact</p>
+        <ul class="list-unstyled crm-footer-links">
+          <li><a href="tel:+918110087700"><?php echo htmlspecialchars(CONTACT_PHONE); ?></a></li>
+          <li><a href="mailto:<?php echo htmlspecialchars(CONTACT_EMAIL); ?>"><?php echo htmlspecialchars(CONTACT_EMAIL); ?></a></li>
+          <li><a href="https://wa.me/<?php echo htmlspecialchars(WHATSAPP_NUMBER); ?>" target="_blank" rel="noopener">WhatsApp</a></li>
         </ul>
       </div>
     </div>
 
     <hr class="border-secondary opacity-25 my-4">
 
-    <div class="row g-3 align-items-center mb-4">
-      <div class="col-md-4">
-        <div class="d-flex align-items-center gap-2 text-white-50 small">
-          <span class="crm-trust-icon"><i class="fa-solid fa-shield-halved"></i></span>
-          Secure &amp; Reliable
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="d-flex align-items-center gap-2 text-white-50 small">
-          <span class="crm-trust-icon"><i class="fa-solid fa-rotate-left"></i></span>
-          Cancel Anytime
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="d-flex align-items-center gap-2 text-white-50 small">
-          <span class="crm-trust-icon"><i class="fa-solid fa-headset"></i></span>
-          24/7 Support
-        </div>
-      </div>
-    </div>
-
-    <div class="row g-3 align-items-center">
-      <div class="col-md-4">
-        <p class="mb-0 small text-white-50">Get the Maz CRM app</p>
-        <div class="d-flex gap-2 mt-2">
-          <span class="crm-store-badge"><i class="fa-brands fa-google-play me-1"></i> Google Play</span>
-          <span class="crm-store-badge"><i class="fa-brands fa-apple me-1"></i> App Store</span>
-        </div>
-      </div>
-      <div class="col-md-4 text-md-center">
-        <p class="mb-0 small text-white-50">&copy; <?php echo date('Y'); ?> Maz CRM. All rights reserved.</p>
-      </div>
-      <div class="col-md-4 text-md-end">
-        <div class="crm-social d-inline-flex gap-3">
-          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-        </div>
-      </div>
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-2 small text-white-50">
+      <p class="mb-0">&copy; <?php echo date('Y'); ?> Maz CRM. All rights reserved.</p>
+      <p class="mb-0">Built for Indian sales teams — leads, pipeline, follow-ups, and reports.</p>
     </div>
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo CRM_LOCAL_ASSET_BASE; ?>/js/crm-motion.js?v=1.1"></script>
+<script src="<?php echo htmlspecialchars(CRM_LOCAL_ASSET_BASE); ?>/js/crm-site.js?v=3.0" defer></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /**
- * Maz CRM microsite motion — subtle, performance-friendly
+ * Maz CRM microsite — motion, pricing toggle, preview tabs
  */
 (function () {
   'use strict';
@@ -28,7 +28,7 @@
 
   addClass(
     document.querySelectorAll(
-      '.crm-plan-card, .crm-addon-card, .crm-feature-card, .crm-why-item, .crm-industry-card, .crm-step, .crm-form-card, .crm-marketplace-banner, .crm-faq .accordion-item, .crm-section .text-center'
+      '.crm-plan-card, .crm-feature-card, .crm-benefit, .crm-step, .crm-form-card, .crm-faq .accordion-item, .crm-section .text-center'
     ),
     'crm-reveal'
   );
@@ -51,7 +51,6 @@
       },
       { threshold: 0.1, rootMargin: '0px 0px -24px 0px' }
     );
-
     document.querySelectorAll('.crm-reveal, .crm-reveal-left, .crm-reveal-right').forEach(function (el) {
       io.observe(el);
     });
@@ -76,4 +75,47 @@
   topBtn.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
   });
+
+  /* Monthly / yearly toggle */
+  var toggle = document.querySelector('[data-crm-billing]');
+  if (toggle) {
+    var buttons = toggle.querySelectorAll('[data-billing]');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var mode = btn.getAttribute('data-billing');
+        buttons.forEach(function (b) { b.classList.toggle('active', b === btn); });
+        document.querySelectorAll('[data-price-monthly], [data-price-yearly]').forEach(function (el) {
+          var monthly = el.getAttribute('data-price-monthly');
+          var yearly = el.getAttribute('data-price-yearly');
+          var label = el.querySelector('[data-price-value]');
+          var unit = el.querySelector('[data-price-unit]');
+          if (!label) return;
+          if (mode === 'yearly') {
+            label.textContent = yearly || 'Contact us';
+            if (unit) unit.textContent = yearly ? '/year' : '';
+          } else {
+            label.textContent = monthly || 'Contact us';
+            if (unit) unit.textContent = monthly ? '/month' : '';
+          }
+        });
+      });
+    });
+  }
+
+  /* Preview tabs on home */
+  var tabBtns = document.querySelectorAll('[data-crm-panel]');
+  if (tabBtns.length) {
+    tabBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-crm-panel');
+        tabBtns.forEach(function (b) {
+          b.classList.toggle('btn-primary', b === btn);
+          b.classList.toggle('btn-outline-primary', b !== btn);
+        });
+        document.querySelectorAll('[data-crm-panel-target]').forEach(function (panel) {
+          panel.hidden = panel.getAttribute('data-crm-panel-target') !== id;
+        });
+      });
+    });
+  }
 })();

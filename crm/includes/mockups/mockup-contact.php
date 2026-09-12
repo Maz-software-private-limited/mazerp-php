@@ -24,25 +24,25 @@ $url = $mockup_url ?? 'app.mazerp.com/crm/contacts';
         <div class="crm-contact-card">
           <div class="crm-avatar">RK</div>
           <strong>Ramesh Kumar</strong>
-          <p style="margin:6px 0 0;font-size:0.8rem;color:var(--text-muted);">Metro Distributors<br>+91 98XXX XXX21</p>
+          <p style="margin:6px 0 0;font-size:0.8rem;color:var(--crm-muted);">Metro Distributors<br>+91 98XXX XXX21</p>
           <p style="margin:12px 0 0;font-size:0.78rem;"><span class="crm-badge ok">Active</span></p>
         </div>
         <div class="crm-timeline">
           <div class="crm-timeline-item">
             <i class="fa-solid fa-phone"></i>
-            <div><strong>Call logged</strong><br><span style="color:var(--text-muted);">Discussed credit terms · Today 10:24</span></div>
+            <div><strong>Call logged</strong><br><span style="color:var(--crm-muted);">Discussed credit terms · Today 10:24</span></div>
           </div>
           <div class="crm-timeline-item">
             <i class="fa-solid fa-file-invoice"></i>
-            <div><strong>Invoice #INV-2041</strong><br><span style="color:var(--text-muted);">₹78,400 · Yesterday</span></div>
+            <div><strong>Invoice #INV-2041</strong><br><span style="color:var(--crm-muted);">₹78,400 · Yesterday</span></div>
           </div>
           <div class="crm-timeline-item">
             <i class="fa-solid fa-comment"></i>
-            <div><strong>WhatsApp follow-up</strong><br><span style="color:var(--text-muted);">Quote shared · 2 days ago</span></div>
+            <div><strong>WhatsApp follow-up</strong><br><span style="color:var(--crm-muted);">Quote shared · 2 days ago</span></div>
           </div>
           <div class="crm-timeline-item">
             <i class="fa-solid fa-star"></i>
-            <div><strong>Converted from lead</strong><br><span style="color:var(--text-muted);">Source: Referral · 12 days ago</span></div>
+            <div><strong>Converted from lead</strong><br><span style="color:var(--crm-muted);">Source: Referral · 12 days ago</span></div>
           </div>
         </div>
       </div>
