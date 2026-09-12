@@ -47,9 +47,10 @@ include __DIR__ . '/includes/header.php';
           <h2 class="h4 fw-bold mb-1">Demo request</h2>
           <p class="text-secondary small mb-3">We only ask for what we need to schedule a relevant walkthrough.</p>
           <div id="formMsg" class="form-msg" role="status" aria-live="polite"></div>
-          <form id="payrollContactForm" action="../api/submit.php" method="post" novalidate>
+          <form id="payrollContactForm" action="api/submit.php" method="post" novalidate>
             <input type="hidden" name="source" value="payroll-microsite">
             <input type="hidden" name="intent" value="demo">
+            <input type="hidden" name="product" value="payroll">
             <input type="text" name="website" value="" tabindex="-1" autocomplete="off" class="d-none" aria-hidden="true">
             <div class="row g-3">
               <div class="col-md-6">
