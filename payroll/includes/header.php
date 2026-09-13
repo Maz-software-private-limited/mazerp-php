@@ -59,7 +59,7 @@ $payroll_breadcrumb_labels = [
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="<?php echo htmlspecialchars(PAYROLL_LOCAL_ASSET_BASE); ?>/css/payroll-site.css?v=1.1">
+<link rel="stylesheet" href="<?php echo htmlspecialchars(PAYROLL_LOCAL_ASSET_BASE); ?>/css/payroll-site.css?v=1.2">
 
 <?php
 payroll_print_json_ld(payroll_schema_organization());
@@ -96,6 +96,23 @@ if ($payroll_active === 'faq' && !empty($payroll_faq_items)) {
         <li class="nav-item">
           <a class="nav-link <?php echo payroll_nav_is_active($link['slug']) ? 'active' : ''; ?>" href="<?php echo htmlspecialchars($link['url']); ?>"><?php echo htmlspecialchars($link['label']); ?></a>
         </li>
+        <?php if (($link['slug'] ?? '') === 'index'): ?>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="payrollProductsMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
+          <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="payrollProductsMenu">
+            <?php foreach ($payroll_suite_products as $product): ?>
+            <li>
+              <a class="dropdown-item" href="<?php echo htmlspecialchars($product['url']); ?>" <?php echo (strpos($product['url'], 'http') === 0 && strpos($product['url'], PAYROLL_MAIN_SITE_URL) !== 0) ? 'target="_blank" rel="noopener"' : ''; ?>>
+                <span class="fw-semibold d-block"><?php echo htmlspecialchars($product['label']); ?></span>
+                <?php if (!empty($product['desc'])): ?>
+                  <span class="small text-secondary"><?php echo htmlspecialchars($product['desc']); ?></span>
+                <?php endif; ?>
+              </a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+        </li>
+        <?php endif; ?>
         <?php endforeach; ?>
         <li class="nav-item dropdown d-none d-xl-block">
           <a class="nav-link dropdown-toggle <?php echo payroll_nav_is_active(['employee-management','salary-management','payslips','payroll-reports']) ? 'active' : ''; ?>" href="<?php echo htmlspecialchars(payroll_url('features')); ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
