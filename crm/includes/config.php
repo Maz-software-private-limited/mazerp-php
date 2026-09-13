@@ -149,7 +149,7 @@ $crm_nav_links = [
 $crm_suite_products = [
     [
         'label' => 'Books',
-        'url'   => CRM_MAIN_SITE_URL . '/erp.php',
+        'url'   => CRM_MAIN_SITE_URL . '/',
         'desc'  => 'Billing, inventory & operations',
     ],
     [

@@ -145,7 +145,12 @@ $is_product_page = in_array($active, $_product_pages);
               </a>
               <div class="dropdown-menu" role="menu">
                 <?php
-                  $_dm_color_map = ['erp' => 'blue', 'crm' => 'green', 'accounting' => 'amber'];
+                  $_dm_color_map = [
+                      'erp'     => 'blue',
+                      'crm'     => 'green',
+                      'payroll' => 'purple',
+                      'timex'   => 'sky',
+                  ];
                   foreach ($products_nav as $prod_key => $prod):
                     $_dm_color = $_dm_color_map[$prod_key] ?? 'blue';
                 ?>

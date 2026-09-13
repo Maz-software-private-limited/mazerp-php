@@ -153,7 +153,7 @@ $payroll_nav_links = [
 $payroll_suite_products = [
     [
         'label' => 'Books',
-        'url'   => PAYROLL_MAIN_SITE_URL . '/erp.php',
+        'url'   => PAYROLL_MAIN_SITE_URL . '/',
         'desc'  => 'Billing, inventory & operations',
     ],
     [

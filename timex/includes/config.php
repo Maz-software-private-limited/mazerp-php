@@ -150,7 +150,7 @@ $timex_nav_links = [
 $timex_suite_products = [
     [
         'label' => 'Books',
-        'url'   => TIMEX_MAIN_SITE_URL . '/erp.php',
+        'url'   => TIMEX_MAIN_SITE_URL . '/',
         'desc'  => 'Billing, inventory & operations',
     ],
     [

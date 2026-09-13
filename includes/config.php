@@ -286,7 +286,7 @@ $_page = current_page();
 $seo = array_merge($default_seo, $page_seo[$_page] ?? []);
 
 // Product pages — used to set the "Products" parent nav item as active
-$_product_pages = ['erp', 'crm', 'accounting'];
+$_product_pages = ['erp', 'crm', 'payroll', 'timex'];
 
 $nav_items = [
     'index'     => ['label' => 'Home',      'url' => 'index.php'],
@@ -301,21 +301,27 @@ $nav_items = [
 
 $products_nav = [
     'erp' => [
-        'label' => 'ERP',
-        'url'   => 'erp.php',
+        'label' => 'Books',
+        'url'   => 'index.php',
         'icon'  => 'fa-layer-group',
-        'desc'  => 'Inventory, billing & operations',
+        'desc'  => 'Billing, inventory & operations',
     ],
     'crm' => [
         'label' => 'CRM',
-        'url'   => 'crm.php',
+        'url'   => 'crm/',
         'icon'  => 'fa-users',
-        'desc'  => 'Customers & sales pipeline',
+        'desc'  => 'Leads, pipeline & customers',
     ],
-    'accounting' => [
-        'label' => 'Accounting',
-        'url'   => 'accounting.php',
-        'icon'  => 'fa-calculator',
-        'desc'  => 'Finance, GST & reports',
+    'payroll' => [
+        'label' => 'Payroll',
+        'url'   => 'payroll/',
+        'icon'  => 'fa-money-check-dollar',
+        'desc'  => 'Salary, payslips & compliance',
+    ],
+    'timex' => [
+        'label' => 'Timex',
+        'url'   => 'timex/',
+        'icon'  => 'fa-clock',
+        'desc'  => 'Time & attendance',
     ],
 ];
