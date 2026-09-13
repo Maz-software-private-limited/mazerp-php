@@ -102,11 +102,16 @@ if ($payroll_active === 'faq' && !empty($payroll_faq_items)) {
           <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="payrollProductsMenu">
             <?php foreach ($payroll_suite_products as $product): ?>
             <li>
-              <a class="dropdown-item" href="<?php echo htmlspecialchars($product['url']); ?>" <?php echo (strpos($product['url'], 'http') === 0 && strpos($product['url'], PAYROLL_MAIN_SITE_URL) !== 0) ? 'target="_blank" rel="noopener"' : ''; ?>>
-                <span class="fw-semibold d-block"><?php echo htmlspecialchars($product['label']); ?></span>
-                <?php if (!empty($product['desc'])): ?>
-                  <span class="small text-secondary"><?php echo htmlspecialchars($product['desc']); ?></span>
-                <?php endif; ?>
+              <a class="dropdown-item suite-product-item" href="<?php echo htmlspecialchars($product['url']); ?>" <?php echo (strpos($product['url'], 'http') === 0 && strpos($product['url'], PAYROLL_MAIN_SITE_URL) !== 0) ? 'target="_blank" rel="noopener"' : ''; ?>>
+                <span class="dm-icon <?php echo htmlspecialchars($product['color'] ?? 'blue'); ?>">
+                  <i class="fa-solid <?php echo htmlspecialchars($product['icon'] ?? 'fa-cube'); ?>"></i>
+                </span>
+                <span class="dm-text">
+                  <span class="dm-label"><?php echo htmlspecialchars($product['label']); ?></span>
+                  <?php if (!empty($product['desc'])): ?>
+                    <span class="dm-desc"><?php echo htmlspecialchars($product['desc']); ?></span>
+                  <?php endif; ?>
+                </span>
               </a>
             </li>
             <?php endforeach; ?>

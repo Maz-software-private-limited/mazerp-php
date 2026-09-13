@@ -151,16 +151,22 @@ $timex_suite_products = [
     [
         'label' => 'Books',
         'url'   => TIMEX_MAIN_SITE_URL . '/',
+        'icon'  => 'fa-layer-group',
+        'color' => 'blue',
         'desc'  => 'Billing, inventory & operations',
     ],
     [
         'label' => 'CRM',
         'url'   => TIMEX_MAIN_SITE_URL . '/crm/',
+        'icon'  => 'fa-users',
+        'color' => 'green',
         'desc'  => 'Leads, pipeline & customers',
     ],
     [
         'label' => 'Payroll',
         'url'   => TIMEX_MAIN_SITE_URL . '/payroll/',
+        'icon'  => 'fa-money-check-dollar',
+        'color' => 'purple',
         'desc'  => 'Salary, payslips & compliance',
     ],
 ];

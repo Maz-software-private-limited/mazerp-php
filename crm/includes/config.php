@@ -150,16 +150,22 @@ $crm_suite_products = [
     [
         'label' => 'Books',
         'url'   => CRM_MAIN_SITE_URL . '/',
+        'icon'  => 'fa-layer-group',
+        'color' => 'blue',
         'desc'  => 'Billing, inventory & operations',
     ],
     [
         'label' => 'Payroll',
         'url'   => CRM_MAIN_SITE_URL . '/payroll/',
+        'icon'  => 'fa-money-check-dollar',
+        'color' => 'purple',
         'desc'  => 'Salary, payslips & compliance',
     ],
     [
         'label' => 'Timex',
         'url'   => CRM_MAIN_SITE_URL . '/timex/',
+        'icon'  => 'fa-clock',
+        'color' => 'sky',
         'desc'  => 'Time & attendance',
     ],
 ];

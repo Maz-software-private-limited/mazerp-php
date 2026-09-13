@@ -154,16 +154,22 @@ $payroll_suite_products = [
     [
         'label' => 'Books',
         'url'   => PAYROLL_MAIN_SITE_URL . '/',
+        'icon'  => 'fa-layer-group',
+        'color' => 'blue',
         'desc'  => 'Billing, inventory & operations',
     ],
     [
         'label' => 'CRM',
         'url'   => PAYROLL_MAIN_SITE_URL . '/crm/',
+        'icon'  => 'fa-users',
+        'color' => 'green',
         'desc'  => 'Leads, pipeline & customers',
     ],
     [
         'label' => 'Timex',
         'url'   => PAYROLL_MAIN_SITE_URL . '/timex/',
+        'icon'  => 'fa-clock',
+        'color' => 'sky',
         'desc'  => 'Time & attendance',
     ],
 ];
