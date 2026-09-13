@@ -39,7 +39,7 @@ define('CRM_LOGO_URL', CRM_LOCAL_ASSET_BASE . '/img/logo-crm.png');
  * Portal plans API base (no trailing slash).
  * Prod: 'https://api.mazerp.com/v2/portal'
  */
-define('CRM_PLANS_API_BASE', 'http://localhost:3000/portal');
+define('CRM_PLANS_API_BASE', 'https://api.mazerp.com/v2/portal');
 define('CRM_PLANS_CACHE_TTL', 600);
 define('CRM_PLANS_TIMEOUT', 5);
 
@@ -143,6 +143,25 @@ $crm_nav_links = [
     ['label' => 'Follow-ups', 'url' => crm_url('follow-ups'), 'slug' => 'follow-ups'],
     ['label' => 'Pricing', 'url' => crm_url('pricing'), 'slug' => 'pricing'],
     ['label' => 'FAQ', 'url' => crm_url('faq'), 'slug' => 'faq'],
+];
+
+/** Other Maz products shown in the navbar Products dropdown (after Home). */
+$crm_suite_products = [
+    [
+        'label' => 'Books',
+        'url'   => CRM_MAIN_SITE_URL . '/erp.php',
+        'desc'  => 'Billing, inventory & operations',
+    ],
+    [
+        'label' => 'Payroll',
+        'url'   => CRM_MAIN_SITE_URL . '/payroll/',
+        'desc'  => 'Salary, payslips & compliance',
+    ],
+    [
+        'label' => 'Timex',
+        'url'   => CRM_MAIN_SITE_URL . '/timex/',
+        'desc'  => 'Time & attendance',
+    ],
 ];
 
 $crm_feature_links = [

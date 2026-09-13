@@ -95,6 +95,23 @@ if ($timex_active === 'faq' && !empty($timex_faq_items)) {
         <li class="nav-item">
           <a class="nav-link <?php echo timex_nav_is_active($link['slug']) ? 'active' : ''; ?>" href="<?php echo htmlspecialchars($link['url']); ?>"><?php echo htmlspecialchars($link['label']); ?></a>
         </li>
+        <?php if (($link['slug'] ?? '') === 'index'): ?>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="timexProductsMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
+          <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="timexProductsMenu">
+            <?php foreach ($timex_suite_products as $product): ?>
+            <li>
+              <a class="dropdown-item" href="<?php echo htmlspecialchars($product['url']); ?>" <?php echo (strpos($product['url'], 'http') === 0 && strpos($product['url'], TIMEX_MAIN_SITE_URL) !== 0) ? 'target="_blank" rel="noopener"' : ''; ?>>
+                <span class="fw-semibold d-block"><?php echo htmlspecialchars($product['label']); ?></span>
+                <?php if (!empty($product['desc'])): ?>
+                  <span class="small text-secondary"><?php echo htmlspecialchars($product['desc']); ?></span>
+                <?php endif; ?>
+              </a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+        </li>
+        <?php endif; ?>
         <?php endforeach; ?>
         <li class="nav-item dropdown d-none d-xl-block">
           <a class="nav-link dropdown-toggle <?php echo timex_nav_is_active(['employee-management','shift-management','workforce-reports']) ? 'active' : ''; ?>" href="<?php echo htmlspecialchars(timex_url('features')); ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>

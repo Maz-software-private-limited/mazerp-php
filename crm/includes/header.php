@@ -95,6 +95,23 @@ if ($crm_active === 'faq' && !empty($crm_faq_items)) {
         <li class="nav-item">
           <a class="nav-link <?php echo crm_nav_is_active($link['slug']) ? 'active' : ''; ?>" href="<?php echo htmlspecialchars($link['url']); ?>"><?php echo htmlspecialchars($link['label']); ?></a>
         </li>
+        <?php if (($link['slug'] ?? '') === 'index'): ?>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="crmProductsMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
+          <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="crmProductsMenu">
+            <?php foreach ($crm_suite_products as $product): ?>
+            <li>
+              <a class="dropdown-item" href="<?php echo htmlspecialchars($product['url']); ?>" <?php echo (strpos($product['url'], 'http') === 0 && strpos($product['url'], CRM_MAIN_SITE_URL) !== 0) ? 'target="_blank" rel="noopener"' : ''; ?>>
+                <span class="fw-semibold d-block"><?php echo htmlspecialchars($product['label']); ?></span>
+                <?php if (!empty($product['desc'])): ?>
+                  <span class="small text-secondary"><?php echo htmlspecialchars($product['desc']); ?></span>
+                <?php endif; ?>
+              </a>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+        </li>
+        <?php endif; ?>
         <?php endforeach; ?>
         <li class="nav-item dropdown d-none d-xl-block">
           <a class="nav-link dropdown-toggle <?php echo crm_nav_is_active(['lead-management','customer-management','crm-reports']) ? 'active' : ''; ?>" href="<?php echo htmlspecialchars(crm_url('features')); ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>

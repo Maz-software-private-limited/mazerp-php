@@ -39,7 +39,7 @@ define('PAYROLL_LOGO_URL', PAYROLL_LOCAL_ASSET_BASE . '/img/logo-payroll.png');
  * Portal plans API base (no trailing slash).
  * Prod: 'https://api.mazerp.com/v2/portal'
  */
-define('PAYROLL_PLANS_API_BASE', 'http://localhost:3000/portal');
+define('PAYROLL_PLANS_API_BASE', 'https://api.mazerp.com/v2/portal');
 define('PAYROLL_PLANS_CACHE_TTL', 600);
 define('PAYROLL_PLANS_TIMEOUT', 5);
 

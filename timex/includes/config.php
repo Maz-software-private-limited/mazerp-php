@@ -40,7 +40,7 @@ define('TIMEX_LOGO_URL', TIMEX_LOCAL_ASSET_BASE . '/img/logo-timex.png');
  * Portal plans API base (no trailing slash).
  * Prod: 'https://api.mazerp.com/v2/portal'
  */
-define('TIMEX_PLANS_API_BASE', 'http://localhost:3000/portal');
+define('TIMEX_PLANS_API_BASE', 'https://api.mazerp.com/v2/portal');
 define('TIMEX_PLANS_CACHE_TTL', 600);
 define('TIMEX_PLANS_TIMEOUT', 5);
 
@@ -144,6 +144,25 @@ $timex_nav_links = [
     ['label' => 'Leave & OT', 'url' => timex_url('leave-management'), 'slug' => 'leave-management'],
     ['label' => 'Pricing', 'url' => timex_url('pricing'), 'slug' => 'pricing'],
     ['label' => 'FAQ', 'url' => timex_url('faq'), 'slug' => 'faq'],
+];
+
+/** Other Maz products shown in the navbar Products dropdown (after Home). */
+$timex_suite_products = [
+    [
+        'label' => 'Books',
+        'url'   => TIMEX_MAIN_SITE_URL . '/erp.php',
+        'desc'  => 'Billing, inventory & operations',
+    ],
+    [
+        'label' => 'CRM',
+        'url'   => TIMEX_MAIN_SITE_URL . '/crm/',
+        'desc'  => 'Leads, pipeline & customers',
+    ],
+    [
+        'label' => 'Payroll',
+        'url'   => TIMEX_MAIN_SITE_URL . '/payroll/',
+        'desc'  => 'Salary, payslips & compliance',
+    ],
 ];
 
 $timex_feature_links = [
