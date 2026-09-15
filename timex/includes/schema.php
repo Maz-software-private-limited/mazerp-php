@@ -28,9 +28,9 @@ function timex_schema_software() {
         'url' => TIMEX_SITE_URL . '/',
         'offers' => [
             '@type' => 'Offer',
-            'price' => '0',
             'priceCurrency' => 'INR',
-            'description' => 'Start free available',
+            'description' => 'One yearly plan for Maz Timex. See pricing for current offer and catalog rates.',
+            'url' => TIMEX_SITE_URL . '/pricing.php',
         ],
     ];
 }

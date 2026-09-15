@@ -4,78 +4,106 @@
  */
 require_once __DIR__ . '/../../includes/config.php';
 
-define('TIMEX_SITE_NAME', 'Maz Timex');
-define('TIMEX_SITE_URL', 'https://www.mazerp.com/timex');
-define('TIMEX_SIGNUP_URL', 'https://app.mazerp.com/auth/register');
-define('TIMEX_LOGIN_URL', 'https://app.mazerp.com/signin');
-define('TIMEX_MAIN_SITE_URL', SITE_URL);
-define('TIMEX_PAYROLL_URL', 'https://www.mazerp.com/payroll');
+if (!defined('TIMEX_SITE_NAME')) {
+    define('TIMEX_SITE_NAME', 'Maz Timex');
+}
+if (!defined('TIMEX_SITE_URL')) {
+    define('TIMEX_SITE_URL', rtrim(SITE_URL, '/') . '/timex');
+}
+if (!defined('TIMEX_SIGNUP_URL')) {
+    define('TIMEX_SIGNUP_URL', workspace_signup_url('timex'));
+}
+if (!defined('TIMEX_LOGIN_URL')) {
+    define('TIMEX_LOGIN_URL', 'https://app.mazerp.com/signin?' . http_build_query(['product' => 'timex']));
+}
+if (!defined('TIMEX_MAIN_SITE_URL')) {
+    define('TIMEX_MAIN_SITE_URL', SITE_URL);
+}
+if (!defined('TIMEX_PAYROLL_URL')) {
+    define('TIMEX_PAYROLL_URL', rtrim(SITE_URL, '/') . '/payroll');
+}
 
 /**
  * Web path to this microsite (e.g. "/timex") so assets/links work
  * even when the URL has no trailing slash.
  */
-function timex_web_base() {
-    static $base = null;
-    if ($base !== null) {
+if (!function_exists('timex_web_base')) {
+    function timex_web_base() {
+        static $base = null;
+        if ($base !== null) {
+            return $base;
+        }
+        $docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : false;
+        $timexRoot = realpath(__DIR__ . '/..');
+        if ($docRoot && $timexRoot && strpos($timexRoot, $docRoot) === 0) {
+            $rel = str_replace('\\', '/', substr($timexRoot, strlen($docRoot)));
+            $base = $rel === '' ? '' : $rel;
+        } else {
+            $base = '/timex';
+        }
         return $base;
     }
-    $docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : false;
-    $timexRoot = realpath(__DIR__ . '/..');
-    if ($docRoot && $timexRoot && strpos($timexRoot, $docRoot) === 0) {
-        $rel = str_replace('\\', '/', substr($timexRoot, strlen($docRoot)));
-        $base = $rel === '' ? '' : $rel;
-    } else {
-        $base = '/timex';
-    }
-    return $base;
 }
 
-define('TIMEX_WEB_BASE', timex_web_base());
-define('TIMEX_ASSET_BASE', '../assets');
-define('TIMEX_LOCAL_ASSET_BASE', TIMEX_WEB_BASE . '/assets');
-define('TIMEX_LOGO_URL', TIMEX_LOCAL_ASSET_BASE . '/img/logo-timex.png');
+if (!defined('TIMEX_WEB_BASE')) {
+    define('TIMEX_WEB_BASE', timex_web_base());
+}
+if (!defined('TIMEX_LOCAL_ASSET_BASE')) {
+    define('TIMEX_LOCAL_ASSET_BASE', TIMEX_WEB_BASE . '/assets');
+}
+if (!defined('TIMEX_LOGO_URL')) {
+    define('TIMEX_LOGO_URL', TIMEX_LOCAL_ASSET_BASE . '/img/logo-timex.png');
+}
 
-/**
- * Portal plans API base (no trailing slash).
- * Prod: 'https://api.mazerp.com/v2/portal'
- */
-define('TIMEX_PLANS_API_BASE', 'https://api.mazerp.com/v2/portal');
-define('TIMEX_PLANS_CACHE_TTL', 600);
-define('TIMEX_PLANS_TIMEOUT', 5);
+if (!defined('TIMEX_PLANS_CACHE_TTL')) {
+    define('TIMEX_PLANS_CACHE_TTL', 600);
+}
+if (!defined('TIMEX_PLANS_TIMEOUT')) {
+    define('TIMEX_PLANS_TIMEOUT', 5);
+}
 
 /** Used only for static fallback plans when the live API is unavailable. */
-define('TIMEX_SHOW_PRICES', false);
-
-function timex_current_page() {
-    $base = basename($_SERVER['PHP_SELF'], '.php');
-    return $base !== '' ? $base : 'index';
+if (!defined('TIMEX_SHOW_PRICES')) {
+    define('TIMEX_SHOW_PRICES', false);
 }
 
-function timex_url($page = null) {
-    $page = $page ?? timex_current_page();
-    $root = TIMEX_WEB_BASE === '' ? '' : TIMEX_WEB_BASE;
-    if ($page === 'index' || $page === '' || $page === null) {
-        return $root . '/';
+if (!function_exists('timex_current_page')) {
+    function timex_current_page() {
+        $base = basename($_SERVER['PHP_SELF'], '.php');
+        return $base !== '' ? $base : 'index';
     }
-    // .php keeps links working on PHP built-in server; Apache .htaccess also serves clean URLs.
-    return $root . '/' . $page . '.php';
 }
 
-function timex_canonical_path($page = null) {
-    $page = $page ?? timex_current_page();
-    if ($page === 'index') {
-        return TIMEX_SITE_URL . '/';
+if (!function_exists('timex_url')) {
+    function timex_url($page = null) {
+        $page = $page ?? timex_current_page();
+        $root = TIMEX_WEB_BASE === '' ? '' : TIMEX_WEB_BASE;
+        if ($page === 'index' || $page === '' || $page === null) {
+            return $root . '/';
+        }
+        // .php keeps links working on PHP built-in server; Apache .htaccess also serves clean URLs.
+        return $root . '/' . $page . '.php';
     }
-    return TIMEX_SITE_URL . '/' . $page;
 }
 
-function timex_nav_is_active($slugs) {
-    $current = timex_current_page();
-    if (!is_array($slugs)) {
-        $slugs = [$slugs];
+if (!function_exists('timex_canonical_path')) {
+    function timex_canonical_path($page = null) {
+        $page = $page ?? timex_current_page();
+        if ($page === 'index') {
+            return TIMEX_SITE_URL . '/';
+        }
+        return TIMEX_SITE_URL . '/' . $page;
     }
-    return in_array($current, $slugs, true);
+}
+
+if (!function_exists('timex_nav_is_active')) {
+    function timex_nav_is_active($slugs) {
+        $current = timex_current_page();
+        if (!is_array($slugs)) {
+            $slugs = [$slugs];
+        }
+        return in_array($current, $slugs, true);
+    }
 }
 
 $timex_default_seo = [
@@ -117,7 +145,7 @@ $timex_page_seo = [
     ],
     'pricing' => [
         'title'       => 'Timex Pricing | Maz Timex',
-        'description' => 'Compare Maz Timex workforce plans for startups and growing teams. Start free or book a demo to see employee limits and attendance options.',
+        'description' => 'One Timex plan with 6- and 12-month savings offers for attendance, leave, overtime, and payroll-ready workforce reports. Start now or book a demo.',
     ],
     'faq' => [
         'title'       => 'Timex FAQ | Maz Timex',
@@ -188,26 +216,20 @@ $timex_footer_product = [
     ['label' => 'Workforce Reports', 'url' => timex_url('workforce-reports')],
 ];
 
+/** Marketing checklist on the pricing page (one plan, everything included). */
+$timex_pricing_included = [
+    'Employee Management',
+    'Attendance & Time Tracking',
+    'Leave Management',
+    'Workforce Operations',
+    'Mobile Employee Access',
+    'Reports & Insights',
+    'Role-based Access',
+    'Secure Cloud Platform',
+];
+
+/** Single-plan fallback when the live catalog is unavailable. */
 $timex_plans = [
-    [
-        'key' => 'basic',
-        'name' => 'Basic',
-        'icon' => 'blue',
-        'icon_fa' => 'fa-seedling',
-        'monthly' => '',
-        'yearly' => '',
-        'popular' => false,
-        'blurb' => 'For small teams starting structured attendance.',
-        'features' => [
-            'Employee roster & org setup',
-            'Shifts & weekly offs',
-            'Mobile punch (QR + GPS)',
-            'Live attendance board',
-            'Leave basics',
-            'Core attendance reports',
-            'Email support',
-        ],
-    ],
     [
         'key' => 'standard',
         'name' => 'Standard',
@@ -216,53 +238,65 @@ $timex_plans = [
         'monthly' => '',
         'yearly' => '',
         'popular' => true,
-        'blurb' => 'For growing teams that need leave, OT, and geo-fence depth.',
-        'features' => [
-            'Everything in Basic',
-            'Leave policies & balances',
-            'Overtime policies & approval',
-            'Regularization workflows',
-            'Geo-fenced office locations',
-            'Payroll-ready monthly summary',
-            'Priority onboarding support',
+        'trial_enabled' => false,
+        'trial_days' => 0,
+        'blurb' => 'One plan for workforce time—attendance, leave, overtime, and payroll-ready reports.',
+        'commitment_offers' => [
+            [
+                'months' => 6,
+                'total' => 3594,
+                'effective_monthly' => 599,
+                'name' => '6 Months',
+                'blurb' => 'Get started with a flexible 6-month commitment.',
+                'cta_label' => 'Choose 6 Months',
+                'best_value' => false,
+                'currency' => 'INR',
+            ],
+            [
+                'months' => 12,
+                'total' => 5988,
+                'effective_monthly' => 499,
+                'name' => '12 Months',
+                'blurb' => 'Save more with our 12-month offer and enjoy Timex for a full year.',
+                'cta_label' => 'Choose 12 Months',
+                'best_value' => true,
+                'currency' => 'INR',
+            ],
         ],
-        'note' => '*Some capabilities may depend on your plan or add-ons.',
-    ],
-    [
-        'key' => 'professional',
-        'name' => 'Professional',
-        'icon' => 'slate',
-        'icon_fa' => 'fa-building',
-        'monthly' => '',
-        'yearly' => '',
-        'popular' => false,
-        'blurb' => 'For HR teams that need location tracking and richer reporting.',
         'features' => [
-            'Everything in Standard',
-            'Higher employee limits',
-            'Location tracking reports',
-            'Advanced workforce reports',
-            'Multi-branch office setup',
-            'Priority support',
+            'Employee roster, departments & teams',
+            'Shifts, weekly offs & office geo-fence',
+            'Mobile punch (QR + GPS) & live board',
+            'Leave, overtime & regularization',
+            'Workforce reports & payroll handoff',
+            'Approvals, alerts & import/export',
         ],
-    ],
-    [
-        'key' => 'enterprise',
-        'name' => 'Enterprise',
-        'icon' => 'slate',
-        'icon_fa' => 'fa-landmark',
-        'monthly' => '',
-        'yearly' => '',
-        'popular' => false,
-        'blurb' => 'For larger organizations that need guided rollout and scale.',
-        'features' => [
-            'Everything in Professional',
-            'Custom employee limits',
-            'Guided implementation',
-            'Dedicated success check-ins',
-            'Custom onboarding walkthrough',
-            'Priority support',
+        'feature_groups' => [
+            [
+                'category' => 'Time & Attendance',
+                'icon' => 'fa-clock',
+                'items' => [
+                    ['code' => '', 'name' => 'Mobile punch (QR + GPS)', 'description' => 'Employees punch from the Employee App'],
+                    ['code' => '', 'name' => 'Live attendance board', 'description' => 'See who is in, late, or still open'],
+                    ['code' => '', 'name' => 'Overtime & regularization', 'description' => 'Policies and approval workflows'],
+                ],
+            ],
+            [
+                'category' => 'Workforce Ops',
+                'icon' => 'fa-users',
+                'items' => [
+                    ['code' => '', 'name' => 'Employees, shifts & locations', 'description' => 'Organize teams and office sites'],
+                    ['code' => '', 'name' => 'Leave & holidays', 'description' => 'Policies, balances, and calendar'],
+                    ['code' => '', 'name' => 'Reports & payroll handoff', 'description' => 'Attendance summaries for Maz Payroll'],
+                ],
+            ],
         ],
+        'limits' => [
+            ['code' => 'timex_employees', 'name' => 'Employees', 'category' => 'Workforce', 'limit_value' => null, 'is_unlimited' => false, 'unit' => '', 'display' => 'Based on quote', 'sort_order' => 100],
+            ['code' => 'multi_user', 'name' => 'Users', 'category' => 'Business', 'limit_value' => null, 'is_unlimited' => false, 'unit' => '', 'display' => 'Based on quote', 'sort_order' => 4],
+            ['code' => 'multi_branch', 'name' => 'Branches', 'category' => 'Business', 'limit_value' => null, 'is_unlimited' => false, 'unit' => '', 'display' => 'Based on quote', 'sort_order' => 46],
+        ],
+        'note' => 'Live catalog prices are temporarily unavailable. Start now or book a demo for current options.',
     ],
 ];
 

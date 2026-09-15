@@ -11,7 +11,7 @@ include __DIR__ . '/includes/header.php';
         <h1 class="mb-3">Workforce Time Made Clear</h1>
         <p class="lead mb-4">Manage employees, shifts, live punch, leave, overtime, and reports from one cloud workspace—then hand payroll-ready attendance to Maz Payroll.</p>
         <div class="d-flex flex-wrap gap-2 mb-3">
-          <a href="<?php echo htmlspecialchars(TIMEX_SIGNUP_URL); ?>" class="btn btn-primary btn-lg px-4">Start Free</a>
+          <a href="<?php echo htmlspecialchars(TIMEX_SIGNUP_URL); ?>" class="btn btn-primary btn-lg px-4">Start Now</a>
           <a href="<?php echo htmlspecialchars(timex_url('contact')); ?>" class="btn btn-outline-primary btn-lg px-4">Book a Demo</a>
         </div>
         <p class="small text-secondary mb-0">Built for HR and managers who need accurate attendance without running salary in the same product.</p>

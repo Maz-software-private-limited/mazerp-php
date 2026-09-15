@@ -1,5 +1,5 @@
 /**
- * Maz Timex microsite — motion, pricing toggle, form helpers
+ * Maz Timex microsite — motion, pricing sticky CTA, form helpers
  */
 (function () {
   'use strict';
@@ -28,14 +28,15 @@
 
   addClass(
     document.querySelectorAll(
-      '.timex-plan-card, .timex-feature-card, .timex-benefit, .timex-step, .timex-form-card, .timex-faq .accordion-item, .timex-section .text-center, .timex-payslip'
+      '.timex-plan-card, .timex-offer-card, .timex-pricing-included, .timex-savings-compare, .timex-pricing-close, .timex-limit-chip, .timex-value-step, .timex-feature-card, .timex-benefit, .timex-step, .timex-form-card, .timex-faq .accordion-item, .timex-feature-accordion .accordion-item, .timex-section .text-center, .timex-payslip'
     ),
     'timex-reveal'
   );
+  addClass(document.querySelectorAll('.timex-pricing-stage__intro'), 'timex-reveal');
   addClass(document.querySelectorAll('.timex-hero-home .col-lg-5, .timex-section .col-lg-5'), 'timex-reveal-left');
   addClass(document.querySelectorAll('.timex-hero-home .col-lg-7, .timex-section .col-lg-7'), 'timex-reveal-right');
 
-  document.querySelectorAll('.row.g-3, .row.g-4').forEach(function (row) {
+  document.querySelectorAll('.row.g-3, .row.g-4, .timex-offer-cards').forEach(function (row) {
     row.classList.add('timex-stagger');
   });
 
@@ -76,30 +77,21 @@
     window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
   });
 
-  /* Monthly / yearly toggle */
-  var toggle = document.querySelector('[data-timex-billing]');
-  if (toggle) {
-    var buttons = toggle.querySelectorAll('[data-billing]');
-    buttons.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var mode = btn.getAttribute('data-billing');
-        buttons.forEach(function (b) { b.classList.toggle('active', b === btn); });
-        document.querySelectorAll('[data-price-monthly], [data-price-yearly]').forEach(function (el) {
-          var monthly = el.getAttribute('data-price-monthly');
-          var yearly = el.getAttribute('data-price-yearly');
-          var label = el.querySelector('[data-price-value]');
-          var unit = el.querySelector('[data-price-unit]');
-          if (!label) return;
-          if (mode === 'yearly') {
-            label.textContent = yearly || 'Contact us';
-            if (unit) unit.textContent = yearly ? '/year' : '';
-          } else {
-            label.textContent = monthly || 'Contact us';
-            if (unit) unit.textContent = monthly ? '/month' : '';
-          }
-        });
-      });
-    });
+  /* Mobile sticky CTA after scrolling past offer cards (defaults to best value) */
+  var sticky = document.querySelector('[data-timex-sticky-cta]');
+  var offers = document.querySelector('#timex-offers') || document.querySelector('.timex-offer-cards');
+  if (sticky && offers && window.matchMedia('(max-width: 767.98px)').matches) {
+    if ('IntersectionObserver' in window) {
+      var stickyIo = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            sticky.hidden = entry.isIntersecting;
+          });
+        },
+        { threshold: 0.12 }
+      );
+      stickyIo.observe(offers);
+    }
   }
 
   /* Preview tabs on home */

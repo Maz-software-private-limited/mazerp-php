@@ -19,6 +19,41 @@ if (!in_array($country, ['IN', 'US', 'AE'])) {
     $country = 'IN';
 }
 
+// Define the site name, url, and contact details
+define('SITE_NAME', 'MazERP');
+define('SITE_TAGLINE', 'One Stop Software Solution for All Your Business Needs');
+define('SITE_URL', 'https://www.mazerp.com');
+define('CONTACT_EMAIL', 'info@maztechno.com');
+define('CONTACT_PHONE', '+91 81100 87700');
+define('WHATSAPP_NUMBER', '918110087700');
+define('LOGO_URL', 'assets/img/logo.png');
+define('LOGO_ALT_URL', 'assets/img/logo.png');
+define('EMAIL_LOGO_CID', 'mazerp-logo');
+define('EMAIL_LOGO_PATH', __DIR__ . '/../assets/img/logo.png');
+
+// API URLs
+define('API_ENDPOINT', 'https://api.mazerp.com/v2');
+// Workspace API URL
+define('WORKSPACE_ENDPOINT', API_ENDPOINT . '/workspace');
+// Portal API URL
+define('PORTAL_ENDPOINT', API_ENDPOINT . '/portal');
+// workspace login URL
+define('WORKSPACE_LOGIN_URL', 'https://app.mazerp.com/auth/login');
+// workspace signup URL
+define('WORKSPACE_SIGNUP_URL', 'https://app.mazerp.com/auth/register');
+
+$api_config = [
+    'plans_api_base'   => '',       // empty = use PORTAL_ENDPOINT / WORKSPACE_ENDPOINT
+    'plans_path_style' => 'portal', // portal | workspace
+];
+$api_config_file = __DIR__ . '/api-config.local.php';
+if (is_file($api_config_file)) {
+    $localApi = require $api_config_file;
+    if (is_array($localApi)) {
+        $api_config = array_merge($api_config, $localApi);
+    }
+}
+
 $loc_data = [
     'IN' => [
         'country_label' => 'India',
@@ -108,13 +143,6 @@ $loc_data = [
 
 $loc = $loc_data[$country];
 
-
-define('SITE_NAME', 'MazERP');
-define('SITE_TAGLINE', 'One Stop Software Solution for All Your Business Needs');
-define('SITE_URL', 'https://www.mazerp.com');
-define('CONTACT_EMAIL', 'info@maztechno.com');
-define('CONTACT_PHONE', '+91 81100 87700');
-
 $mail_config = [
     'smtp_host'     => 'smtp.hostinger.com',
     'smtp_port'     => 465,
@@ -132,11 +160,6 @@ if (is_file($mail_config_file)) {
         $mail_config = array_merge($mail_config, $local);
     }
 }
-define('WHATSAPP_NUMBER', '918110087700');
-define('LOGO_URL', 'assets/img/logo.png');
-define('LOGO_ALT_URL', 'assets/img/logo.png');
-define('EMAIL_LOGO_CID', 'mazerp-logo');
-define('EMAIL_LOGO_PATH', __DIR__ . '/../assets/img/logo.png');
 
 function current_page() {
     return basename($_SERVER['PHP_SELF'], '.php') ?: 'index';
@@ -325,3 +348,84 @@ $products_nav = [
         'desc'  => 'Time & attendance',
     ],
 ];
+
+
+if (!function_exists('workspace_signup_url')) {
+    function workspace_signup_url($product = null, $plan = null) {
+        $url = WORKSPACE_SIGNUP_URL;
+        $query = [];
+        switch ($product) {
+            case 'erp':
+                case 'books':
+                $query['product'] = 'books';
+                break;
+            case 'crm':
+                $query['product'] = 'crm';
+                break;
+            case 'payroll':
+                $query['product'] = 'payroll';
+                break;
+            case 'timex':
+                $query['product'] = 'timex';
+                break;
+        }
+        if ($plan) {
+            $query['plan'] = $plan;
+        }
+        $url .= '?' . http_build_query($query); 
+        return $url;
+    }
+}
+
+if (!function_exists('workspace_login_url')) {
+    function workspace_login_url($product = null, $plan = null) { 
+        $url = WORKSPACE_LOGIN_URL;
+        $query = [];
+        switch ($product) {
+            case 'erp':
+                case 'books':
+                $query['product'] = 'books';
+                break;
+            case 'crm':
+                $query['product'] = 'crm';
+                break;
+            case 'payroll':
+                $query['product'] = 'payroll';
+                break;
+            case 'timex':
+                $query['product'] = 'timex';
+                break;
+        }
+        if ($plan) {
+            $query['plan'] = $plan;
+        }
+        $url .= '?' . http_build_query($query); 
+        return $url;
+    }
+}
+ 
+// get plans endpoint api
+if (!function_exists('get_plans_endpoint_url')) {
+    function get_plans_endpoint_url($product = null) {
+        global $api_config;
+        $style = $api_config['plans_path_style'] ?? 'portal';
+        $base = trim((string) ($api_config['plans_api_base'] ?? ''));
+
+        if ($style === 'workspace') {
+            $root = rtrim($base !== '' ? $base : WORKSPACE_ENDPOINT, '/');
+            // WORKSPACE_ENDPOINT already ends with /workspace; local base is host-only
+            if ($base !== '') {
+                $root .= '/workspace';
+            }
+            $url = $root . ($product ? '/' . rawurlencode($product) : '') . '/plans';
+            return $url . '?' . http_build_query(['status' => 'active']);
+        }
+
+        $url = rtrim($base !== '' ? $base : PORTAL_ENDPOINT, '/') . '/plans';
+        $query = ['status' => 'active'];
+        if ($product) {
+            $query['product_code'] = $product;
+        }
+        return $url . '?' . http_build_query($query);
+    }
+}

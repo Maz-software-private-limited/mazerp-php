@@ -595,30 +595,555 @@ img { max-width: 100%; height: auto; }
   font-weight: 700;
 }
 
-/* Pricing */
-.timex-billing-toggle {
-  display: inline-flex;
+/* Pricing — one plan, dual commitment offers */
+.timex-pricing-stage {
+  position: relative;
+  padding: 2.5rem 0 1.5rem;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 10%, rgba(37, 99, 235, 0.12), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 20%, rgba(15, 23, 42, 0.06), transparent 50%),
+    linear-gradient(180deg, #f8fbff 0%, #fff 72%);
+  overflow: hidden;
+}
+
+.timex-pricing-stage__intro {
+  max-width: 40rem;
+}
+
+.timex-pricing-stage h1 {
+  font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin-bottom: 0.75rem;
+  color: var(--timex-navy);
+}
+
+.timex-pricing-stage__lead {
+  font-family: var(--timex-heading);
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-weight: 600;
+  color: var(--timex-slate);
+  margin-bottom: 0.85rem;
+}
+
+.timex-pricing-stage__support {
+  font-size: 1.05rem;
+  color: var(--timex-muted);
+  margin-bottom: 0;
+  max-width: 36rem;
+}
+
+.timex-pricing-included {
+  max-width: 48rem;
+}
+
+.timex-pricing-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .timex-pricing-checklist {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.timex-pricing-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-weight: 600;
+  color: var(--timex-navy);
+  font-size: 0.98rem;
+}
+
+.timex-pricing-checklist i {
+  margin-top: 0.2rem;
+  color: var(--timex-blue);
+  flex-shrink: 0;
+}
+
+.timex-offer-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .timex-offer-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+}
+
+.timex-offer-card {
+  position: relative;
   background: #fff;
   border: 1px solid var(--timex-border);
+  border-radius: calc(var(--timex-radius) + 2px);
+  padding: 1.75rem 1.5rem 1.5rem;
+  box-shadow: var(--timex-shadow-md);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--timex-duration-slow) var(--timex-ease), box-shadow var(--timex-duration-slow) var(--timex-ease);
+}
+
+.timex-offer-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  border-radius: calc(var(--timex-radius) + 2px) calc(var(--timex-radius) + 2px) 0 0;
+  background: linear-gradient(90deg, #94a3b8 0%, var(--timex-blue) 100%);
+}
+
+.timex-offer-card--best {
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: var(--timex-shadow-lg);
+}
+
+.timex-offer-card--best::before {
+  background: linear-gradient(90deg, var(--timex-blue) 0%, #0f172a 100%);
+}
+
+@media (hover: hover) {
+  .timex-offer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--timex-shadow-lg);
+  }
+}
+
+.timex-offer-card__badge {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--timex-blue-dark);
+  background: var(--timex-blue-soft);
+  padding: 0.3rem 0.65rem;
   border-radius: 999px;
-  padding: 4px;
+  margin-bottom: 0.85rem;
+}
+
+.timex-offer-card__title {
+  font-family: var(--timex-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--timex-navy);
+  margin-bottom: 1rem;
+}
+
+.timex-price-stack {
+  margin-bottom: 1.1rem;
+}
+
+.timex-price-stack__was {
+  font-size: 0.98rem;
+  color: #64748b;
+  margin-bottom: 0.15rem;
+  line-height: 1.3;
+}
+
+.timex-price-stack__was s {
+  text-decoration-thickness: 1.5px;
+  color: #64748b;
+}
+
+.timex-price-stack__now {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  line-height: 1;
+}
+
+.timex-price-stack__amount {
+  display: inline-flex;
+  align-items: flex-start;
+  color: var(--timex-navy);
+  font-family: var(--timex-heading);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.timex-offer-card--best .timex-price-stack__amount {
+  color: var(--timex-navy);
+}
+
+.timex-price-stack__major {
+  font-size: clamp(2.15rem, 4.5vw, 2.75rem);
+  line-height: 1;
+}
+
+.timex-price-stack__minor {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: 0.28em;
+  letter-spacing: -0.02em;
+}
+
+.timex-price-stack__unit {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--timex-muted);
+}
+
+.timex-price-stack__caption {
+  margin: 0.55rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: var(--timex-text);
+}
+
+.timex-offer-card__blurb {
+  color: var(--timex-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.35rem;
+  flex-grow: 1;
+}
+
+.timex-offer-card .btn {
+  margin-top: auto;
+}
+
+.timex-savings-compare {
+  max-width: 36rem;
+  text-align: center;
+  padding: 1.75rem 1.5rem;
+  background: linear-gradient(180deg, #f8fbff 0%, #fff 100%);
+  border: 1px solid var(--timex-border);
+  border-radius: var(--timex-radius);
+}
+
+.timex-savings-compare__rows {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.15rem;
+}
+
+.timex-savings-compare__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border: 1px solid var(--timex-border);
+  border-radius: var(--timex-radius-sm);
+  text-align: left;
+}
+
+.timex-savings-compare__row span {
+  color: var(--timex-muted);
+  font-weight: 600;
+}
+
+.timex-savings-compare__row strong {
+  color: var(--timex-navy);
+  font-family: var(--timex-heading);
+}
+
+.timex-savings-compare__save {
+  font-weight: 700;
+  color: var(--timex-blue-dark);
+  font-size: 1.02rem;
+}
+
+.timex-pricing-close {
+  max-width: 36rem;
+}
+
+.timex-pricing-close h2 {
+  margin-bottom: 0.85rem;
+}
+
+.timex-feature-accordion .accordion-item {
+  border: 1px solid var(--timex-border);
+  border-radius: 12px !important;
+  margin-bottom: 0.65rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.timex-feature-accordion .accordion-button {
+  font-weight: 600;
+  font-family: var(--timex-heading);
+  gap: 0.65rem;
+  box-shadow: none !important;
+}
+
+.timex-feature-accordion .accordion-button:not(.collapsed) {
+  background: var(--timex-blue-soft);
+  color: var(--timex-blue-dark);
+}
+
+.timex-feature-acc-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #eff6ff;
+  color: var(--timex-blue);
+  flex-shrink: 0;
+}
+
+.timex-feature-count {
+  margin-left: auto;
+  margin-right: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--timex-muted);
+  background: #f1f5f9;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+}
+
+.timex-feature-detail-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .timex-feature-detail-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.timex-feature-detail-list li {
+  padding-left: 1.15rem;
+  position: relative;
+  font-size: 0.92rem;
+}
+
+.timex-feature-detail-list li::before {
+  content: '\f00c';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  color: var(--timex-blue);
+  font-size: 0.72rem;
+}
+
+.timex-feature-detail-list strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--timex-navy);
+}
+
+.timex-feature-detail-list span {
+  display: block;
+  color: var(--timex-muted);
+  font-size: 0.84rem;
+  margin-top: 0.1rem;
+}
+
+.timex-limit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .timex-limit-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 992px) {
+  .timex-limit-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.timex-limit-chip {
+  background: #fff;
+  border: 1px solid var(--timex-border);
+  border-radius: var(--timex-radius-sm);
+  padding: 1rem 0.9rem;
+  text-align: center;
   box-shadow: var(--timex-shadow-sm);
 }
 
-.timex-billing-toggle .btn {
-  border: 0;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 0.55rem 1.25rem;
-  color: #64748b;
-  background: transparent;
+.timex-limit-chip__value {
+  font-family: var(--timex-heading);
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--timex-navy);
+  letter-spacing: -0.02em;
 }
 
-.timex-billing-toggle .btn.active {
+.timex-limit-chip__label {
+  font-size: 0.84rem;
+  color: var(--timex-muted);
+  margin-top: 0.2rem;
+}
+
+.timex-addons-block {
+  max-width: 40rem;
+  border: 1px dashed #cbd5e1;
+  border-radius: var(--timex-radius);
+  padding: 1.15rem 1.25rem;
+  background: var(--timex-surface);
+}
+
+.timex-addon-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.timex-addon-list li {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.65rem 0;
+  border-top: 1px solid var(--timex-border);
+  font-size: 0.92rem;
+}
+
+.timex-addon-list li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.timex-addon-price {
+  font-weight: 700;
+  color: var(--timex-blue-dark);
+}
+
+.timex-value-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 992px) {
+  .timex-value-flow {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.timex-value-step {
+  flex: 1;
+  background: #fff;
+  border: 1px solid var(--timex-border);
+  border-radius: var(--timex-radius);
+  padding: 1.15rem 1.2rem;
+  box-shadow: var(--timex-shadow-sm);
+}
+
+.timex-value-step__num {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
   background: var(--timex-blue);
   color: #fff;
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.65rem;
+}
+
+.timex-value-arrow {
+  display: none;
+  color: #94a3b8;
+  align-items: center;
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 992px) {
+  .timex-value-arrow {
+    display: flex;
+  }
+}
+
+.timex-trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem 1.25rem;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1rem 1.15rem;
+  background: var(--timex-surface);
+  border: 1px solid var(--timex-border);
+  border-radius: var(--timex-radius);
+}
+
+.timex-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  color: var(--timex-slate);
+  font-weight: 600;
+}
+
+.timex-trust-item i {
+  color: var(--timex-blue);
+}
+
+.timex-sticky-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1040;
+  padding: 0.65rem 0.85rem calc(0.65rem + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid var(--timex-border);
+  box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.timex-sticky-cta[hidden] {
+  display: none !important;
+}
+
+.timex-sticky-cta__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+.timex-sticky-cta__price {
+  font-family: var(--timex-heading);
+  line-height: 1.2;
+}
+
+.timex-sticky-cta__price strong {
+  font-size: 1.1rem;
+}
+
+.timex-sticky-cta__price span {
+  color: var(--timex-muted);
+  font-size: 0.85rem;
+  margin-left: 0.2rem;
 }
 
 .timex-plan-card {
@@ -664,6 +1189,7 @@ img { max-width: 100%; height: auto; }
   align-items: center;
   justify-content: center;
   margin-bottom: 0.85rem;
+  flex-shrink: 0;
 }
 
 .timex-plan-icon.blue { background: var(--timex-blue-soft); color: var(--timex-blue-dark); }
@@ -680,6 +1206,12 @@ img { max-width: 100%; height: auto; }
   list-style: none;
   padding: 0;
   margin: 1rem 0 1.25rem;
+}
+
+.timex-plan-features--centered {
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .timex-plan-features li {
@@ -699,6 +1231,12 @@ img { max-width: 100%; height: auto; }
   color: var(--timex-blue);
   font-size: 0.75rem;
   top: 0.2rem;
+}
+
+@media (max-width: 767.98px) {
+  body.timex-site:has(.timex-sticky-cta:not([hidden])) {
+    padding-bottom: 4.5rem;
+  }
 }
 
 /* Forms */

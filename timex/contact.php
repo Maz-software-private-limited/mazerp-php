@@ -19,7 +19,7 @@ include __DIR__ . '/includes/header.php';
     <div class="row g-4">
       <div class="col-lg-5">
         <h2 class="h4 fw-bold mb-3">Talk to our team</h2>
-        <p class="text-secondary">Prefer to explore on your own? <a href="<?php echo htmlspecialchars(TIMEX_SIGNUP_URL); ?>">Start free</a> anytime.</p>
+        <p class="text-secondary">Prefer to explore on your own? <a href="<?php echo htmlspecialchars(TIMEX_SIGNUP_URL); ?>">Start now</a> anytime.</p>
         <div class="d-flex gap-3 mb-3">
           <div class="timex-plan-icon blue"><i class="fa-solid fa-phone" aria-hidden="true"></i></div>
           <div>

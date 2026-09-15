@@ -5,7 +5,7 @@
     <h2 class="h3 fw-bold mb-2">Run salary in Payroll from Timex attendance</h2>
     <p class="mb-4 text-white-50 mx-auto" style="max-width:34rem;">Timex owns time. Payroll owns pay. Capture punch, leave, and OT here—then process salary in Maz Payroll with payroll-ready attendance.</p>
     <div class="d-flex flex-wrap justify-content-center gap-2">
-      <a href="<?php echo htmlspecialchars(TIMEX_SIGNUP_URL); ?>" class="btn btn-light btn-lg px-4 fw-semibold">Start Free</a>
+      <a href="<?php echo htmlspecialchars(TIMEX_SIGNUP_URL); ?>" class="btn btn-light btn-lg px-4 fw-semibold">Start Now</a>
       <a href="<?php echo htmlspecialchars(timex_url('contact')); ?>" class="btn btn-outline-light btn-lg px-4">Book a Demo</a>
     </div>
   </div>
@@ -36,7 +36,7 @@
           <li><a href="<?php echo htmlspecialchars(timex_url('pricing')); ?>">Pricing</a></li>
           <li><a href="<?php echo htmlspecialchars(timex_url('faq')); ?>">FAQ</a></li>
           <li><a href="<?php echo htmlspecialchars(timex_url('contact')); ?>">Contact</a></li>
-          <li><a href="<?php echo htmlspecialchars(TIMEX_SIGNUP_URL); ?>">Start Free</a></li>
+          <li><a href="<?php echo htmlspecialchars(TIMEX_SIGNUP_URL); ?>">Start Now</a></li>
         </ul>
       </div>
       <div class="col-6 col-md-4 col-lg-2">

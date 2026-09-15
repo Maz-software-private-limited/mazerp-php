@@ -1,0 +1,18 @@
+<?php
+/**
+ * Local API overrides for plans catalog (and related endpoints).
+ *
+ * 1. Copy this file to api-config.local.php in the same directory:
+ *    cp api-config.local.php.example api-config.local.php
+ * 2. Adjust plans_api_base / plans_path_style for your local API
+ * 3. Never commit api-config.local.php
+ *
+ * workspace style builds: {plans_api_base}/workspace/{product}/plans?status=active
+ * portal style (default) builds: {PORTAL_ENDPOINT}/plans?status=active&product_code={product}
+ */
+return [
+    // Host only — no /v2, no /portal
+    'plans_api_base' => 'http://localhost:3000',
+    // Builds: {base}/workspace/{product}/plans?status=active
+    'plans_path_style' => 'workspace',
+];

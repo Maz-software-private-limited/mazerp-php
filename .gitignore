@@ -1,3 +1,4 @@
 includes/mail-config.local.php
+includes/api-config.local.php
 api/leads.log
 api/mail-errors.log

@@ -3,7 +3,7 @@
  * Fetch and normalize Maz Timex plans from the portal public catalog API.
  */
 
-if (!defined('TIMEX_PLANS_API_BASE')) {
+if (!defined('TIMEX_SITE_NAME')) {
     require_once __DIR__ . '/config.php';
 }
 
@@ -52,8 +52,7 @@ function timex_fetch_portal_plans($forceRefresh = false) {
  * @return array<int, array>|null
  */
 function timex_request_portal_plans() {
-    $base = rtrim(TIMEX_PLANS_API_BASE, '/');
-    $url = $base . '/plans?status=active&product_code=timex';
+    $url = get_plans_endpoint_url('timex');
     $timeout = defined('TIMEX_PLANS_TIMEOUT') ? (int) TIMEX_PLANS_TIMEOUT : 5;
 
     $raw = timex_http_get($url, $timeout);
@@ -240,9 +239,30 @@ function timex_normalize_portal_plan(array $p) {
     $yearly = isset($p['yearly_price']) ? (float) $p['yearly_price'] : 0.0;
     $currency = strtoupper(trim((string) ($p['currency'] ?? 'INR')));
     $isQuote = !empty($p['is_quote']);
+    $monthlyEnabled = array_key_exists('monthly_enabled', $p)
+        ? !empty($p['monthly_enabled'])
+        : (!$isQuote && $monthly > 0);
+    $yearlyEnabled = array_key_exists('yearly_enabled', $p)
+        ? !empty($p['yearly_enabled'])
+        : (!$isQuote && $yearly > 0);
+    $billingCycle = strtolower(trim((string) ($p['billing_cycle'] ?? '')));
+    if ($billingCycle === '') {
+        if ($monthlyEnabled && $yearlyEnabled) {
+            $billingCycle = 'both';
+        } elseif ($yearlyEnabled) {
+            $billingCycle = 'yearly';
+        } elseif ($monthlyEnabled) {
+            $billingCycle = 'monthly';
+        }
+    }
 
-    $features = [];
-    if (!empty($p['display_labels']) && is_array($p['display_labels'])) {
+    $parsed = timex_parse_feature_payload($p);
+    $featureGroups = $parsed['groups'];
+    $limits = $parsed['limits'];
+    $features = $parsed['flat'];
+
+    // Prefer structured features; only fall back to display_labels when features are missing
+    if (empty($features) && !empty($p['display_labels']) && is_array($p['display_labels'])) {
         $labels = $p['display_labels'];
         usort($labels, function ($a, $b) {
             $ao = is_array($a) ? (int) ($a['sort_order'] ?? 0) : 0;
@@ -261,10 +281,24 @@ function timex_normalize_portal_plan(array $p) {
     }
 
     if (empty($features) && !empty($p['included_features']) && is_array($p['included_features'])) {
-        foreach (array_slice($p['included_features'], 0, 8) as $feat) {
+        foreach (array_slice($p['included_features'], 0, 12) as $feat) {
             $features[] = is_string($feat) ? $feat : (string) $feat;
         }
     }
+
+    $addons = timex_normalize_addons($p['addons'] ?? []);
+    $offer = timex_select_eligible_offer(
+        $p['eligible_offers'] ?? [],
+        $monthly,
+        $yearly,
+        $monthlyEnabled,
+        $yearlyEnabled,
+        $currency
+    );
+    $commitmentOffers = timex_select_commitment_offers(
+        $p['eligible_offers'] ?? [],
+        $currency
+    );
 
     $iconMap = [
         'basic' => ['blue', 'fa-seedling'],
@@ -278,6 +312,9 @@ function timex_normalize_portal_plan(array $p) {
     $key = strtolower($code !== '' ? $code : $name);
     $icon = $iconMap[$key] ?? ['blue', 'fa-coins'];
 
+    $showMonthly = $monthlyEnabled && !$isQuote && $monthly > 0;
+    $showYearly = $yearlyEnabled && !$isQuote && $yearly > 0;
+
     return [
         'code' => $code !== '' ? $code : $key,
         'name' => $name,
@@ -285,17 +322,603 @@ function timex_normalize_portal_plan(array $p) {
         'monthly' => $monthly,
         'yearly' => $yearly,
         'currency' => $currency,
-        'monthly_label' => $isQuote || $monthly <= 0 ? '' : timex_format_money($monthly, $currency),
-        'yearly_label' => $isQuote || $yearly <= 0 ? '' : timex_format_money($yearly, $currency),
+        'monthly_enabled' => $monthlyEnabled,
+        'yearly_enabled' => $yearlyEnabled,
+        'billing_cycle' => $billingCycle,
+        'monthly_label' => $showMonthly ? timex_format_money($monthly, $currency) : '',
+        'yearly_label' => $showYearly ? timex_format_money($yearly, $currency) : '',
         'popular' => !empty($p['is_popular']),
         'is_quote' => $isQuote,
         'trial_days' => isset($p['trial_days']) ? (int) $p['trial_days'] : null,
         'trial_enabled' => !empty($p['trial_enabled']),
         'sort_order' => isset($p['sort_order']) ? (int) $p['sort_order'] : 0,
         'features' => $features,
+        'feature_groups' => $featureGroups,
+        'limits' => $limits,
+        'addons' => $addons,
+        'offer' => $offer,
+        'commitment_offers' => $commitmentOffers,
         'icon' => $icon[0],
         'icon_fa' => $icon[1],
     ];
+}
+
+/**
+ * Parse categorized features into groups, capacity limits, and flat labels.
+ *
+ * @param array $p
+ * @return array{groups: array<int, array>, limits: array<int, array>, flat: array<int, string>}
+ */
+function timex_parse_feature_payload(array $p) {
+    $groups = [];
+    $limits = [];
+    $flat = [];
+    $rawFeatures = $p['features'] ?? null;
+
+    if (!is_array($rawFeatures) || empty($rawFeatures)) {
+        return ['groups' => [], 'limits' => [], 'flat' => []];
+    }
+
+    // Associative category map (workspace API) vs flat list
+    $isAssoc = array_keys($rawFeatures) !== range(0, count($rawFeatures) - 1);
+    if ($isAssoc) {
+        foreach ($rawFeatures as $category => $items) {
+            if (!is_array($items)) {
+                continue;
+            }
+            $catName = is_string($category) ? trim($category) : 'Features';
+            if ($catName === '') {
+                $catName = 'Features';
+            }
+            $groupItems = [];
+            usort($items, function ($a, $b) {
+                $ao = is_array($a) ? (int) ($a['sort_order'] ?? 0) : 0;
+                $bo = is_array($b) ? (int) ($b['sort_order'] ?? 0) : 0;
+                return $ao <=> $bo;
+            });
+            foreach ($items as $item) {
+                if (!is_array($item) || empty($item['is_included'])) {
+                    continue;
+                }
+                $featName = trim((string) ($item['feature_name'] ?? $item['name'] ?? ''));
+                if ($featName === '') {
+                    continue;
+                }
+                $code = trim((string) ($item['feature_code'] ?? ''));
+                $desc = trim((string) ($item['description'] ?? ''));
+                $groupItems[] = [
+                    'code' => $code,
+                    'name' => $featName,
+                    'description' => $desc,
+                ];
+                $flat[] = $featName;
+                $limitRow = timex_feature_to_limit($item, $catName);
+                if ($limitRow !== null) {
+                    $limits[] = $limitRow;
+                }
+            }
+            if (!empty($groupItems)) {
+                $groups[] = [
+                    'category' => $catName,
+                    'icon' => timex_feature_category_icon($catName),
+                    'items' => $groupItems,
+                ];
+            }
+        }
+    }
+
+    usort($limits, function ($a, $b) {
+        return ($a['sort_order'] ?? 0) <=> ($b['sort_order'] ?? 0);
+    });
+
+    return [
+        'groups' => $groups,
+        'limits' => $limits,
+        'flat' => $flat,
+    ];
+}
+
+/**
+ * @param array $item
+ * @param string $category
+ * @return array|null
+ */
+function timex_feature_to_limit(array $item, $category) {
+    $isUnlimited = !empty($item['is_unlimited']);
+    $limitRaw = $item['limit_value'] ?? null;
+
+    if (!$isUnlimited && ($limitRaw === null || $limitRaw === '')) {
+        return null;
+    }
+
+    $limitValue = is_numeric($limitRaw) ? (float) $limitRaw : null;
+    // -1 often means unlimited even when is_unlimited is false
+    if ($limitValue !== null && $limitValue < 0) {
+        $isUnlimited = true;
+        $limitValue = null;
+    }
+
+    $name = trim((string) ($item['feature_name'] ?? $item['name'] ?? ''));
+    if ($name === '') {
+        return null;
+    }
+
+    $unit = '';
+    $code = strtolower(trim((string) ($item['feature_code'] ?? '')));
+    if ($code === 'storage' || stripos($name, 'storage') !== false) {
+        $unit = 'GB';
+    }
+
+    $display = $isUnlimited
+        ? 'Unlimited'
+        : timex_format_indian_number($limitValue) . ($unit !== '' ? ' ' . $unit : '');
+
+    return [
+        'code' => $code,
+        'name' => $name,
+        'category' => $category,
+        'limit_value' => $isUnlimited ? null : $limitValue,
+        'is_unlimited' => $isUnlimited,
+        'unit' => $unit,
+        'display' => $display,
+        'sort_order' => isset($item['sort_order']) ? (int) $item['sort_order'] : 0,
+    ];
+}
+
+function timex_feature_category_icon($category) {
+    $map = [
+        'Business' => 'fa-building',
+        'Usage' => 'fa-hard-drive',
+        'Workforce' => 'fa-users',
+        'Leave' => 'fa-calendar-check',
+        'Projects' => 'fa-diagram-project',
+        'Integrations' => 'fa-plug',
+        'Time' => 'fa-clock',
+        'Shifts' => 'fa-business-time',
+        'Location' => 'fa-location-dot',
+        'Approvals' => 'fa-check-double',
+        'Automation' => 'fa-wand-magic-sparkles',
+        'Analytics' => 'fa-chart-line',
+        'HR' => 'fa-id-card',
+        'Data' => 'fa-database',
+        'Platform' => 'fa-layer-group',
+        'Security' => 'fa-shield-halved',
+    ];
+    return $map[$category] ?? 'fa-circle-check';
+}
+
+/**
+ * @param mixed $addons
+ * @return array<int, array>
+ */
+function timex_normalize_addons($addons) {
+    if (!is_array($addons) || empty($addons)) {
+        return [];
+    }
+    $out = [];
+    foreach ($addons as $addon) {
+        if (!is_array($addon)) {
+            continue;
+        }
+        $name = trim((string) ($addon['name'] ?? $addon['addon_name'] ?? $addon['label'] ?? ''));
+        if ($name === '') {
+            continue;
+        }
+        $out[] = [
+            'code' => trim((string) ($addon['code'] ?? $addon['addon_code'] ?? '')),
+            'name' => $name,
+            'description' => trim((string) ($addon['description'] ?? '')),
+            'price_label' => isset($addon['price'])
+                ? timex_format_money((float) $addon['price'], (string) ($addon['currency'] ?? 'INR'))
+                : trim((string) ($addon['price_label'] ?? '')),
+        ];
+    }
+    return $out;
+}
+
+/**
+ * Pick the best active eligible offer for display.
+ *
+ * @param mixed $offers
+ * @return array|null
+ */
+function timex_select_eligible_offer($offers, $monthly, $yearly, $monthlyEnabled, $yearlyEnabled, $currency = 'INR') {
+    if (!is_array($offers) || empty($offers)) {
+        return null;
+    }
+
+    $preferredCycle = $yearlyEnabled ? 'yearly' : ($monthlyEnabled ? 'monthly' : '');
+    $candidates = [];
+
+    foreach ($offers as $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+        if (!timex_offer_is_in_window($row)) {
+            continue;
+        }
+        $cycle = strtolower(trim((string) ($row['billing_cycle'] ?? '')));
+        if ($cycle === 'yearly' && !$yearlyEnabled) {
+            continue;
+        }
+        if ($cycle === 'monthly' && !$monthlyEnabled) {
+            continue;
+        }
+        $candidates[] = $row;
+    }
+
+    if (empty($candidates)) {
+        return null;
+    }
+
+    usort($candidates, function ($a, $b) use ($preferredCycle) {
+        $ac = strtolower(trim((string) ($a['billing_cycle'] ?? '')));
+        $bc = strtolower(trim((string) ($b['billing_cycle'] ?? '')));
+        $ap = ($preferredCycle !== '' && $ac === $preferredCycle) ? 0 : 1;
+        $bp = ($preferredCycle !== '' && $bc === $preferredCycle) ? 0 : 1;
+        if ($ap !== $bp) {
+            return $ap <=> $bp;
+        }
+        return ((int) ($a['id'] ?? 0)) <=> ((int) ($b['id'] ?? 0));
+    });
+
+    $row = $candidates[0];
+    $cycle = strtolower(trim((string) ($row['billing_cycle'] ?? $preferredCycle)));
+    if ($cycle !== 'monthly' && $cycle !== 'yearly') {
+        $cycle = $preferredCycle !== '' ? $preferredCycle : 'yearly';
+    }
+
+    $offerCurrency = strtoupper(trim((string) ($row['currency'] ?? $currency)));
+    if (array_key_exists('charge_amount', $row) && $row['charge_amount'] !== null && $row['charge_amount'] !== '') {
+        $price = (float) $row['charge_amount'];
+    } else {
+        $price = isset($row['offer_price']) ? (float) $row['offer_price'] : 0.0;
+    }
+
+    $regular = $cycle === 'monthly' ? (float) $monthly : (float) $yearly;
+    $savings = max(0, $regular - $price);
+    $duration = isset($row['offer_duration']) ? (int) $row['offer_duration'] : 0;
+    $periodUnit = $cycle === 'monthly' ? '/month' : '/year';
+
+    return [
+        'id' => isset($row['id']) ? (int) $row['id'] : null,
+        'name' => trim((string) ($row['offer_name'] ?? 'Special offer')),
+        'duration_months' => $duration > 0 ? $duration : null,
+        'price' => $price,
+        'price_label' => timex_format_money($price, $offerCurrency),
+        'currency' => $offerCurrency,
+        'billing_cycle' => $cycle,
+        'period_unit' => $periodUnit,
+        'regular_price' => $regular,
+        'regular_label' => $regular > 0 ? timex_format_money($regular, $offerCurrency) : '',
+        'savings' => $savings,
+        'savings_label' => $savings > 0 ? timex_format_money($savings, $offerCurrency) : '',
+        'start_date' => $row['start_date'] ?? null,
+        'end_date' => $row['end_date'] ?? null,
+        'active' => true,
+    ];
+}
+
+/**
+ * Default 6- and 12-month commitment offers (marketing fallback).
+ *
+ * @return array<int, array>
+ */
+function timex_default_commitment_offers() {
+    return [
+        [
+            'months' => 6,
+            'total' => 3594.0,
+            'effective_monthly' => 599.0,
+            'name' => '6 Months',
+            'blurb' => 'Get started with a flexible 6-month commitment.',
+            'cta_label' => 'Choose 6 Months',
+            'best_value' => false,
+            'currency' => 'INR',
+        ],
+        [
+            'months' => 12,
+            'total' => 5988.0,
+            'effective_monthly' => 499.0,
+            'name' => '12 Months',
+            'blurb' => 'Save more with our 12-month offer and enjoy Timex for a full year.',
+            'cta_label' => 'Choose 12 Months',
+            'best_value' => true,
+            'currency' => 'INR',
+        ],
+    ];
+}
+
+/**
+ * Normalize a commitment offer row for the pricing page.
+ *
+ * @param array $row
+ * @return array
+ */
+function timex_normalize_commitment_offer(array $row, $currency = 'INR') {
+    $months = (int) ($row['months'] ?? $row['offer_duration'] ?? 0);
+    $offerCurrency = strtoupper(trim((string) ($row['currency'] ?? $currency)));
+    if ($offerCurrency === '') {
+        $offerCurrency = 'INR';
+    }
+
+    if (isset($row['total'])) {
+        $total = (float) $row['total'];
+    } elseif (array_key_exists('charge_amount', $row) && $row['charge_amount'] !== null && $row['charge_amount'] !== '') {
+        $total = (float) $row['charge_amount'];
+    } else {
+        $total = isset($row['offer_price']) ? (float) $row['offer_price'] : 0.0;
+    }
+
+    if (isset($row['effective_monthly']) && (float) $row['effective_monthly'] > 0) {
+        $monthly = (float) $row['effective_monthly'];
+    } elseif ($months > 0 && $total > 0) {
+        $monthly = $total / $months;
+    } else {
+        $monthly = 0.0;
+    }
+
+    $name = trim((string) ($row['name'] ?? $row['offer_name'] ?? ''));
+    if ($name === '' && $months > 0) {
+        $name = $months . ' Months';
+    }
+
+    $blurb = trim((string) ($row['blurb'] ?? ''));
+    if ($blurb === '') {
+        $blurb = $months === 12
+            ? 'Save more with our 12-month offer and enjoy Timex for a full year.'
+            : 'Get started with a flexible ' . $months . '-month commitment.';
+    }
+
+    $cta = trim((string) ($row['cta_label'] ?? ''));
+    if ($cta === '') {
+        $cta = 'Choose ' . ($months > 0 ? $months . ' Months' : 'Offer');
+    }
+
+    return [
+        'id' => isset($row['id']) ? (int) $row['id'] : null,
+        'months' => $months,
+        'name' => $name,
+        'blurb' => $blurb,
+        'cta_label' => $cta,
+        'best_value' => !empty($row['best_value']) || $months === 12,
+        'total' => $total,
+        'total_label' => $total > 0 ? timex_format_money($total, $offerCurrency) : '',
+        'effective_monthly' => $monthly,
+        'monthly_label' => $monthly > 0 ? timex_format_money($monthly, $offerCurrency) : '',
+        'currency' => $offerCurrency,
+        'active' => true,
+        'compare_monthly' => 0.0,
+        'compare_monthly_label' => '',
+        'save_percent' => null,
+        'save_caption' => '',
+    ];
+}
+
+/**
+ * Split a formatted money label into major + decimal parts for display.
+ *
+ * @param string $label
+ * @return array{major: string, minor: string}
+ */
+function timex_split_money_label($label) {
+    $label = (string) $label;
+    if (preg_match('/^(.*?)(\.\d+)$/u', $label, $m)) {
+        return [
+            'major' => $m[1],
+            'minor' => $m[2],
+        ];
+    }
+    return [
+        'major' => $label,
+        'minor' => '',
+    ];
+}
+
+/**
+ * Add struck compare price + save caption (Stripe-style hierarchy) across commitment offers.
+ *
+ * @param array<int, array> $offers
+ * @return array<int, array>
+ */
+function timex_enrich_commitment_offer_display(array $offers) {
+    $refMonthly = 0.0;
+    $currency = 'INR';
+    foreach ($offers as $offer) {
+        $refMonthly = max($refMonthly, (float) ($offer['effective_monthly'] ?? 0));
+        if (!empty($offer['currency'])) {
+            $currency = (string) $offer['currency'];
+        }
+    }
+
+    foreach ($offers as &$offer) {
+        $monthly = (float) ($offer['effective_monthly'] ?? 0);
+        $months = (int) ($offer['months'] ?? 0);
+        $parts = timex_split_money_label($offer['monthly_label'] ?? '');
+        $offer['monthly_major'] = $parts['major'];
+        $offer['monthly_minor'] = $parts['minor'];
+
+        $offer['compare_monthly'] = 0.0;
+        $offer['compare_monthly_label'] = '';
+        $offer['save_percent'] = null;
+        $offer['save_caption'] = '';
+
+        if ($refMonthly > 0 && $monthly > 0 && $monthly < $refMonthly - 0.009) {
+            $save = $refMonthly - $monthly;
+            $pct = (int) round(($save / $refMonthly) * 100);
+            $compareLabel = timex_format_money($refMonthly, $currency);
+            $offer['compare_monthly'] = $refMonthly;
+            $offer['compare_monthly_label'] = $compareLabel;
+            $offer['save_percent'] = $pct > 0 ? $pct : null;
+            if ($pct > 0 && $months > 0) {
+                $offer['save_caption'] = 'Save ' . $pct . '% for ' . $months
+                    . ' months, then ' . $compareLabel . '/mo';
+            } elseif ($months > 0) {
+                $offer['save_caption'] = 'Save ' . timex_format_money($save, $currency)
+                    . ' every month for ' . $months . ' months';
+            }
+        } elseif ($months > 0 && !empty($offer['total_label'])) {
+            $offer['save_caption'] = $offer['total_label'] . ' total for ' . $months . ' months';
+        }
+    }
+    unset($offer);
+
+    return $offers;
+}
+
+/**
+ * Resolve 6- and 12-month commitment offers from catalog rows, filling gaps from fallback.
+ *
+ * @param mixed $offers
+ * @param array<int, array>|null $fallback
+ * @return array<int, array>
+ */
+function timex_select_commitment_offers($offers, $currency = 'INR', $fallback = null) {
+    $wanted = [6, 12];
+    $found = [];
+
+    if (is_array($offers)) {
+        foreach ($offers as $row) {
+            if (!is_array($row)) {
+                continue;
+            }
+            if (!timex_offer_is_in_window($row)) {
+                continue;
+            }
+            $duration = (int) ($row['offer_duration'] ?? $row['months'] ?? 0);
+            if (!in_array($duration, $wanted, true) || isset($found[$duration])) {
+                continue;
+            }
+            $normalized = timex_normalize_commitment_offer(array_merge($row, ['months' => $duration]), $currency);
+            if ($normalized['total'] <= 0 && $normalized['effective_monthly'] <= 0) {
+                continue;
+            }
+            $found[$duration] = $normalized;
+        }
+    }
+
+    $fallbackRows = is_array($fallback) && !empty($fallback)
+        ? $fallback
+        : timex_default_commitment_offers();
+
+    $out = [];
+    foreach ($wanted as $months) {
+        if (isset($found[$months])) {
+            $item = $found[$months];
+        } else {
+            $fb = null;
+            foreach ($fallbackRows as $row) {
+                if ((int) ($row['months'] ?? 0) === $months) {
+                    $fb = $row;
+                    break;
+                }
+            }
+            if ($fb === null) {
+                continue;
+            }
+            $item = timex_normalize_commitment_offer($fb, $currency);
+        }
+        $item['best_value'] = ($months === 12);
+        $out[] = $item;
+    }
+
+    return timex_enrich_commitment_offer_display($out);
+}
+
+/**
+ * Signup URL with commitment length for checkout context.
+ *
+ * @param int $months
+ * @return string
+ */
+function timex_signup_commitment_url($months) {
+    $url = TIMEX_SIGNUP_URL;
+    $sep = (strpos($url, '?') !== false) ? '&' : '?';
+    return $url . $sep . 'commitment=' . (int) $months;
+}
+
+/**
+ * Monthly savings of the longer offer vs the shorter one.
+ *
+ * @param array<int, array> $offers
+ * @return array{amount: float, label: string}|null
+ */
+function timex_commitment_monthly_savings(array $offers) {
+    $byMonths = [];
+    foreach ($offers as $offer) {
+        $m = (int) ($offer['months'] ?? 0);
+        if ($m > 0) {
+            $byMonths[$m] = (float) ($offer['effective_monthly'] ?? 0);
+        }
+    }
+    if (empty($byMonths[6]) || empty($byMonths[12])) {
+        return null;
+    }
+    $save = max(0, $byMonths[6] - $byMonths[12]);
+    if ($save <= 0) {
+        return null;
+    }
+    $currency = 'INR';
+    foreach ($offers as $offer) {
+        if (!empty($offer['currency'])) {
+            $currency = (string) $offer['currency'];
+            break;
+        }
+    }
+    return [
+        'amount' => $save,
+        'label' => timex_format_money($save, $currency),
+    ];
+}
+
+/**
+ * @param array $row
+ * @return bool
+ */
+function timex_offer_is_in_window(array $row) {
+    $now = time();
+    $start = timex_parse_offer_date($row['start_date'] ?? null);
+    $end = timex_parse_offer_date($row['end_date'] ?? null);
+    if ($start !== null && $now < $start) {
+        return false;
+    }
+    if ($end !== null && $now > $end) {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * @param mixed $value
+ * @return int|null unix timestamp
+ */
+function timex_parse_offer_date($value) {
+    if ($value === null || $value === '') {
+        return null;
+    }
+    if (is_numeric($value)) {
+        return (int) $value;
+    }
+    $ts = strtotime((string) $value);
+    return $ts === false ? null : $ts;
+}
+
+/**
+ * Select the single plan to feature on the pricing page.
+ *
+ * @param array<int, array> $plans
+ * @return array|null
+ */
+function timex_select_primary_plan(array $plans) {
+    if (empty($plans)) {
+        return null;
+    }
+    foreach ($plans as $plan) {
+        if (!empty($plan['popular'])) {
+            return $plan;
+        }
+    }
+    return $plans[0];
 }
 
 function timex_format_money($amount, $currency = 'INR') {
@@ -336,6 +959,23 @@ function timex_normalize_fallback_plans(array $staticPlans) {
         $monthlyRaw = isset($plan['monthly']) ? (string) $plan['monthly'] : '';
         $yearlyRaw = isset($plan['yearly']) ? (string) $plan['yearly'] : '';
         $hasPrice = $monthlyRaw !== '' || $yearlyRaw !== '';
+        $featureList = array_values($plan['features'] ?? []);
+        $featureGroups = [];
+        if (!empty($plan['feature_groups']) && is_array($plan['feature_groups'])) {
+            $featureGroups = $plan['feature_groups'];
+        } elseif (!empty($featureList)) {
+            $featureGroups[] = [
+                'category' => 'Included',
+                'icon' => 'fa-circle-check',
+                'items' => array_map(function ($label) {
+                    return [
+                        'code' => '',
+                        'name' => (string) $label,
+                        'description' => '',
+                    ];
+                }, $featureList),
+            ];
+        }
         $out[] = [
             'code' => (string) ($plan['key'] ?? ('plan-' . $i)),
             'name' => (string) ($plan['name'] ?? 'Plan'),
@@ -343,14 +983,26 @@ function timex_normalize_fallback_plans(array $staticPlans) {
             'monthly' => 0,
             'yearly' => 0,
             'currency' => 'INR',
+            'monthly_enabled' => $monthlyRaw !== '',
+            'yearly_enabled' => $yearlyRaw !== '',
+            'billing_cycle' => ($monthlyRaw !== '' && $yearlyRaw !== '') ? 'both' : ($yearlyRaw !== '' ? 'yearly' : ($monthlyRaw !== '' ? 'monthly' : '')),
             'monthly_label' => $hasPrice ? $monthlyRaw : '',
             'yearly_label' => $hasPrice ? $yearlyRaw : '',
             'popular' => !empty($plan['popular']),
             'is_quote' => !$hasPrice,
-            'trial_days' => null,
-            'trial_enabled' => false,
+            'trial_days' => isset($plan['trial_days']) ? (int) $plan['trial_days'] : null,
+            'trial_enabled' => !empty($plan['trial_enabled']),
             'sort_order' => $i,
-            'features' => array_values($plan['features'] ?? []),
+            'features' => $featureList,
+            'feature_groups' => $featureGroups,
+            'limits' => array_values($plan['limits'] ?? []),
+            'addons' => array_values($plan['addons'] ?? []),
+            'offer' => null,
+            'commitment_offers' => timex_select_commitment_offers(
+                $plan['commitment_offers'] ?? [],
+                'INR',
+                timex_default_commitment_offers()
+            ),
             'icon' => (string) ($plan['icon'] ?? 'blue'),
             'icon_fa' => (string) ($plan['icon_fa'] ?? 'fa-coins'),
             'note' => (string) ($plan['note'] ?? ''),

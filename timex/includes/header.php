@@ -130,7 +130,7 @@ if ($timex_active === 'faq' && !empty($timex_faq_items)) {
 
       <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2 ms-lg-3">
         <a href="<?php echo htmlspecialchars(timex_url('contact')); ?>" class="btn btn-outline-primary timex-btn-login px-3">Book a Demo</a>
-        <a href="<?php echo htmlspecialchars(TIMEX_SIGNUP_URL); ?>" class="btn btn-primary timex-btn-cta px-3">Start Free</a>
+        <a href="<?php echo htmlspecialchars(TIMEX_SIGNUP_URL); ?>" class="btn btn-primary timex-btn-cta px-3">Start Now</a>
       </div>
     </div>
   </div>
