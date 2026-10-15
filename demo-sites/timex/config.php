@@ -8,14 +8,27 @@ return [
     'logo' => 'assets/img/logo.png',
     'tagline' => 'Time and Attendance Management App',
     'meta_description' => 'MazERP Timex — smart attendance for the modern workforce. Live board, biometric punch, leave, shifts, and HRM reports by Maz Techno.',
-    'console_url' => rtrim(getenv('MAZERP_CONSOLE_URL') ?: 'http://localhost:4210/console', '/'),
+    'console_url' => rtrim(getenv('MAZERP_CONSOLE_URL') ?: 'http://localhost:8080/console', '/'),
+    'get_started_plan_url' => (static function (): string {
+        $explicit = getenv('MAZERP_TIMEX_GET_STARTED_URL');
+        if ($explicit !== false && $explicit !== '') {
+            return rtrim($explicit, '/');
+        }
+        $console = rtrim(getenv('MAZERP_CONSOLE_URL') ?: 'http://localhost:8080/console', '/');
+        $productCode = getenv('MAZERP_TIMEX_PRODUCT_CODE') ?: 'timex';
+        $planCode = getenv('MAZERP_TIMEX_PLAN_CODE') ?: 'basic';
+        $billingCycle = getenv('MAZERP_TIMEX_BILLING_CYCLE') ?: 'yearly';
+        return $console . '/product_code=' . rawurlencode($productCode)
+            . '/get_started/plan_code=' . rawurlencode($planCode)
+            . '/billing_cycle=' . rawurlencode($billingCycle);
+    })(),
     'timex_app_url' => rtrim(getenv('MAZERP_TIMEX_URL') ?: 'http://localhost:4213/timex', '/'),
     'mazerp_marketing_url' => rtrim(getenv('MAZERP_MARKETING_URL') ?: getenv('MAZERP_ALL_PRODUCTS_URL') ?: 'https://www.mazerp.com', '/'),
     'company_name' => 'Maz Techno',
     'contact_email' => getenv('MAZERP_CONTACT_EMAIL') ?: 'info@maztechno.com',
-    'contact_phone' => getenv('MAZERP_CONTACT_PHONE') ?: '+91 94440 12345',
-    'contact_phone_e164' => getenv('MAZERP_CONTACT_PHONE_E164') ?: '919444012345',
-    'contact_whatsapp_e164' => getenv('MAZERP_CONTACT_WHATSAPP_E164') ?: '919444012345',
+    'contact_phone' => getenv('MAZERP_CONTACT_PHONE') ?: '+91 81100 87700',
+    'contact_phone_e164' => getenv('MAZERP_CONTACT_PHONE_E164') ?: '918110087700',
+    'contact_whatsapp_e164' => getenv('MAZERP_CONTACT_WHATSAPP_E164') ?: '918110087700',
     'contact_whatsapp_prefill' => 'Hi, I would like to schedule a MazERP Timex demo.',
     'pricing' => [
         'monthly_price' => (int) (getenv('MAZERP_TIMEX_PRICE_MONTHLY') ?: 999),

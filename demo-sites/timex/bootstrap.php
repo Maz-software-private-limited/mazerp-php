@@ -85,6 +85,11 @@ function get_started_url(): string
     return site_config()['timex_app_url'] . '/initialize';
 }
 
+function timex_get_started_plan_url(): string
+{
+    return (string) (site_config()['get_started_plan_url'] ?? '');
+}
+
 function contact_whatsapp_href(): string
 {
     $c = site_config();

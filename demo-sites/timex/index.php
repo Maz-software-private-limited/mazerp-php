@@ -13,7 +13,6 @@ $c = site_config();
 $tel = contact_tel_href();
 $wa = contact_whatsapp_href();
 $phone = (string) $c['contact_phone'];
-$mazerpUrl = (string) ($c['mazerp_marketing_url'] ?? 'https://www.mazerp.com');
 $monthlyPrice = (int) ($c['pricing']['monthly_price'] ?? 999);
 $freeMaxEmployees = (int) ($c['pricing']['free_year_max_employees'] ?? 10);
 $heroAssetVer = static function (string $rel): string {
@@ -87,7 +86,11 @@ $heroAssetVer = static function (string $rel): string {
             </p>
           </div>
           <div class="hero__panel-actions">
-            <button type="button" class="btn--offer" data-open-modal="modal-demo">Get Started Free</button>
+            <a
+              class="btn--offer"
+              href="<?= e(timex_get_started_plan_url()) ?>"
+              target="_blank"
+              rel="noopener noreferrer">Get Started Free</a>
             <a class="btn--outline-light" href="#features">Explore Features</a>
           </div>
         </div>
@@ -109,7 +112,7 @@ $heroAssetVer = static function (string $rel): string {
     <section class="clients-band" id="clients" aria-labelledby="clients-title">
       <div class="clients-band__inner">
         <p id="clients-title"><strong>Clients.</strong> Timex is MazERP time and attendance—alongside Books, CRM, and Payroll in one signed-in workspace for growing businesses.</p>
-        <a href="<?= e($mazerpUrl) ?>">Explore MazERP products →</a>
+        <a href="<?= e(timex_get_started_plan_url()) ?>" target="_blank" rel="noopener noreferrer">Explore MazERP products →</a>
       </div>
     </section>
 
