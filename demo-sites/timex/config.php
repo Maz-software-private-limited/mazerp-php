@@ -15,12 +15,13 @@ return [
             return rtrim($explicit, '/');
         }
         $console = rtrim(getenv('MAZERP_CONSOLE_URL') ?: 'http://localhost:8080/console', '/');
-        $productCode = getenv('MAZERP_TIMEX_PRODUCT_CODE') ?: 'timex';
-        $planCode = getenv('MAZERP_TIMEX_PLAN_CODE') ?: 'basic';
-        $billingCycle = getenv('MAZERP_TIMEX_BILLING_CYCLE') ?: 'yearly';
-        return $console . '/product_code=' . rawurlencode($productCode)
-            . '/get_started/plan_code=' . rawurlencode($planCode)
-            . '/billing_cycle=' . rawurlencode($billingCycle);
+        $plan = getenv('MAZERP_TIMEX_PLAN_CODE') ?: 'basic';
+        $cycle = getenv('MAZERP_TIMEX_BILLING_CYCLE') ?: 'yearly';
+        $query = http_build_query([
+            'plan' => $plan,
+            'cycle' => $cycle,
+        ]);
+        return $console . '/timex/get_started?' . $query;
     })(),
     'timex_app_url' => rtrim(getenv('MAZERP_TIMEX_URL') ?: 'http://localhost:4213/timex', '/'),
     'mazerp_marketing_url' => rtrim(getenv('MAZERP_MARKETING_URL') ?: getenv('MAZERP_ALL_PRODUCTS_URL') ?: 'https://www.mazerp.com', '/'),
