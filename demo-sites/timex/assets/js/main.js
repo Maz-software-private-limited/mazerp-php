@@ -79,7 +79,6 @@
     checked: $("[data-stat-checked]"),
     leave: $("[data-stat-leave]"),
     field: $("[data-stat-field]"),
-    heroChecked: $("[data-hero-checked]"),
   };
 
   const syncStats = () => {
@@ -87,7 +86,9 @@
     if (statEls.checked) statEls.checked.textContent = String(stats.checked);
     if (statEls.leave) statEls.leave.textContent = String(stats.leave);
     if (statEls.field) statEls.field.textContent = String(stats.field);
-    if (statEls.heroChecked) statEls.heroChecked.textContent = String(stats.checked);
+    $$("[data-hero-checked]").forEach((el) => {
+      el.textContent = String(stats.checked);
+    });
   };
 
   const tableBody = $("#attendance-tbody");

@@ -14,6 +14,12 @@ $tel = contact_tel_href();
 $wa = contact_whatsapp_href();
 $phone = (string) $c['contact_phone'];
 $mazerpUrl = (string) ($c['mazerp_marketing_url'] ?? 'https://www.mazerp.com');
+$monthlyPrice = (int) ($c['pricing']['monthly_price'] ?? 999);
+$heroAssetVer = static function (string $rel): string {
+    $path = __DIR__ . '/' . ltrim($rel, '/');
+    $url = asset_url($rel);
+    return is_file($path) ? $url . '?v=' . filemtime($path) : $url;
+};
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +35,7 @@ $mazerpUrl = (string) ($c['mazerp_marketing_url'] ?? 'https://www.mazerp.com');
   <link rel="stylesheet" href="<?= e(asset_url('assets/css/style.css')) ?>">
   <link rel="stylesheet" href="<?= e(asset_url('assets/css/header.css')) ?>">
   <link rel="stylesheet" href="<?= e(asset_url('assets/css/sections.css')) ?>">
+  <link rel="stylesheet" href="<?= e(asset_url('assets/css/hero.css')) ?>">
 </head>
 <body>
   <header class="site-header" data-site-header>
@@ -54,62 +61,38 @@ $mazerpUrl = (string) ($c['mazerp_marketing_url'] ?? 'https://www.mazerp.com');
   </header>
 
   <main id="top">
-    <section class="hero">
+    <section class="hero hero--split">
       <div class="hero__inner">
-        <div class="hero__content">
-          <h1 class="hero__title">
-            The <span class="hero__ai">Smart AI</span>-Powered Attendance Solution for the Modern Workforce
-          </h1>
-          <div class="hero__promo-strip">
-            <span class="hero__promo-brand">Timex</span>
-            <span class="hero__promo-text"><strong>1st year free</strong> · then <span class="hero__promo-amount">₹999</span>/month</span>
-            <button type="button" class="hero__promo-cta" data-open-modal="modal-demo">Claim →</button>
-          </div>
-          <p class="hero__sub">
-            MazERP Timex enhances <strong>Efficiency</strong>, improves <strong>Productivity</strong>, and increases <strong>Profitability</strong>.
+        <div class="hero__panel">
+          <p class="hero__panel-badge">Limited-time offer</p>
+          <h1 class="hero__panel-title">Smart Attendance Management Software. Free for 1 Year!</h1>
+          <p class="hero__panel-text">
+            Manage employee attendance smarter with MazERP Timex. Get your first-year subscription worth <?= e(format_inr($monthlyPrice)) ?> absolutely free and simplify workforce management.
           </p>
-          <button type="button" class="btn btn--primary btn--lg" data-open-modal="modal-demo">Schedule your Demo</button>
+          <div class="hero__panel-price">
+            <span class="hero__panel-price-tag">
+              <span class="hero__price-was"><?= e(format_inr($monthlyPrice)) ?></span>
+              <span class="hero__price-arrow" aria-hidden="true">→</span>
+              <span>FREE</span>
+            </span>
+            <span class="hero__panel-price-note">First-year subscription</span>
+          </div>
+          <div class="hero__panel-actions">
+            <button type="button" class="btn--offer" data-open-modal="modal-demo">Get Started Free</button>
+            <a class="btn--outline-light" href="#features">Explore Features</a>
+          </div>
         </div>
 
-        <div class="hero__showcase" aria-hidden="true">
-          <div class="laptop">
-            <div class="laptop__bezel">
-              <div class="laptop__screen">
-                <div class="dash">
-                  <div class="dash__title">Live Attendance · ERP Dashboard</div>
-                  <div class="dash__cards">
-                    <div class="dash-card dash-card--gold"><span>Shift Employees</span><strong>102</strong></div>
-                    <div class="dash-card dash-card--gold"><span>Checked-in</span><strong data-hero-checked>96</strong></div>
-                    <div class="dash-card dash-card--gold"><span>On Leave</span><strong>06</strong></div>
-                    <div class="dash-card dash-card--gold"><span>Field Attendance</span><strong>36</strong></div>
-                  </div>
-                  <div class="dash__charts">
-                    <div class="donut" style="--p: 72"></div>
-                    <div class="bars">
-                      <span style="--h: 40%"></span><span style="--h: 65%"></span><span style="--h: 55%"></span>
-                      <span style="--h: 80%"></span><span style="--h: 70%"></span><span style="--h: 90%"></span>
-                    </div>
-                  </div>
-                  <table class="dash-table">
-                    <tr><th>Employee</th><th>Status</th></tr>
-                    <tr><td>Anita R.</td><td>Present</td></tr>
-                    <tr><td>Rahul K.</td><td>On site</td></tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="presenter">
-            <div class="presenter__figure"></div>
-            <div class="phone-mock">
-              <div class="phone-mock__screen">
-                <p class="phone-mock__app">TAM Mobile</p>
-                <p class="phone-mock__feat">GPS geofencing</p>
-                <p class="phone-mock__feat">Selfie verification</p>
-                <button type="button" class="phone-mock__punch">Punch In Now</button>
-              </div>
-            </div>
-          </div>
+        <div class="hero__media" aria-label="Timex product preview">
+          <img
+            class="hero__visual"
+            src="<?= e($heroAssetVer('assets/img/hero-visual-blend.png')) ?>"
+            width="1320"
+            height="554"
+            alt="Timex QR scanner, attendance dashboard on laptop, and mobile check-in app"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high">
         </div>
       </div>
     </section>
