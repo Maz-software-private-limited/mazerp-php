@@ -4,38 +4,6 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
-  /* Theme switch (Aurora / Midnight / Breeze) */
-  const themeLink = $("#theme-stylesheet");
-  const THEME_KEY = "timex-theme";
-  const applyTheme = (name) => {
-    if (!themeLink) return;
-    const href = themeLink.getAttribute(`data-theme-${name}`);
-    if (href) themeLink.href = href;
-    try {
-      localStorage.setItem(THEME_KEY, name);
-    } catch {
-      /* ignore */
-    }
-    $$("[data-set-theme]").forEach((btn) => {
-      btn.classList.toggle("is-active", btn.getAttribute("data-set-theme") === name);
-    });
-  };
-  const savedTheme = (() => {
-    try {
-      return localStorage.getItem(THEME_KEY);
-    } catch {
-      return null;
-    }
-  })();
-  if (savedTheme === "aurora" || savedTheme === "breeze" || savedTheme === "midnight") {
-    applyTheme(savedTheme);
-  } else {
-    applyTheme("aurora");
-  }
-  $$("[data-set-theme]").forEach((btn) => {
-    btn.addEventListener("click", () => applyTheme(btn.getAttribute("data-set-theme") || "aurora"));
-  });
-
   /* Header scroll */
   const header = $("[data-site-header]");
   if (header) {

@@ -146,6 +146,11 @@ main > .hero {
   padding-top: calc(var(--header-h) + 2.75rem) !important;
 }
 
+/* In-page nav: land below fixed header */
+main [id] {
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+
 @media (min-width: 900px) {
   .site-header__inner {
     display: grid;

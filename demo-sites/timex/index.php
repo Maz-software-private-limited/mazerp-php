@@ -26,10 +26,7 @@ $mazerpUrl = (string) ($c['mazerp_marketing_url'] ?? 'https://www.mazerp.com');
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<?= e(asset_url('assets/css/style.css')) ?>" id="theme-stylesheet"
-    data-theme-aurora="<?= e(asset_url('assets/css/style-aurora.css')) ?>"
-    data-theme-midnight="<?= e(asset_url('assets/css/style-midnight.css')) ?>"
-    data-theme-breeze="<?= e(asset_url('assets/css/style-breeze.css')) ?>">
+  <link rel="stylesheet" href="<?= e(asset_url('assets/css/style.css')) ?>">
   <link rel="stylesheet" href="<?= e(asset_url('assets/css/header.css')) ?>">
   <link rel="stylesheet" href="<?= e(asset_url('assets/css/sections.css')) ?>">
 </head>
@@ -46,8 +43,8 @@ $mazerpUrl = (string) ($c['mazerp_marketing_url'] ?? 'https://www.mazerp.com');
       <nav class="site-nav" aria-label="Primary">
         <a href="#clients">Clients</a>
         <a href="#features">Features</a>
-        <a href="#workflow">Reports</a>
-        <a href="#access">Security</a>
+        <a href="#reports">Reports</a>
+        <a href="#security">Security</a>
       </nav>
       <div class="site-header__actions">
         <a class="site-phone" href="<?= e($tel) ?>"><?= e($phone) ?></a>
@@ -166,7 +163,7 @@ $mazerpUrl = (string) ($c['mazerp_marketing_url'] ?? 'https://www.mazerp.com');
       </div>
     </section>
 
-    <section class="section" id="workflow">
+    <section class="section" id="reports">
       <div class="container">
         <header class="section-head">
           <p class="section-kicker">From clock-ins to reports</p>
@@ -216,7 +213,7 @@ $mazerpUrl = (string) ($c['mazerp_marketing_url'] ?? 'https://www.mazerp.com');
       </div>
     </section>
 
-    <section class="section section--alt" id="access">
+    <section class="section section--alt" id="security">
       <div class="container">
         <header class="section-head">
           <p class="section-kicker">Roles &amp; permissions</p>
@@ -266,12 +263,6 @@ $mazerpUrl = (string) ($c['mazerp_marketing_url'] ?? 'https://www.mazerp.com');
   <footer class="site-footer">
     <div class="container">
       <p>© <?= date('Y') ?> Maz Techno · MazERP Timex · Time &amp; Attendance Management</p>
-      <div class="theme-switch" role="group" aria-label="Visual style">
-        <span>Style</span>
-        <button type="button" data-set-theme="aurora" class="is-active">Aurora</button>
-        <button type="button" data-set-theme="midnight">Midnight</button>
-        <button type="button" data-set-theme="breeze">Breeze</button>
-      </div>
     </div>
   </footer>
 
