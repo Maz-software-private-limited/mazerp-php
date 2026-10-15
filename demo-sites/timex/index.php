@@ -15,6 +15,7 @@ $wa = contact_whatsapp_href();
 $phone = (string) $c['contact_phone'];
 $mazerpUrl = (string) ($c['mazerp_marketing_url'] ?? 'https://www.mazerp.com');
 $monthlyPrice = (int) ($c['pricing']['monthly_price'] ?? 999);
+$freeMaxEmployees = (int) ($c['pricing']['free_year_max_employees'] ?? 10);
 $heroAssetVer = static function (string $rel): string {
     $path = __DIR__ . '/' . ltrim($rel, '/');
     $url = asset_url($rel);
@@ -70,12 +71,20 @@ $heroAssetVer = static function (string $rel): string {
             Manage employee attendance smarter with MazERP Timex. Get your first-year subscription worth <?= e(format_inr($monthlyPrice)) ?> absolutely free and simplify workforce management.
           </p>
           <div class="hero__panel-price">
-            <span class="hero__panel-price-tag">
-              <span class="hero__price-was"><?= e(format_inr($monthlyPrice)) ?></span>
-              <span class="hero__price-arrow" aria-hidden="true">→</span>
-              <span>FREE</span>
-            </span>
-            <span class="hero__panel-price-note">First-year subscription</span>
+            <div class="hero__panel-price-row">
+              <span class="hero__panel-price-tag">
+                <span class="hero__price-was"><?= e(format_inr($monthlyPrice)) ?></span>
+                <span class="hero__price-arrow" aria-hidden="true">→</span>
+                <span>FREE</span>
+              </span>
+              <span class="hero__panel-price-note">First-year subscription</span>
+            </div>
+            <p class="hero__panel-eligibility">
+              <span class="hero__panel-eligibility__badge" aria-label="Team size limit">
+                <span class="hero__panel-eligibility__icon" aria-hidden="true"></span>
+                Up to <strong><?= (int) $freeMaxEmployees ?></strong> employees
+              </span>
+            </p>
           </div>
           <div class="hero__panel-actions">
             <button type="button" class="btn--offer" data-open-modal="modal-demo">Get Started Free</button>
@@ -262,7 +271,7 @@ $heroAssetVer = static function (string $rel): string {
     <div class="modal__dialog" role="dialog" aria-labelledby="modal-demo-title" aria-modal="true">
       <button type="button" class="modal__close" data-close-modal aria-label="Close">×</button>
       <h2 id="modal-demo-title">Schedule your demo</h2>
-      <p>Tell us about your team—we will show MazERP Timex live attendance, mobile punch, and approvals. Qualifying organizations get <strong>year one free</strong>, then <strong>₹999/month</strong>.</p>
+      <p>Tell us about your team—we will show MazERP Timex live attendance, mobile punch, and approvals. Qualifying organizations with up to <strong><?= (int) $freeMaxEmployees ?> employees</strong> get <strong>year one free</strong>, then <strong><?= e(format_inr($monthlyPrice)) ?>/month</strong>.</p>
       <form data-demo-form action="<?= e(demo_request_url()) ?>" method="post">
         <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_token']) ?>">
         <label>Name<input name="name" required autocomplete="name"></label>
@@ -279,7 +288,7 @@ $heroAssetVer = static function (string $rel): string {
     <div class="modal__dialog" role="dialog" aria-labelledby="modal-call-title" aria-modal="true">
       <button type="button" class="modal__close" data-close-modal aria-label="Close">×</button>
       <h2 id="modal-call-title">Quick call</h2>
-      <p>Speak with Maz Techno about Timex pricing, rollout, and the <strong>first year free</strong> offer (₹999/month after).</p>
+      <p>Speak with Maz Techno about Timex pricing, rollout, and the <strong>first year free</strong> offer for up to <?= (int) $freeMaxEmployees ?> employees (<?= e(format_inr($monthlyPrice)) ?>/month after).</p>
       <a class="btn btn--primary btn--block" href="<?= e($tel) ?>">Call <?= e($phone) ?></a>
       <button type="button" class="btn btn--ghost btn--block" data-close-modal>Close</button>
     </div>

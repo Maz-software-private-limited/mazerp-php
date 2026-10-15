@@ -19,6 +19,7 @@ return [
     'contact_whatsapp_prefill' => 'Hi, I would like to schedule a MazERP Timex demo.',
     'pricing' => [
         'monthly_price' => (int) (getenv('MAZERP_TIMEX_PRICE_MONTHLY') ?: 999),
-        'intro' => 'First year free for qualifying new organizations. ₹999/month after year one.',
+        'free_year_max_employees' => (int) (getenv('MAZERP_TIMEX_FREE_MAX_EMPLOYEES') ?: 10),
+        'intro' => 'First year free for qualifying new organizations with up to 10 employees. ₹999/month after year one.',
     ],
 ];
