@@ -1,0 +1,17 @@
+# Pretty URLs — site base /crm/
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /demo-sites/crm/
+
+  RewriteRule ^robots\.txt$ robots.php [L]
+  RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  RewriteRule ^$ index.php [L]
+  RewriteRule ^demo-request/?$ contact.php [L]
+  RewriteRule ^(why|features|how-it-works|pipeline|follow-ups|preview|security|pricing|faq|contact)/?$ index.php?section=$1 [L,QSA]
+  RewriteRule ^(privacy|terms)/?$ $1.php [L]
+</IfModule>

@@ -1,0 +1,19 @@
+# Pretty URLs — site base /payroll/
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /demo-sites/payroll/
+
+  RewriteRule ^robots\.txt$ robots.php [L]
+  RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  RewriteRule ^$ index.php [L]
+  RewriteRule ^demo-request/?$ contact.php [L]
+  RewriteRule ^(features|how-it-works|benefits|security|pricing|faq|contact)/?$ index.php?section=$1 [L,QSA]
+  RewriteRule ^guides/?$ guides/index.php [L]
+  RewriteRule ^guides/([a-z0-9-]+)/?$ guides/$1.php [L]
+  RewriteRule ^(privacy|terms|themes)/?$ $1.php [L]
+</IfModule>

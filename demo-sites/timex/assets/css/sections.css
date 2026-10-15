@@ -1,0 +1,172 @@
+/* NoQu-style page sections (MazERP Timex) */
+
+.clients-band {
+  padding: 1.25rem 0;
+  background: var(--bg, #f4f6f8);
+  border-block: 1px solid var(--border, rgba(15, 23, 42, 0.1));
+}
+
+.clients-band__inner {
+  width: min(1180px, 94vw);
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.clients-band p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted, #64748b);
+  max-width: 40rem;
+}
+
+.clients-band a {
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.feature-spotlight {
+  max-width: 40rem;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.feature-spotlight h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+  color: var(--ink, #0f172a);
+}
+
+.feature-spotlight p {
+  margin: 0;
+  color: var(--muted, #64748b);
+  line-height: 1.65;
+}
+
+.scale-band {
+  padding: 3.5rem 0;
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e3a5f 100%);
+  color: #f8fafc;
+  text-align: center;
+}
+
+.scale-band h2 {
+  font-family: var(--font-display, inherit);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  max-width: 28rem;
+  margin-inline: auto;
+}
+
+.scale-band p {
+  margin: 0 auto;
+  max-width: 36rem;
+  color: #cbd5e1;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.demo-invite {
+  text-align: center;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.demo-invite p {
+  color: var(--muted, #64748b);
+  margin: 0 0 1.5rem;
+}
+
+.demo-invite__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.workflow-steps {
+  list-style: none;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.workflow-steps li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, rgba(15, 23, 42, 0.1));
+  border-radius: var(--radius, 10px);
+}
+
+.workflow-steps strong {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--price, #059669);
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.workflow-steps span {
+  color: var(--muted, #64748b);
+  font-size: 0.95rem;
+}
+
+.access-list {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 32rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.access-list li {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  font-weight: 500;
+}
+
+.access-list li::before {
+  content: "✓";
+  color: var(--price, #059669);
+  font-weight: 800;
+}
+
+.live-stat {
+  background: #f8fafc !important;
+  color: var(--ink, #0f172a) !important;
+  border: 1px solid var(--border, rgba(15, 23, 42, 0.1)) !important;
+}
+
+.live-stat span {
+  color: var(--muted, #64748b) !important;
+}
+
+.live-stat strong {
+  color: var(--accent-deep, #4338ca) !important;
+}
+
+.section-kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-deep, #4338ca);
+  margin: 0 0 0.5rem;
+}

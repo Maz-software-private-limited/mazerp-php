@@ -1,0 +1,64 @@
+/* Theme: payroll — Enterprise Gateway */
+html[data-theme="payroll"] {
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-ink: #1e293b;
+  --color-ink-muted: #475569;
+  --color-border: #e2e8f0;
+  --color-brand: #0f172a;
+  --color-cta: #ea580c;
+  --color-cta-hover: #c2410c;
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-soft: #eff6ff;
+  --cta-band-bg: linear-gradient(90deg, #eff6ff 0%, #fff7ed 100%);
+  --font-heading: "Lexend", system-ui, sans-serif;
+  --font-sans: "Source Sans 3", system-ui, sans-serif;
+  --header-h: 72px;
+}
+
+html[data-theme="payroll"] .hero--gateway {
+  padding: 3.5rem 0 4.5rem;
+  color: #f1f5f9;
+}
+
+html[data-theme="payroll"] .hero--gateway .hero__backdrop {
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(37, 99, 235, 0.22), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(234, 88, 12, 0.12), transparent 50%),
+    linear-gradient(160deg, #1e293b 0%, #0f172a 48%, #172554 100%);
+}
+
+html[data-theme="payroll"] .hero--gateway .hero__title {
+  color: #fff;
+  max-width: 20ch;
+}
+
+html[data-theme="payroll"] .hero--gateway .hero__lead {
+  color: #cbd5e1;
+}
+
+html[data-theme="payroll"] .hero--gateway .hero__note {
+  color: #94a3b8;
+}
+
+html[data-theme="payroll"] .hero--gateway .hero__note a {
+  color: #93c5fd;
+}
+
+html[data-theme="payroll"] .hero--gateway .hero__eyebrow {
+  color: #fde68a;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+html[data-theme="payroll"] .hero--gateway .hero__trust li {
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(15, 23, 42, 0.45);
+}
+
+html[data-theme="payroll"] .hero--gateway .dashboard-mockup {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.35);
+}

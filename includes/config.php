@@ -115,6 +115,22 @@ define('SITE_URL', 'https://www.mazerp.com');
 define('CONTACT_EMAIL', 'info@maztechno.com');
 define('CONTACT_PHONE', '+91 81100 87700');
 
+if (!function_exists('workspace_signup_url')) {
+    /**
+     * MazERP console registration URL for a product workspace (timex, payroll, etc.).
+     */
+    function workspace_signup_url(string $product = ''): string
+    {
+        $base = 'https://app.mazerp.com/auth/register';
+        $product = trim($product);
+        if ($product === '') {
+            return $base;
+        }
+
+        return $base . '?' . http_build_query(['product' => $product]);
+    }
+}
+
 $mail_config = [
     'smtp_host'     => 'smtp.hostinger.com',
     'smtp_port'     => 465,

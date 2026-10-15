@@ -1,0 +1,12 @@
+# Timex — single promotion page
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /timex/
+
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  RewriteRule ^demo-request/?$ demo-request.php [L]
+  RewriteRule ^$ index.php [L]
+</IfModule>

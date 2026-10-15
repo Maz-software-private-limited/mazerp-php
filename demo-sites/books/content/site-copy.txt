@@ -1,0 +1,446 @@
+﻿<?php
+
+declare(strict_types=1);
+
+/**
+ * Site configuration â€” override via environment variables in deployment.
+ */
+return [
+    'site_name' => 'MazERP Payroll',
+    'tagline' => 'Monthly payroll from salary setup to payslip',
+    'meta_description' => 'Run Indian payroll in one workflow: salary structures, attendance, leave, PF, ESI, TDS, approval, and payslipsâ€”without spreadsheet reconciliation.',
+    'console_url' => rtrim(getenv('MAZERP_CONSOLE_URL') ?: 'http://localhost:4210/console', '/'),
+    'payroll_app_url' => rtrim(getenv('MAZERP_PAYROLL_URL') ?: 'http://localhost:4214/payroll', '/'),
+    'company_name' => 'MazERP',
+    'contact_email' => getenv('MAZERP_CONTACT_EMAIL') ?: '',
+    'pricing' => [
+        'billing_modes' => ['monthly', 'yearly'],
+        'default_mode' => 'yearly',
+        'currency' => 'INR',
+        'plans' => [
+            [
+                'id' => 'starter',
+                'name' => 'Starter',
+                'description' => 'For teams paying up to 25 people each month.',
+                'monthly_price' => null,
+                'yearly_price' => null,
+                'price_label' => 'Get a quote',
+                'employee_limit' => 'Up to 25 employees',
+                'features' => [
+                    'Monthly payroll runs and registers',
+                    'Payslips for your team',
+                    'PF, ESI, and TDS in your structures',
+                    'Attendance and leave (including LOP)',
+                ],
+                'cta' => 'Get a quote',
+                'highlighted' => false,
+            ],
+            [
+                'id' => 'growth',
+                'name' => 'Growth',
+                'description' => 'For companies adding headcount and approval steps.',
+                'monthly_price' => null,
+                'yearly_price' => null,
+                'price_label' => 'Get a quote',
+                'employee_limit' => 'Up to 100 employees',
+                'features' => [
+                    'Everything in Starter',
+                    'Overtime and shift rules',
+                    'Payroll approval workflow',
+                    'Employee access to payslips',
+                ],
+                'cta' => 'Get a quote for my team',
+                'highlighted' => true,
+            ],
+            [
+                'id' => 'scale',
+                'name' => 'Scale',
+                'description' => 'For larger payrolls that need hands-on onboarding.',
+                'monthly_price' => null,
+                'yearly_price' => null,
+                'price_label' => 'Get a quote',
+                'employee_limit' => '100+ employees',
+                'features' => [
+                    'Everything in Growth',
+                    'Complex salary structures',
+                    'Priority onboarding',
+                    'Dedicated contact when available',
+                ],
+                'cta' => 'Talk to sales',
+                'highlighted' => false,
+            ],
+        ],
+    ],
+    'faq' => [
+        [
+            'question' => 'Is MazERP Payroll only for companies in India?',
+            'answer' => 'It is built around monthly payroll workflows Indian businesses useâ€”including PF, ESI, TDS, attendance, and LOP. If that matches how you pay people, it is likely a fit.',
+        ],
+        [
+            'question' => 'Do I need to set up PF, ESI, and TDS myself?',
+            'answer' => 'You configure statutory components as part of salary structures and payroll runs. What applies depends on your organization settings and regulations for your business.',
+        ],
+        [
+            'question' => 'What happens when someone takes unpaid leave?',
+            'answer' => 'Approved leave and loss of pay (LOP) for the period feed into the monthly run so net pay reflects the days you actually paid for.',
+        ],
+        [
+            'question' => 'When do employees receive payslips?',
+            'answer' => 'After you process and approve payroll for the period, you can generate payslips based on your setup and who has access in the product.',
+        ],
+        [
+            'question' => 'I already have a MazERP account. Where do I start?',
+            'answer' => 'Use Log in to open payroll with your existing account. New to MazERP? Open the payroll app to begin setup, or book a walkthrough and we will walk through your scenario.',
+        ],
+        [
+            'question' => 'Where is payroll data stored?',
+            'answer' => 'Data lives in the MazERP environment you sign in to. Ask us for hosting, access, and retention details for your deployment.',
+        ],
+    ],
+];
+
+<section class="section" id="benefits" aria-labelledby="benefits-title">
+  <div class="container">
+    <header class="section__header">
+      <h2 id="benefits-title" class="section__title">Built for how you run payroll today</h2>
+      <p class="section__lead">Owner-led teams, fast-growing companies, and HR departments all need the same thing: a month-end process they can repeat without surprises.</p>
+    </header>
+    <div class="benefit-columns">
+      <article class="benefit-card">
+        <h3 class="benefit-card__title">Small businesses</h3>
+        <p>Stop maintaining salary sheets by hand. Run payroll once a month and send payslips your team can read without calling you for breakdowns.</p>
+      </article>
+      <article class="benefit-card">
+        <h3 class="benefit-card__title">Growing companies</h3>
+        <p>Add employees without rewriting formulas. Structures and approvals scale with headcount instead of breaking every quarter.</p>
+      </article>
+      <article class="benefit-card">
+        <h3 class="benefit-card__title">HR teams</h3>
+        <p>Spend less time chasing attendance fixes and statutory mismatchesâ€”and more time on hiring, policy, and people questions.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact" aria-labelledby="contact-title">
+  <div class="container contact">
+    <div class="contact__intro">
+      <h2 id="contact-title" class="section__title">See MazERP Payroll on your payroll cycle</h2>
+      <p class="section__lead">Tell us how many people you pay and what you use today. We'll set up a walkthrough around structures, statutory setup, and monthly approval.</p>
+      <p class="contact__alt">Want to click through first? <a href="<?= e(get_started_url()) ?>">Open the payroll app</a>.</p>
+    </div>
+    <form class="contact-form" action="contact.php" method="post" data-contact-form novalidate>
+      <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_token'] ?? '') ?>">
+      <div class="form-field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required maxlength="120">
+      </div>
+      <div class="form-field">
+        <label for="email">Work email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required maxlength="200">
+      </div>
+      <div class="form-field">
+        <label for="company">Company</label>
+        <input id="company" name="company" type="text" autocomplete="organization" maxlength="200">
+      </div>
+      <div class="form-field">
+        <label for="employees">How many employees do you pay?</label>
+        <select id="employees" name="employees">
+          <option value="">Select range</option>
+          <option value="1-25">1â€“25</option>
+          <option value="26-100">26â€“100</option>
+          <option value="101-500">101â€“500</option>
+          <option value="500+">500+</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="message">What should we cover on the call?</label>
+        <textarea id="message" name="message" rows="4" maxlength="2000" placeholder="For example: PF/ESI setup, LOP rules, or approval workflow."></textarea>
+      </div>
+      <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+      <button type="submit" class="btn btn--primary btn--lg">Book my walkthrough</button>
+    </form>
+  </div>
+</section>
+
+<div class="dashboard-mockup">
+  <div class="dashboard-mockup__chrome">
+    <span class="dashboard-mockup__dot"></span>
+    <span class="dashboard-mockup__dot"></span>
+    <span class="dashboard-mockup__dot"></span>
+    <span class="dashboard-mockup__title">Payroll Â· October 2026</span>
+  </div>
+  <div class="dashboard-mockup__body">
+    <aside class="dashboard-mockup__sidebar">
+      <span class="dashboard-mockup__nav-item is-active">Dashboard</span>
+      <span class="dashboard-mockup__nav-item">Employees</span>
+      <span class="dashboard-mockup__nav-item">Payroll run</span>
+      <span class="dashboard-mockup__nav-item">Payslips</span>
+      <span class="dashboard-mockup__nav-item">Statutory</span>
+    </aside>
+    <div class="dashboard-mockup__main">
+      <div class="dashboard-mockup__stats">
+        <div class="stat-card">
+          <span class="stat-card__label">Employees in run</span>
+          <span class="stat-card__value">48</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__label">Gross payout</span>
+          <span class="stat-card__value">â‚¹24,86,500</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__label">Status</span>
+          <span class="stat-card__badge">Pending approval</span>
+        </div>
+      </div>
+      <table class="dashboard-mockup__table">
+        <thead>
+          <tr>
+            <th scope="col">Employee</th>
+            <th scope="col">Days paid</th>
+            <th scope="col">Gross</th>
+            <th scope="col">Deductions</th>
+            <th scope="col">Net pay</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ananya Sharma</td>
+            <td>30</td>
+            <td>â‚¹85,000</td>
+            <td>â‚¹12,420</td>
+            <td>â‚¹72,580</td>
+          </tr>
+          <tr>
+            <td>Rahul Mehta</td>
+            <td>28</td>
+            <td>â‚¹62,500</td>
+            <td>â‚¹9,180</td>
+            <td>â‚¹53,320</td>
+          </tr>
+          <tr>
+            <td>Priya Nair</td>
+            <td>30</td>
+            <td>â‚¹1,10,000</td>
+            <td>â‚¹18,650</td>
+            <td>â‚¹91,350</td>
+          </tr>
+          <tr>
+            <td>Vikram Singh</td>
+            <td>29</td>
+            <td>â‚¹48,000</td>
+            <td>â‚¹6,940</td>
+            <td>â‚¹41,060</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<?php
+
+declare(strict_types=1);
+
+$faq = site_config()['faq'];
+?>
+<section class="section section--muted" id="faq" aria-labelledby="faq-title">
+  <div class="container container--narrow">
+    <header class="section__header">
+      <h2 id="faq-title" class="section__title">Questions before you switch</h2>
+      <p class="section__lead">Straight answers about fit, setup, and what happens after you sign in.</p>
+    </header>
+    <div class="faq" data-faq>
+      <?php foreach ($faq as $index => $item): ?>
+        <details class="faq__item"<?= $index === 0 ? ' open' : '' ?>>
+          <summary class="faq__question"><?= e($item['question']) ?></summary>
+          <div class="faq__answer">
+            <p><?= e($item['answer']) ?></p>
+          </div>
+        </details>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features" aria-labelledby="features-title">
+  <div class="container">
+    <header class="section__header">
+      <h2 id="features-title" class="section__title">What you need for every pay cycle</h2>
+      <p class="section__lead">Salary, time, statutory deductions, and payslipsâ€”connected so you're not copying figures between tools.</p>
+    </header>
+    <ul class="feature-grid">
+      <li class="feature-card">
+        <h3 class="feature-card__title">Automated payroll</h3>
+        <p>Set structures once; each month's run applies the same rules across your employee list.</p>
+      </li>
+      <li class="feature-card">
+        <h3 class="feature-card__title">Salary calculations</h3>
+        <p>See gross, allowances, and deductions calculated from the components you configuredâ€”not manual cells.</p>
+      </li>
+      <li class="feature-card">
+        <h3 class="feature-card__title">Attendance</h3>
+        <p>Pay days follow the attendance you recorded, so totals match what managers approved.</p>
+      </li>
+      <li class="feature-card">
+        <h3 class="feature-card__title">Overtime</h3>
+        <p>Include extra hours in the run using the overtime rules you set up for your organization.</p>
+      </li>
+      <li class="feature-card">
+        <h3 class="feature-card__title">Leave and LOP</h3>
+        <p>Approved leave and loss of pay flow into the period so net pay reflects the actual month.</p>
+      </li>
+      <li class="feature-card">
+        <h3 class="feature-card__title">Payslips</h3>
+        <p>Share clear payslips after payroll is approved so employees see the same numbers you signed off on.</p>
+      </li>
+      <li class="feature-card">
+        <h3 class="feature-card__title">Employee management</h3>
+        <p>Keep employee details, salary assignments, and payroll history tied to the same record.</p>
+      </li>
+      <li class="feature-card">
+        <h3 class="feature-card__title">PF, ESI, and TDS</h3>
+        <p>Handle statutory components inside your payroll workflow instead of bolting them on at the end.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <h1 id="hero-title" class="hero__title">Run monthly payroll in one placeâ€”from salary to payslip</h1>
+      <p class="hero__lead">
+        MazERP Payroll brings structures, attendance, leave, overtime, and statutory deductions into a single monthly run. Review totals, approve when they're right, then generate payslips for your team.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--primary btn--lg" href="<?= e(get_started_url()) ?>">Open payroll app</a>
+        <a class="btn btn--secondary btn--lg" href="#contact">Book a walkthrough</a>
+      </div>
+      <p class="hero__note">Already on MazERP? <a href="<?= e(login_url()) ?>">Log in to payroll</a></p>
+    </div>
+    <div class="hero__visual" aria-hidden="true">
+      <?php require __DIR__ . '/dashboard-mockup.php'; ?>
+    </div>
+  </div>
+</section>
+
+<section class="section section--muted" id="how-it-works" aria-labelledby="how-title">
+  <div class="container">
+    <header class="section__header">
+      <h2 id="how-title" class="section__title">How it works</h2>
+      <p class="section__lead">Five steps from setup to payslipsâ€”the same rhythm every month.</p>
+    </header>
+    <ol class="steps">
+      <li class="step">
+        <h3 class="step__title">Configure salary structures</h3>
+        <p>Add components, statutory settings, and who each structure applies to.</p>
+      </li>
+      <li class="step">
+        <h3 class="step__title">Process monthly payroll</h3>
+        <p>Open the period and pull in attendance, leave, and overtime for that month.</p>
+      </li>
+      <li class="step">
+        <h3 class="step__title">Review calculations</h3>
+        <p>Scan gross, deductions, and net pay line by line before you commit.</p>
+      </li>
+      <li class="step">
+        <h3 class="step__title">Approve payroll</h3>
+        <p>Sign off on the run so payouts and records match what leadership approved.</p>
+      </li>
+      <li class="step">
+        <h3 class="step__title">Generate payslips</h3>
+        <p>Release payslips to employees after approvalâ€”no retyping totals into PDFs.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<?php
+
+declare(strict_types=1);
+
+$pricing = site_config()['pricing'];
+$plans = $pricing['plans'];
+?>
+<section class="section" id="pricing" aria-labelledby="pricing-title">
+  <div class="container">
+    <header class="section__header">
+      <h2 id="pricing-title" class="section__title">Pricing that scales with headcount</h2>
+      <p class="section__lead">Choose a plan by team size. Request a quote belowâ€”we'll share rates for your employee count and billing cycle.</p>
+    </header>
+    <div class="pricing-toggle" role="group" aria-label="Billing period" data-pricing-toggle>
+      <button type="button" class="pricing-toggle__btn is-active" data-billing="yearly" aria-pressed="true">Yearly</button>
+      <button type="button" class="pricing-toggle__btn" data-billing="monthly" aria-pressed="false">Monthly</button>
+    </div>
+    <div class="pricing-grid">
+      <?php foreach ($plans as $plan): ?>
+        <article class="pricing-card<?= !empty($plan['highlighted']) ? ' pricing-card--highlight' : '' ?>">
+          <?php if (!empty($plan['highlighted'])): ?>
+            <p class="pricing-card__ribbon">Popular</p>
+          <?php endif; ?>
+          <h3 class="pricing-card__name"><?= e($plan['name']) ?></h3>
+          <p class="pricing-card__desc"><?= e($plan['description']) ?></p>
+          <p class="pricing-card__price" data-plan-price="<?= e($plan['id']) ?>">
+            <?php
+            $monthly = $plan['monthly_price'];
+            $yearly = $plan['yearly_price'];
+            if ($monthly === null && $yearly === null) {
+                echo e($plan['price_label']);
+            } else {
+                echo 'â‚¹' . e((string) ($yearly ?? $monthly));
+            }
+            ?>
+          </p>
+          <p class="pricing-card__limit"><?= e($plan['employee_limit']) ?></p>
+          <ul class="pricing-card__features">
+            <?php foreach ($plan['features'] as $feature): ?>
+              <li><?= e($feature) ?></li>
+            <?php endforeach; ?>
+          </ul>
+          <a class="btn <?= !empty($plan['highlighted']) ? 'btn--primary' : 'btn--secondary' ?> btn--block" href="#contact"><?= e($plan['cta']) ?></a>
+        </article>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<section class="section section--muted pain" id="problem" aria-labelledby="problem-title">
+  <div class="container">
+    <header class="section__header section__header--center">
+      <h2 id="problem-title" class="section__title">Month-end payroll shouldn't mean reconciling five spreadsheets</h2>
+      <p class="section__lead">If you pay employees in India, you already juggle salary components, attendance, leave, and statutory lines. When those numbers live in different places, mistakes show up lateâ€”and fixes eat your week.</p>
+    </header>
+    <ul class="pain__list">
+      <li class="pain__item">You re-check PF, ESI, and TDS because the sheet and the attendance file don't match.</li>
+      <li class="pain__item">LOP and overtime changes arrive after you've already "finalized" the month.</li>
+      <li class="pain__item">Employees ask for payslips before you're confident the run is correct.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--muted" id="security" aria-labelledby="security-title">
+  <div class="container security">
+    <div class="security__copy">
+      <h2 id="security-title" class="section__title">Your payroll data stays behind the right logins</h2>
+      <p class="section__lead">Salary and statutory information is sensitive. MazERP Payroll keeps access limited to people you authorize and ties changes to review and approval steps.</p>
+      <ul class="security__list">
+        <li>Roles and permissions control who can run, edit, or approve payroll</li>
+        <li>Sign-in flows through your MazERP accountâ€”no separate password sprawl</li>
+        <li>Review before approve, so adjustments leave a clear trail in your process</li>
+        <li>Hosting and retention follow your MazERP environmentâ€”ask us for deployment details</li>
+      </ul>
+    </div>
+    <div class="security__panel" aria-hidden="true">
+      <div class="security__panel-inner">
+        <p class="security__panel-label">Access control</p>
+        <p class="security__panel-value">Roles &amp; permissions</p>
+        <p class="security__panel-label">Sign-in</p>
+        <p class="security__panel-value">MazERP console authentication</p>
+        <p class="security__panel-label">Workflow</p>
+        <p class="security__panel-value">Review â†’ Approve â†’ Payslips</p>
+      </div>
+    </div>
+  </div>
+</section>
+

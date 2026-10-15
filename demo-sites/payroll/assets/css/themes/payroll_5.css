@@ -1,0 +1,56 @@
+/* Theme: payroll_5 — Indigo Glass */
+html[data-theme="payroll_5"] {
+  --color-bg: #f5f3ff;
+  --color-surface: #ffffff;
+  --color-ink: #1e1b4b;
+  --color-ink-muted: #4c4a6a;
+  --color-border: #e0e7ff;
+  --color-brand: #312e81;
+  --color-cta: #7c3aed;
+  --color-cta-hover: #6d28d9;
+  --color-primary: #4f46e5;
+  --color-primary-dark: #4338ca;
+  --color-primary-soft: #ede9fe;
+  --cta-band-bg: linear-gradient(90deg, #ede9fe 0%, #e0e7ff 100%);
+  --font-heading: "Outfit", system-ui, sans-serif;
+  --font-sans: "Work Sans", system-ui, sans-serif;
+  --shadow-soft: 0 8px 32px rgba(79, 70, 229, 0.12);
+}
+
+html[data-theme="payroll_5"] .hero--glass {
+  padding: 3.5rem 0 4.5rem;
+}
+
+html[data-theme="payroll_5"] .hero--glass .hero__backdrop {
+  background:
+    radial-gradient(ellipse 70% 55% at 20% 20%, rgba(124, 58, 237, 0.18), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 90% 10%, rgba(79, 70, 229, 0.22), transparent 45%),
+    linear-gradient(180deg, #eef2ff 0%, #f5f3ff 55%, #faf8f5 100%);
+}
+
+html[data-theme="payroll_5"] .hero--glass .hero__eyebrow {
+  color: #5b21b6;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid #c4b5fd;
+  backdrop-filter: blur(6px);
+}
+
+html[data-theme="payroll_5"] .hero--glass .hero__trust li {
+  color: #4338ca;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid #c4b5fd;
+  backdrop-filter: blur(6px);
+}
+
+html[data-theme="payroll_5"] .hero--glass .dashboard-mockup {
+  border-color: #c4b5fd;
+  box-shadow: var(--shadow-soft);
+}
+
+html[data-theme="payroll_5"] .feature-card:hover {
+  border-color: #c4b5fd;
+}
+
+html[data-theme="payroll_5"] .pricing-card--highlight {
+  box-shadow: 0 12px 40px rgba(124, 58, 237, 0.15);
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 40" role="img" aria-label="Maz CRM">
+  <rect width="36" height="36" x="2" y="2" rx="10" fill="#4c1d95"/>
+  <path fill="#fff" d="M12 26V14h4.2l3.4 7.2L23 14h4.1v12h-3.3v-7.1l-3.5 7.1h-2.2l-3.5-7.1V26H12z"/>
+  <text x="48" y="26" fill="#14121f" font-family="Segoe UI, system-ui, sans-serif" font-size="18" font-weight="700">Maz CRM</text>
+</svg>

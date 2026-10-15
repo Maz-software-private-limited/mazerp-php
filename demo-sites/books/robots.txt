@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /storage/
+
+# Prefer robots.php when the server routes robots.txt to it (see .htaccess.example).
+Sitemap: /payroll/sitemap.php
